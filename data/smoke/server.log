@@ -1,0 +1,6 @@
+  telegram: listening for "Got it" taps (designer pickup time)
+Vani integration listening on :8799   storage=supabase  provider=gemini→offline  live=true
+  webhook  POST /webhooks/vaani/<VAANI_WEBHOOK_SECRET>
+  BYOL     wss://<public-host>/byol          (Vani appends /<call_id>)
+2026-10-09T07:11:41.879Z webhook call_started live-e2e-1 registered
+2026-10-09T07:11:51.706Z webhook call_ended live-e2e-1 noted_end

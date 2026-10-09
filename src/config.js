@@ -42,3 +42,10 @@ export function isLive(cfg, requiredEnvKeys = []) {
 }
 
 export const dataDir = (cfg) => cfg.env.AANGAN_DATA_DIR || path.join(cfg.root, 'data', 'runtime');
+
+/** Force every integration into DRY-RUN regardless of .env (used by evals, demo and the call simulator, which handle fake callers). */
+export function forceDryRun(cfg) {
+  cfg.env = { ...cfg.env, AANGAN_LIVE: '0' };
+  cfg.mode = { ...cfg.mode, dry_run: true };
+  return cfg;
+}

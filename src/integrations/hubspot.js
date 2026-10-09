@@ -45,6 +45,16 @@ export async function pushLeadToHubspot(record, { cfg, store, fetchImpl = fetch 
   }
 
   const headers = { Authorization: `Bearer ${cfg.env.HUBSPOT_TOKEN}`, 'Content-Type': 'application/json' };
+  const done = (action, id) => { store?.outboxPush({ channel: 'hubspot', dryRun: false, enquiryId: record.enquiryId, source: record.source, action, id }); return { dryRun: false, id }; };
+
+  // 1) We already know this contact (same caller, merged by phone in our own store) → update by id.
+  //    HubSpot's search index lags by several seconds, so a call-back right after a drop must NOT depend on search.
+  if (record.hubspotId) {
+    const res = await fetchImpl(`${API}/crm/v3/objects/contacts/${record.hubspotId}`, { method: 'PATCH', headers, body: JSON.stringify({ properties }) });
+    if (res.ok) return done('update_contact', record.hubspotId);
+    if (res.status !== 404) throw new Error(`HubSpot ${res.status}`); // 404 = deleted in HubSpot → fall through and re-create
+  }
+  // 2) Look the number up (covers contacts that already existed in HubSpot before this system).
   const search = await fetchImpl(`${API}/crm/v3/objects/contacts/search`, {
     method: 'POST', headers,
     body: JSON.stringify({ filterGroups: [{ filters: [{ propertyName: 'phone', operator: 'EQ', value: record.phone }] }], limit: 1 }),
@@ -55,6 +65,5 @@ export async function pushLeadToHubspot(record, { cfg, store, fetchImpl = fetch 
     : await fetchImpl(`${API}/crm/v3/objects/contacts`, { method: 'POST', headers, body: JSON.stringify({ properties }) });
   if (!res.ok) throw new Error(`HubSpot ${res.status}`);
   const body = await res.json();
-  store?.outboxPush({ channel: 'hubspot', dryRun: false, enquiryId: record.enquiryId, source: record.source, action: found ? 'update_contact' : 'create_contact', id: body.id });
-  return { dryRun: false, id: body.id };
+  return done(found ? 'update_contact' : 'create_contact', body.id);
 }

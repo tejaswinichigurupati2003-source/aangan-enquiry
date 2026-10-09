@@ -4,7 +4,7 @@
 //   node bin/demo.js [--provider recorded]      then:  node bin/dashboard.js --dir data/demo
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadConfig, ROOT } from '../src/config.js';
+import { loadConfig, forceDryRun, ROOT } from '../src/config.js';
 import { createProvider } from '../src/llm/index.js';
 import { Store } from '../src/store.js';
 import { parseSeed } from '../src/seed.js';
@@ -15,7 +15,7 @@ import { renderReport } from '../src/dashboard/report.js';
 
 const args = process.argv.slice(2);
 const opt = (n, d = null) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : d; };
-const cfg = loadConfig({ fresh: true });
+const cfg = forceDryRun(loadConfig({ fresh: true })); // fake callers: never send anything real
 const provider = createProvider(cfg, { name: opt('provider', 'recorded') });
 const dir = path.join(ROOT, 'data', 'demo');
 fs.rmSync(dir, { recursive: true, force: true });

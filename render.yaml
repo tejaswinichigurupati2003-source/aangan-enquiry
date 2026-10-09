@@ -15,7 +15,7 @@ services:
       - { key: NODE_VERSION, value: "22" }
       - { key: STORAGE_BACKEND, value: supabase }
       - { key: GEMINI_BACKEND, value: aistudio }
-      - { key: AANGAN_LIVE, value: "0" }          # flip to 1 only when Telegram/HubSpot/email are ready
+      - { key: AANGAN_LIVE, value: "1" }          # LIVE: real Telegram + HubSpot. Seed/test data is still always dry-run in code.
       - { key: GEMINI_API_KEY, sync: false }
       - { key: VAANI_API_KEY, sync: false }
       - { key: VAANI_AGENT_ID, sync: false }

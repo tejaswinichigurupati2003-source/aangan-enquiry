@@ -11,7 +11,7 @@ export async function telegramSetup({ token, testChat = null, fetchImpl = fetch,
   if (!me.ok) { log(`✗ Telegram rejected the token: ${me.description ?? 'unknown error'}. Re-copy it from @BotFather (no spaces).`); return { ok: false, chats: [] }; }
   log(`✓ token works — your bot is @${me.result.username} (${me.result.first_name})`);
 
-  const up = await api('getUpdates');
+  const up = await api('getUpdates', { allowed_updates: ['message', 'channel_post', 'my_chat_member', 'callback_query'] });
   const chats = new Map();
   for (const u of up.result ?? []) {
     const m = u.message ?? u.channel_post ?? u.my_chat_member?.chat ? (u.message ?? u.channel_post ?? { chat: u.my_chat_member.chat }) : null;

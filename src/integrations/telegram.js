@@ -44,10 +44,11 @@ export function handleTelegramUpdate(update, store, now = new Date()) {
   return recordAck(store, m[1], now);
 }
 
-export function recordAck(store, enquiryId, now = new Date()) {
+export function recordAck(store, enquiryId, now = new Date(), by = null) {
   const enq = store.getEnquiry(enquiryId);
   if (!enq || enq.handoff?.ackAt) return null;
   enq.handoff.ackAt = now.toISOString();
+  if (by) enq.handoff.ackBy = by;
   store.save();
   return enq;
 }

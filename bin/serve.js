@@ -8,6 +8,7 @@ import { openStore, closeStore, storageBackend } from '../src/storage.js';
 import { createVaaniServer } from '../src/vaani/server.js';
 import { runDueCallbacks } from '../src/callbacks.js';
 import { VaaniApi } from '../src/vaani/api.js';
+import { TelegramPoller } from '../src/integrations/telegram-poller.js';
 
 const args = process.argv.slice(2);
 const opt = (n, d = null) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : d; };
@@ -40,6 +41,8 @@ const tick = async () => {
   } catch (e) { console.error('background task failed:', e.message); }
 };
 const timer = setInterval(tick, 60000); timer.unref();
+const poller = new TelegramPoller({ cfg, store, log: (...a) => console.log(new Date().toISOString(), ...a) });
+if (poller.enabled) { poller.start(); console.log('  telegram: listening for "Got it" taps (designer pickup time)'); }
 
-const shutdown = async () => { console.log('\nshutting down…'); clearInterval(timer); server.close(); await closeStore(store).catch((e) => console.error(e.message)); process.exit(0); };
+const shutdown = async () => { console.log('\nshutting down…'); clearInterval(timer); poller.stop(); server.close(); await closeStore(store).catch((e) => console.error(e.message)); process.exit(0); };
 process.on('SIGINT', shutdown); process.on('SIGTERM', shutdown);

@@ -25,3 +25,10 @@ Source of truth: the private GitHub repo `tejaswinichigurupati2003-source/aangan
    - BYOL: `wss://<service>.onrender.com/byol` with auth token = `VAANI_BYOL_TOKEN`
 5. `GET https://<service>.onrender.com/health` should say `{"ok":true,"storage":"supabase",…}`.
 Alternatives to Render with the same shape: Fly.io, Railway, any VPS with a reverse proxy (needs WebSocket upgrade support).
+
+## Live status (2026-10-09)
+- `AANGAN_LIVE=1`: real Telegram notes (designer group; complaints to Nikhil's private chat) and real HubSpot contacts (Green + live only).
+- **Seed/test data can never reach a real channel**, even with the live flag on (enforced in `src/router.js`; HubSpot also refuses in code). The eval, demo and `npm run call` tools force dry-run themselves (`npm run call -- --live` to override).
+- HubSpot upsert remembers the contact id per enquiry (HubSpot's search index lags by seconds, so a call-back right after a drop would otherwise create a duplicate).
+- The "✅ Got it" button is handled by a long-poll listener inside `bin/serve.js` (only ONE running server per bot token, or Telegram answers 409).
+- **Fast way to configure Render:** Environment → *Add from .env* → upload your local `.env` (it already contains every variable `render.yaml` lists). Delete `DASHBOARD_*` / `SUPABASE_PUBLISHABLE_KEY` if you like; they are not used by the call server.

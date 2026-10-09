@@ -173,3 +173,76 @@ test('telegram-setup: verifies the token, lists chat ids, only sends a message w
   const bad = await telegramSetup({ token: 'x', fetchImpl: async () => ({ json: async () => ({ ok: false, description: 'Unauthorized' }) }), log });
   assert.equal(bad.ok, false);
 });
+
+import { route } from '../src/router.js';
+
+test('LIVE SAFETY: with AANGAN_LIVE=1 and full credentials, SEED records never reach Telegram/email/HubSpot; LIVE records do', async () => {
+  const cls = { tier: 'green', reasons: ['ok'], red_reason: null, flags: [], fields: { name: 'Asha', locality: 'Baner' }, summary: 's', verdicts: {}, next_question: null };
+  const run = async (source) => {
+    const store = new Store(null);
+    const e = { id: 'e1', source, phone: '+919876543210', callIds: [], handoff: {}, fields: {}, status: 'open' };
+    store.db.enquiries.push(e);
+    const f = spy();
+    await route({ cfg: liveCfg(), store, enquiry: e, classification: cls, fetchImpl: f });
+    return { urls: f.calls.map((c) => String(c[0])), store, e };
+  };
+  const seed = await run('seed');
+  assert.deepEqual(seed.urls, [], 'not a single network request for seed data');
+  assert.ok(seed.store.db.outbox.some((o) => o.channel === 'telegram' && o.dryRun === true), 'the note is still written to the outbox as a dry-run');
+  assert.equal(seed.e.handoff.hubspot, 'refused_seed');
+  const live = await run('live');
+  assert.ok(live.urls.some((u) => u.includes('api.telegram.org')), 'live call → real Telegram');
+  assert.ok(live.urls.some((u) => u.includes('api.hubapi.com')), 'live Green call → real HubSpot');
+  assert.equal(live.e.handoff.hubspot, 'pushed');
+});
+
+test('HubSpot: a known contact id is updated directly (no search race); a deleted one is re-created; unknown ids fall back to phone search', async () => {
+  const calls = [];
+  const mk = (handler) => async (url, init = {}) => { calls.push(`${init.method || 'GET'} ${String(url).replace('https://api.hubapi.com', '')}`); return handler(String(url), init); };
+  const ok = (o) => ({ ok: true, status: 200, json: async () => o });
+  const cfg = liveCfg(); const store = new Store(null);
+  // known id → PATCH only
+  let f = mk(() => ok({ id: '77' }));
+  const r1 = await pushLeadToHubspot(rec({ hubspotId: '77' }), { cfg, store, fetchImpl: f });
+  assert.deepEqual(calls, ['PATCH /crm/v3/objects/contacts/77']); assert.equal(r1.id, '77');
+  // known id but 404 (deleted in HubSpot) → search then create
+  calls.length = 0;
+  f = mk((u, i) => (i.method === 'PATCH' && u.endsWith('/77') ? { ok: false, status: 404, json: async () => ({}) } : u.includes('/search') ? ok({ results: [] }) : ok({ id: '88' })));
+  const r2 = await pushLeadToHubspot(rec({ hubspotId: '77' }), { cfg, store, fetchImpl: f });
+  assert.equal(r2.id, '88'); assert.ok(calls.some((c) => c.startsWith('POST /crm/v3/objects/contacts') && !c.includes('search')));
+  // no id → search by phone first
+  calls.length = 0;
+  f = mk((u) => (u.includes('/search') ? ok({ results: [{ id: '55' }] }) : ok({ id: '55' })));
+  const r3 = await pushLeadToHubspot(rec(), { cfg, store, fetchImpl: f });
+  assert.equal(r3.id, '55'); assert.deepEqual(calls.map((c) => c.split(' ')[0]), ['POST', 'PATCH']);
+});
+
+import { TelegramPoller } from '../src/integrations/telegram-poller.js';
+
+test('Telegram "Got it" tap: records pickup time + who, answers the tap, relabels the button; ignores other buttons; second tap is harmless', async () => {
+  const cfg = liveCfg(); const store = new Store(null);
+  store.db.enquiries.push({ id: 'enq_9', handoff: { telegramSentAt: '2026-10-09T10:00:00.000Z' } });
+  const sent = [];
+  const updates = [
+    { update_id: 10, callback_query: { id: 'cq1', data: 'ack:enq_9', from: { first_name: 'Asha', last_name: 'Rao' }, message: { chat: { id: -100 }, message_id: 5 } } },
+    { update_id: 11, callback_query: { id: 'cq2', data: 'ack:enq_9', from: { first_name: 'Someone' }, message: { chat: { id: -100 }, message_id: 5 } } },
+    { update_id: 12, callback_query: { id: 'cq3', data: 'noop', from: { first_name: 'X' } } },
+    { update_id: 13, message: { chat: { id: 1 }, text: 'hi' } },
+  ];
+  const f = async (url, init) => {
+    const method = String(url).split('/').pop(); const body = JSON.parse(init.body);
+    sent.push({ method, body });
+    return { json: async () => (method === 'getUpdates' ? { ok: true, result: updates } : { ok: true }) };
+  };
+  const p = new TelegramPoller({ cfg, store, fetchImpl: f, now: () => new Date('2026-10-09T10:12:00.000Z') });
+  assert.equal(p.enabled, true);
+  assert.equal(await p.tick({ timeout: 0 }), 4);
+  const enq = store.getEnquiry('enq_9');
+  assert.equal(enq.handoff.ackAt, '2026-10-09T10:12:00.000Z'); assert.equal(enq.handoff.ackBy, 'Asha Rao', 'the first tap wins');
+  assert.equal(p.offset, 14, 'updates are acknowledged to Telegram');
+  const edits = sent.filter((s) => s.method === 'editMessageReplyMarkup');
+  assert.match(edits[0].body.reply_markup.inline_keyboard[0][0].text, /Picked up by Asha Rao/);
+  assert.match(edits[1].body.reply_markup.inline_keyboard[0][0].text, /Already picked up/);
+  assert.equal(sent.filter((s) => s.method === 'answerCallbackQuery').length, 3);
+  assert.equal(new TelegramPoller({ cfg: loadConfig({ fresh: true, env: {} }), store }).enabled, false, 'dry-run / no credentials → the poller stays off');
+});

@@ -9,6 +9,7 @@ import { sendEmail } from './integrations/email.js';
 import { pushLeadToHubspot, SeedRefusedError } from './integrations/hubspot.js';
 import { DECLINE } from './scripts.js';
 import { scheduleCallbacks } from './callbacks.js';
+import { forceDryRun } from './config.js';
 
 export async function route({ cfg, store, enquiry, classification, now = new Date(), fetchImpl }) {
   const cls = classification;
@@ -22,7 +23,8 @@ export async function route({ cfg, store, enquiry, classification, now = new Dat
   const actions = [];
   const h = enquiry.handoff;
   const alreadySent = h.telegramSentAt && h.sentForCalls === enquiry.callIds.length && prevTier === cls.tier;
-  const io = { cfg, store, fetchImpl };
+  // Test data must never reach a real Telegram chat or inbox, even with AANGAN_LIVE=1 (HubSpot additionally refuses seed in code).
+  const io = { cfg: enquiry.source === 'live' ? cfg : forceDryRun({ ...cfg, env: { ...cfg.env }, mode: { ...cfg.mode } }), store, fetchImpl };
 
   if (cls.tier === 'green') {
     enquiry.status = 'handed_off';
@@ -36,8 +38,9 @@ export async function route({ cfg, store, enquiry, classification, now = new Dat
       h.silent = tg.silent;
       actions.push('telegram:designer', 'email:backup');
       try {
-        const hs = await pushLeadToHubspot({ enquiryId: enquiry.id, source: enquiry.source, tier: cls.tier, phone: enquiry.phone, fields: enquiry.fields, flags: cls.flags, summary: cls.summary }, io);
+        const hs = await pushLeadToHubspot({ hubspotId: h.hubspotId, enquiryId: enquiry.id, source: enquiry.source, tier: cls.tier, phone: enquiry.phone, fields: enquiry.fields, flags: cls.flags, summary: cls.summary }, io);
         h.hubspot = hs.dryRun ? 'dry_run' : 'pushed';
+        if (hs.id) h.hubspotId = hs.id;
         actions.push(`hubspot:${h.hubspot}`);
       } catch (e) {
         if (e instanceof SeedRefusedError) {

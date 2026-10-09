@@ -7,13 +7,13 @@
 //   node bin/eval.js --write-report        also write EVAL_RESULTS.md
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadConfig, ROOT } from '../src/config.js';
+import { loadConfig, forceDryRun, ROOT } from '../src/config.js';
 import { createProvider } from '../src/llm/index.js';
 import { runSeedEval, runScenarioEval, dumpInputs, dumpScenarioInputs } from '../evals/runner.js';
 
 const args = process.argv.slice(2);
 const opt = (name, def = null) => { const i = args.indexOf(`--${name}`); return i >= 0 ? (args[i + 1]?.startsWith('--') || args[i + 1] == null ? true : args[i + 1]) : def; };
-const cfg = loadConfig({ fresh: true });
+const cfg = forceDryRun(loadConfig({ fresh: true })); // fake callers: never send anything real
 const providerName = opt('provider', 'recorded');
 const only = opt('only') ? String(opt('only')).split(',') : null;
 

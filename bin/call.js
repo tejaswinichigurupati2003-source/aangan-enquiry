@@ -8,7 +8,7 @@
 //   node bin/call.js --no-caller-id         withheld number: the assistant will ask for one
 // Type /drop to simulate the line dropping, /quit to hang up normally.
 import readline from 'node:readline';
-import { loadConfig, dataDir } from '../src/config.js';
+import { loadConfig, dataDir, forceDryRun } from '../src/config.js';
 import { createProvider } from '../src/llm/index.js';
 import { Store } from '../src/store.js';
 import { CallEngine } from '../src/engine.js';
@@ -23,6 +23,7 @@ const opt = (n) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 
 const flag = (n) => args.includes(`--${n}`);
 
 const cfg = loadConfig({ fresh: true });
+if (!flag('live')) forceDryRun(cfg); // the simulator is a rehearsal: real Telegram/HubSpot only with --live
 const store = new Store(flag('no-save') ? null : dataDir(cfg));
 const provider = createProvider(cfg, { name: opt('provider') ?? cfg.provider.name, onFallback: (e) => console.log(`\n  (model unavailable: ${e.message} — using offline fallback)`) });
 const from = flag('no-caller-id') ? null : normalizePhone(opt('from')) ?? `+9198${String(Math.floor(Math.random() * 1e8)).padStart(8, '0')}`;
