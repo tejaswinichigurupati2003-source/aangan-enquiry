@@ -1,5 +1,6 @@
 // Dashboard request handlers for serverless hosting (Vercel). The dashboard shows caller phone numbers and transcripts (personal
-// data), so EVERY route is behind HTTP Basic auth, and with no DASHBOARD_PASSWORD configured the dashboard refuses to serve (503).
+// data), so by default EVERY route is behind HTTP Basic auth, and with no DASHBOARD_PASSWORD configured the dashboard refuses to serve (503).
+// The owner can explicitly turn the login off with DASHBOARD_AUTH=off (then anyone with the link can see everything).
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -12,6 +13,8 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const safeEqual = (a, b) => { const x = Buffer.from(String(a)); const y = Buffer.from(String(b)); return x.length === y.length && crypto.timingSafeEqual(x, y); };
 
 export function checkAuth(req, env) {
+  // Explicit opt-out only (DASHBOARD_AUTH=off). Merely forgetting to set a password still fails CLOSED (503).
+  if (env.DASHBOARD_AUTH === 'off') return { ok: true };
   const pw = env.DASHBOARD_PASSWORD;
   if (!pw) return { ok: false, code: 503, body: { error: 'dashboard password not configured' } };
   const h = String(req.headers?.authorization || '');

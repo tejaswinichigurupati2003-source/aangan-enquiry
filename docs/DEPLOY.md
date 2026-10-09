@@ -10,7 +10,7 @@ Two pieces, two hosts — because they behave differently:
 Source of truth: the private GitHub repo `tejaswinichigurupati2003-source/aangan-enquiry`. No secret is committed (`.env` is git-ignored).
 
 ## Dashboard on Vercel (done)
-- URL: https://aangan-dashboard-gamma.vercel.app — HTTP Basic login. Username/password are `DASHBOARD_USER` / `DASHBOARD_PASSWORD` in your local `.env`
+- URL: https://aangan-dashboard-gamma.vercel.app — **login currently OFF (`DASHBOARD_AUTH=off`, owner decision 2026-10-09): anyone with the link sees phone numbers and transcripts.** To re-enable: `vercel env rm DASHBOARD_AUTH production` and redeploy. Login (when on): HTTP Basic. Username/password are `DASHBOARD_USER` / `DASHBOARD_PASSWORD` in your local `.env`
   (also stored, hidden, as Vercel environment variables). With no password configured it refuses to serve (503).
 - It reads Supabase with the server-side secret key stored as a *sensitive* Vercel env var. Anyone with the dashboard login can see caller phone numbers and transcripts.
 - Redeploy after changes: `vercel deploy --prod`. Change the password: edit `.env`, then `vercel env add DASHBOARD_PASSWORD production --force --sensitive` and redeploy.

@@ -139,3 +139,10 @@ test('Vercel dashboard handlers: password-gated (503 unset, 401 wrong, 200 right
   res = mkRes(); await h.review({ method: 'GET', url: '/api/review', headers: good }, res); assert.equal(res.code, 405);
   assert.equal(checkAuth({ headers: { authorization: basic('someone-else', 'correct horse') } }, env).ok, false, 'wrong username is rejected');
 });
+
+test('dashboard login can be turned off only explicitly (DASHBOARD_AUTH=off); a missing password still fails closed', () => {
+  assert.equal(checkAuth({ headers: {} }, { DASHBOARD_AUTH: 'off' }).ok, true);
+  assert.equal(checkAuth({ headers: {} }, {}).code, 503);
+  assert.equal(checkAuth({ headers: {} }, { DASHBOARD_AUTH: 'on' }).code, 503);
+  assert.equal(checkAuth({ headers: {} }, { DASHBOARD_AUTH: 'yes', DASHBOARD_PASSWORD: 'pw' }).code, 401);
+});
