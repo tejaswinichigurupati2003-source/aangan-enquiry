@@ -1,5 +1,6 @@
 // Dashboard metrics. Everything is computed from the store; nothing is hand-entered.
 import { callCost } from './cost.js';
+import { buildSeries } from './series.js';
 
 const median = (xs) => { const a = xs.filter((x) => x != null && Number.isFinite(x)).sort((p, q) => p - q); if (!a.length) return null; const m = a.length >> 1; return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2; };
 const sum = (xs) => xs.reduce((a, b) => a + b, 0);
@@ -82,6 +83,7 @@ export function computeMetrics(store, cfg, { source = 'all' } = {}) {
     pipeline: pv && source === 'live' ? { greenLeads: greens, grossValueMin: greens * pv.min, grossValueMax: greens * pv.max, note: 'Green leads × average project value from the brief. Not a forecast: conversion is unknown.' } : null,
     ambers: amberQueue, reds, redReview: { total: reds.length, reviewed: reviewed.length, tooStrict, tooStrictRate: reviewed.length ? tooStrict / reviewed.length : null },
     flagCounts,
+    series: buildSeries(store, cfg, calls, enquiries),
     safety: {
       guardBlocked: store.db.events.filter((e) => e.type === 'guard_blocked' && (source === 'all' || e.source === source)).length,
       seedHubspotRefusals: store.db.events.filter((e) => e.type === 'hubspot_refused_seed').length,

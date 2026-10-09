@@ -146,3 +146,20 @@ test('dashboard login can be turned off only explicitly (DASHBOARD_AUTH=off); a 
   assert.equal(checkAuth({ headers: {} }, { DASHBOARD_AUTH: 'on' }).code, 503);
   assert.equal(checkAuth({ headers: {} }, { DASHBOARD_AUTH: 'yes', DASHBOARD_PASSWORD: 'pw' }).code, 401);
 });
+
+test('metrics series: per-day tier counts and per-hour counts add up to the calls; deltas compare 7-day windows; flags have human labels', async () => {
+  const store = await populated();
+  const m = computeMetrics(store, cfg, { source: 'all' });
+  const s = m.series;
+  assert.equal(s.daily.reduce((a, d) => a + d.calls, 0), m.totals.calls, 'every call lands on exactly one day');
+  assert.equal(s.hourly.reduce((a, h) => a + h.calls, 0), m.totals.calls);
+  assert.equal(s.hourly.length, 24);
+  assert.deepEqual([s.officeHours.start, s.officeHours.end], [10, 19]);
+  assert.ok(s.hourly.filter((h) => h.office).length === 9);
+  const green = s.daily.reduce((a, d) => a + d.green, 0);
+  assert.equal(green, store.db.calls.filter((c) => c.tier === 'green').length);
+  assert.ok(s.daily.every((d, i, a) => i === 0 || d.date > a[i - 1].date), 'days are consecutive and ascending');
+  assert.ok(typeof s.deltas.calls.cur === 'number');
+  assert.ok(s.flags.every((f) => f.label && f.count > 0));
+  assert.deepEqual(computeMetrics(new Store(null), cfg).series.daily.length, 1, 'an empty store still yields a valid series');
+});
