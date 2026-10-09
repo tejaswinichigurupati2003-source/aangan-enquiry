@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants a complete redesign of a 3BHK including flooring and the kitchen."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Aundh, within Pune."},
+    "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 24.9, "flexible": null, "evidence": "Caller wants everything done by April, about twenty-five weeks from the call date."},
+    "budget": {"volunteered": true, "assessment": "plausible", "evidence": "Caller volunteered a total and called it comfortable; it is a reasonable amount for the described scope."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller said he and his wife both decide."}
+  },
+  "fields": {"name": "Rahul", "locality": "Aundh", "property_type": "3BHK apartment", "carpet_area_sqft": 1100, "scope": "Complete redesign including flooring and kitchen", "timeline_text": "All done by April", "decision_maker": "Caller with his wife", "referral_source": "Google", "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": true},
+  "flags": ["budget_volunteered"],
+  "summary": "Rahul wants a complete redesign of his 1100 sq ft 3BHK in Aundh by April and volunteered a comfortable budget.",
+  "reason": "In-scope full-home project in Pune with joint decision-makers and a budget the caller offered that is plausible for the scope; no consultation time was captured."
+}

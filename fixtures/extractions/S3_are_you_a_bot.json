@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants the whole 3BHK flat redone."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Kothrud, within Pune."},
+    "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 33.6, "flexible": true, "evidence": "Caller wants it done by June and said there is no hurry, about thirty-four weeks from the call date."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "No budget figure or comment was given."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller said it is his flat and he decides."}
+  },
+  "fields": {"name": "Vikram", "locality": "Kothrud", "property_type": "3BHK apartment", "carpet_area_sqft": 1300, "scope": "Whole flat redone", "timeline_text": "By June, no hurry", "decision_maker": "Caller (owner)", "referral_source": "A friend", "preferred_window": "Saturday afternoon", "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": true},
+  "flags": ["asked_if_bot"],
+  "summary": "Vikram, owner of a 3BHK in Kothrud, wants the whole flat redone by June with no hurry; he first checked whether he was speaking to a bot.",
+  "reason": "In-scope full-home project in Pune with a relaxed timeline and an owner who decides; the only notable point is that he asked if the agent was a bot."
+}

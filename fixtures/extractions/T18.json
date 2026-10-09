@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "fail", "fail_reason": "decor_or_sourcing_only", "evidence": "Caller wants a single pod inside a coworking space made to look nice with lighting, a desk and storage, which is furnishing rather than a fit-out."},
+    "service_area": {"verdict": "unclear", "evidence": "Caller never said where the coworking space is located."},
+    "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null, "evidence": "No timing was mentioned."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller gave no budget figure; only asked about a smaller fee."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller says they run the coworking space and speaks for themselves."}
+  },
+  "fields": {"name": null, "locality": null, "property_type": "coworking pod", "carpet_area_sqft": 180, "scope": "Make a single coworking pod look nice: lighting, desk, storage", "timeline_text": null, "decision_maker": "Caller (runs the coworking space)", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": false},
+  "flags": [],
+  "summary": "Coworking operator wants lighting, a desk and storage for one small pod; this is furnishing, not a fit-out, and no location was given.",
+  "reason": "The request is a single pod with only furnishing-type items, so real_project fails as decor or sourcing only; location was not stated and the caller appears to decide."
+}

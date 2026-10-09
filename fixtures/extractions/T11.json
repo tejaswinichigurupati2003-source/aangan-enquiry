@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants a proper design of living room, bedroom and kitchen with fittings, no structural changes, in a rented flat."},
+    "service_area": {"verdict": "pass", "evidence": "Property is a 2BHK in Baner, Pune."},
+    "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null, "evidence": "Caller gave no start or completion timing."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller gave no budget information."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller is the tenant, has landlord consent, and agreed to book a consultation."}
+  },
+  "fields": {"name": null, "locality": "Baner", "property_type": "2BHK apartment (rented)", "carpet_area_sqft": null, "scope": "Design and fittings for living room, bedroom and kitchen, no structural changes", "timeline_text": null, "decision_maker": "Caller (tenant, landlord has agreed)", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": false},
+  "flags": ["rented_property"],
+  "summary": "Tenant in a Baner 2BHK on a long lease wants living room, bedroom and kitchen designed with no structural changes, and accepted a consultation.",
+  "reason": "Rented flat with no structural work and three rooms in Baner fits the studio, and the caller decides with landlord approval."
+}

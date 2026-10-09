@@ -1,0 +1,18 @@
+{
+  "id": "S9_dropped_then_callback",
+  "description": "Call drops mid-sentence, caller rings back from the same number (T17 pattern): one merged enquiry, two calls, ends Green.",
+  "startedAt": "2026-10-09T14:14:00+05:30",
+  "from": "+919800010010",
+  "calls": [
+    {"caseId": "S9a", "dropAfter": 1, "startedAt": "2026-10-09T14:14:00+05:30", "turns": ["Hi, I wanted to inquire about — "]},
+    {"caseId": "S9b", "startedAt": "2026-10-09T14:16:00+05:30", "turns": [
+      "Hi, I called a minute ago and got cut off. I'm Ritu, 3BHK in Pimple Saudagar, around 1,050 sq ft, never properly did the interiors, I want to start now.",
+      "Kitchen, wardrobes and the living room, the builder furniture is very basic.",
+      "Ideally done by March, plenty of time.",
+      "Yes, I'm the owner and my husband agrees.",
+      "A friend told me about you.",
+      "Weekday evenings."
+    ]}
+  ],
+  "expect": {"tier": "green", "flags_include": ["repeat_caller", "dropped_call"], "one_enquiry": true, "calls_in_enquiry": 2, "guard_events_max": 0}
+}

@@ -1,0 +1,8 @@
+{
+  "id": "S10_missed_call_night",
+  "description": "Missed call at 10:47pm with no voicemail (T08 pattern): Amber, no usable details, call-backs scheduled for the next office slots.",
+  "startedAt": "2026-10-09T22:47:00+05:30",
+  "from": "+919800010011",
+  "calls": [{"missed": true, "startedAt": "2026-10-09T22:47:00+05:30", "turns": []}],
+  "expect": {"tier": "amber", "callbacks_min": 3, "first_callback_due": "2026-10-10T10:15:00+05:30"}
+}

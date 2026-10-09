@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants the kitchen and one bedroom of a 1BHK done, two rooms with design and execution."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Kharadi, Pune."},
+    "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null, "evidence": "Caller said nothing about timing."},
+    "budget": {"volunteered": true, "assessment": "far_below_scope", "evidence": "Caller volunteered a total ceiling for everything that is clearly well under what a kitchen plus a bedroom with full design and execution would need."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller is enquiring about their own flat and set their own budget."}
+  },
+  "fields": {"name": null, "locality": "Kharadi", "property_type": "1BHK apartment", "carpet_area_sqft": 550, "scope": "Kitchen and one bedroom", "timeline_text": null, "decision_maker": "Caller", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": false},
+  "flags": ["budget_volunteered"],
+  "summary": "Caller with a 550 sq ft 1BHK in Kharadi wants the kitchen and a bedroom done but volunteered a total ceiling far under what that scope needs.",
+  "reason": "Project type and area fit, but the volunteered total clearly cannot cover two rooms with full design and execution."
+}

@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller owns a 2BHK and wants a full redesign covering kitchen, wardrobes and living room (multiple rooms, design plus execution implied)."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Magarpatta, which is in Pune."},
+    "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": null, "flexible": true, "evidence": "Caller said they are flexible on timing and January would be ideal; unclear whether that is a start or completion date, so no completion deadline is taken."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller did not mention budget."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller is the owner and says her husband agrees."}
+  },
+  "fields": {"name": "Neha", "locality": "Magarpatta, Pune", "property_type": "2BHK apartment", "carpet_area_sqft": 900, "scope": "Full redesign: kitchen, wardrobes, living room", "timeline_text": "Flexible, January ideal", "decision_maker": "Caller (owner); husband agrees", "referral_source": "Neighbour recommendation", "preferred_window": "Weekend mornings", "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": true},
+  "flags": [],
+  "summary": "Neha, owner of a 2BHK in Magarpatta, wants a full redesign of kitchen, wardrobes and living room, flexible on timing (January ideal), prefers weekend mornings.",
+  "reason": "In-scope multi-room project in Pune with the owner as decision-maker; no budget discussed and the January timing is a flexible preference rather than a clear completion deadline."
+}

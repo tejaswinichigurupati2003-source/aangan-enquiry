@@ -1,0 +1,12 @@
+CALL DATE: 2026-10-09
+CALL TIME (IST): 13:10
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-10-09T13:10:00+05:30 · completed · 39s ---
+Agent: Hello, you've reached Aangan Studio. I'm the studio's AI assistant, and this call is recorded and transcribed so the team can follow up. How can I help you today?
+Caller: Hello? ... hello? Can you — [noise] — I want to —
+Agent: Sorry, I'm having trouble hearing you — the line is breaking up. Could you say that again?
+Caller: [line breaking up] ... Pune ... flat ... can you hear me ...
+Agent: I'm still having trouble hearing you. I'll note this number so the team can call you back. Thank you for calling Aangan Studio.

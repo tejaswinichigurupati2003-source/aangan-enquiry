@@ -1,0 +1,20 @@
+{
+  "name": "aangan-enquiry",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Aangan Studio inbound phone-enquiry system (dry-run by default)",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test tests/",
+    "eval": "node bin/eval.js",
+    "call": "node bin/call.js",
+    "demo": "node bin/demo.js",
+    "report": "node bin/report.js",
+    "dashboard": "node bin/dashboard.js",
+    "serve": "node bin/serve.js",
+    "vani-sim": "node bin/vani-sim.js"
+  }
+}

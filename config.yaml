@@ -1,0 +1,97 @@
+# Aangan Studio — configuration. Secrets do NOT go here (use .env).
+# Every cost below is an ESTIMATE and must be confirmed before anyone relies on the dashboard's
+# cost figures. Where to confirm is noted next to each value.
+
+mode:
+  dry_run: true            # master default. Live sends additionally need AANGAN_LIVE=1 in .env + credentials.
+
+provider:
+  name: auto               # auto | gemini | recorded | offline   (auto = gemini if a key exists, else offline)
+  # Measured 2026-10-09 with the real prompts: 3.1-flash-lite ≈ 1.6 s/turn with thinking off (usable on a phone); 3.8-flash ≈ 4-6 s (fine for the post-call classifier only).
+  # gemini-2.5-flash is no longer available to new users. Re-check model ids at https://ai.google.dev/gemini-api/docs/models before relying on them.
+  conversation_model: gemini-3.1-flash-lite
+  classifier_model: gemini-3.8-flash
+  thinking_budget_conversation: 0   # 0 = no hidden reasoning tokens on live turns (lower latency and cost)
+  thinking_budget_classifier: 1024  # post-call, latency does not matter; a little reasoning helps the judgement
+  max_output_tokens_conversation: 800
+  max_output_tokens_classifier: 4096   # MUST exceed thinking budget + the JSON (~700 tokens): hidden thinking counts against this cap
+  temperature_conversation: 0.3
+  temperature_classifier: 0
+  max_output_tokens: 800
+  timeout_ms: 30000
+  retries: 2
+
+studio:
+  timezone: Asia/Kolkata
+  office_hours_start: "10:00"
+  office_hours_end: "19:00"
+  quiet_hours_start: "22:00"   # Telegram is sent silently between quiet_hours_start and quiet_hours_end
+  quiet_hours_end: "08:00"
+  founder_name: Nikhil Deshpande
+
+rules:
+  lead_time_min_weeks: 8             # qualified.md says 8-10; services.md says 6. Default per brief: 8-10. OPEN QUESTION for Nikhil.
+  lead_time_comfortable_weeks: 10    # 8 <= weeks < 10 passes with a timeline_tight flag
+  commercial_max_sqft: 3000          # services.md: commercial up to approximately 3,000 sq ft (flag only above)
+  commercial_min_sqft_flag: 500      # appears in transcript T18 only, not in services.md. OPEN QUESTION for Nikhil.
+  commercial_min_enforced: false
+  merge_window_days: 14
+  max_caller_turns: 16
+  clarifier_limit_per_criterion: 1
+
+service_area:
+  in: [Pune, PCMC, Kothrud, Baner, Aundh, Wakad, Koregaon Park, Kalyani Nagar, Viman Nagar, Hadapsar, Magarpatta, NIBM, Kondhwa, Undri, Shivane, Warje, Erandwane, Deccan, Pimpri, Chinchwad, Pimple Saudagar, Pimple Nilakh, Ravet, Hinjewadi, Kharadi, Nanded City, Dahanukar Colony, Cybercity]
+  out: [Talegaon, Lonavala, Nashik, Mumbai, Nagpur, Hyderabad, Bangalore, Bengaluru, Delhi, Chennai, Goa, Ahmedabad, Kolhapur, Satara]
+
+telephony:
+  provider: stub                   # stub only. No live number is wired (see README for providers to verify).
+  # Missed / dropped-with-no-details calls (T08): attempt 1 at the first office slot, then two more. Defaults to confirm with Nikhil.
+  callback_schedule:
+    - {day_offset: 0, time: "10:15"}
+    - {day_offset: 0, time: "15:00"}
+    - {day_offset: 1, time: "11:00"}
+
+cost_assumptions:
+  currency: INR
+  expected_calls_per_month: 200    # from the brief (Nikhil's own figure)
+  usd_to_inr: 88.0                 # ESTIMATE - confirm the current rate (RBI reference rate / your bank)
+  speech_chars_per_second: 15      # ESTIMATE - normal speaking pace used to turn text into spoken minutes
+  chars_per_token: 4               # ESTIMATE - used only when a provider does not report real token counts
+
+costs:
+  # --- model tokens, USD per 1,000,000 tokens ---
+  model_usd_per_million_tokens:
+    gemini-2.5-flash:
+      input: 0.30                  # ESTIMATE - confirm at https://ai.google.dev/gemini-api/docs/pricing
+      output: 2.50                 # ESTIMATE - same page
+    default:
+      input: 0.30                  # ESTIMATE - fallback for any model id not listed above (incl. gemini-3.1-flash-lite and gemini-3.8-flash: real prices NOT yet confirmed)
+      output: 2.50                 # ESTIMATE - same fallback
+  # --- speech to text, USD per audio minute ---
+  stt_usd_per_minute: 0.016        # ESTIMATE - confirm at https://cloud.google.com/speech-to-text/pricing (also check Hindi/Marathi support and price)
+  # --- text to speech, USD per 1,000,000 characters ---
+  tts_usd_per_million_chars: 16.0  # ESTIMATE - confirm at https://cloud.google.com/text-to-speech/pricing (pick the voice tier you will actually use)
+  # --- telephony, INR per call minute (inbound India number) ---
+  telephony_inr_per_minute: 0.60   # ESTIMATE - get a written quote from the chosen Indian provider (see README); varies by plan
+  # --- hosting, INR per month (small VM / container) ---
+  hosting_inr_per_month: 2500      # ESTIMATE - confirm against the actual host chosen
+
+prompts:
+  conversation: v2         # prompts/conversation.v2.md (v2 adds mandatory reply_language; v1 kept for reference) — every call record stores the versions used
+  classifier: v1           # prompts/classifier.v1.md
+
+business:
+  # From Nikhil's brief (his stated average project value). Used ONLY for the dashboard's gross-pipeline line. Not a price list.
+  avg_project_value_inr: {min: 800000, max: 1400000}
+
+storage:
+  backend: json            # json (local file, default) | supabase. Override with STORAGE_BACKEND in .env.
+
+vaani:
+  # Vani (vaanivoice.ai) integration. Nothing here is a secret; keys live in .env.
+  api_base: https://api.vaanivoice.ai
+  verify_with_api: true    # on call_postprocessing, re-fetch the call from Vani's API and trust THAT, not the webhook body
+                           # (Vani documents no webhook signature, so this is the authenticity check).
+  max_body_bytes: 2000000
+  byol_idle_timeout_s: 600
+  phone_wait_ms: 1500      # first BYOL turn waits this long for the call_started webhook to supply the caller number

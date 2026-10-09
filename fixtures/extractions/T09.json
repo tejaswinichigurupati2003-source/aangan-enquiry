@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": true, "evidence": "Caller has a project running for three months with the studio's designer Aryan, who has not replied in five days despite three messages and two calls."},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller is already mid-project on a 2BHK flat with the studio; this is an existing engagement, not a new enquiry."},
+    "service_area": {"verdict": "pass", "evidence": "Flat is in Viman Nagar, Pune."},
+    "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null, "evidence": "No completion deadline stated; the urgency is about getting a reply from the designer."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller gave no budget information."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller is the client on her own project."}
+  },
+  "fields": {"name": "Sheetal Deshpande", "locality": "Viman Nagar", "property_type": "2BHK apartment", "carpet_area_sqft": null, "scope": "Ongoing interior project, designer unresponsive", "timeline_text": null, "decision_maker": "Caller", "referral_source": null, "preferred_window": null, "designer_mentioned": "Aryan", "callback_preference": "Callback within 15 minutes from Nikhil or a senior person", "language": "en", "caller_name_is_confirmed": true},
+  "flags": ["caller_frustrated"],
+  "summary": "Existing client Sheetal Deshpande (Viman Nagar 2BHK, designer Aryan) is upset at five days of silence and wants a senior callback from Nikhil.",
+  "reason": "Caller is a current client complaining about a running project, so this is an escalation and not a new lead."
+}

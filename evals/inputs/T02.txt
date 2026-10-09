@@ -1,0 +1,17 @@
+CALL DATE: 2026-09-03
+CALL TIME (IST): 14:41
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-09-03T14:41:00+05:30 · completed · 308s ---
+Agent: Good afternoon, Aangan Studio.
+Caller: Hi. I was looking at your work on Instagram. I have a 2BHK in Wakad — can you tell me roughly how much something like that would cost?
+Agent: Our pricing depends on the materials and the scope — the best way to get a clear picture is a consultation with one of our designers, who can walk you through everything. What are you planning to do?
+Caller: Full redesign — modular kitchen, wardrobes, living room, both bedrooms. About 950 sq ft.
+Agent: Good scope. What’s your timeline?
+Caller: We move in November — so maybe starting design from October?
+Agent: That works well. Shall I set up a consultation?
+Caller: Yes, but can you give me a rough ballpark first? Even a range?
+Agent: I genuinely can’t — it varies quite a bit based on materials. Giving you a number without seeing the site would be misleading. The designer will go through all of that with you — the consultation is free and there’s no obligation.
+Caller: Okay, fair enough. Let’s book it.

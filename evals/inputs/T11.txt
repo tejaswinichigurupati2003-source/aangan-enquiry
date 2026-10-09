@@ -1,0 +1,15 @@
+CALL DATE: 2026-09-12
+CALL TIME (IST): 10:18
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-09-12T10:18:00+05:30 · completed · 382s ---
+Agent: Good morning, Aangan Studio.
+Caller: Hi — I have a question. I’m in a rented apartment. Can you still take up a project?
+Agent: It depends on the scope. What are you looking to do?
+Caller: It’s a 2BHK in Baner. I’ve been here a year, I have a 3-year lease, and the place is quite bare. I want to properly design the living room, bedroom, and kitchen — no structural changes, just design and fittings.
+Agent: That’s fine — we’ve done rented apartments before. For the kitchen we’d do a modular unit that can come out cleanly. The rest is largely flooring, lighting, and furniture — all reversible. Have you checked with your landlord?
+Caller: Yes — they’re fine with it as long as we don’t break walls.
+Agent: Perfect. No wall-breaking from us. Shall we set up a consultation?
+Caller: Yes please.

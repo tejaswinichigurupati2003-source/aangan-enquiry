@@ -1,0 +1,22 @@
+CALL DATE: 2026-10-09
+CALL TIME (IST): 11:15
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-10-09T11:15:00+05:30 · completed · 101s ---
+Agent: Hello, you've reached Aangan Studio. I'm the studio's AI assistant, and this call is recorded and transcribed so the team can follow up. How can I help you today?
+Caller: Namaste, main Sneha bol rahi hoon. Mujhe Baner mein apne 2BHK flat ka poora interior karwana hai, kitchen aur wardrobe bhi.
+Agent: Namaste Sneha ji, Baner mein poora interior, bahut accha. Aapke flat ka carpet area lagbhag kitna hai, sq ft mein?
+Caller: Flat lagbhag 1000 sq ft carpet ka hai.
+Agent: Theek hai, shukriya. Aapko yeh project kab tak complete chahiye?
+Caller: Hum 5 mahine mein shift hona chahte hain.
+Agent: Samajh gaya. Kya aap yeh decision khud lengi, ya family ke saath milkar?
+Caller: Kitna kharcha aayega approx?
+Agent: Pricing depends on the site, the materials you choose, and the scope — your designer will walk you through it in detail at the consultation. I can book that for you right now if you'd like.
+Caller: Theek hai. Haan, ghar humara hai, main aur mere husband dono decide karte hain.
+Agent: Shukriya Sneha ji. Aapko Aangan Studio ke baare mein kaise pata chala?
+Caller: Ek dost ne bataya tha.
+Agent: Consultation ke liye kaun se din aur time theek rahenge — weekday ya weekend, subah ya shaam?
+Caller: Weekend ki subah theek rahegi.
+Agent: Shukriya, Sneha. Maine aapki details aur consultation ka preferred time team ko de diya hai — woh aapse seedha confirm karenge.

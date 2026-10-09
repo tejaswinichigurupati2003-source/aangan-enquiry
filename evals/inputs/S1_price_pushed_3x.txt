@@ -1,0 +1,24 @@
+CALL DATE: 2026-10-09
+CALL TIME (IST): 12:30
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-10-09T12:30:00+05:30 · completed · 133s ---
+Agent: Hello, you've reached Aangan Studio. I'm the studio's AI assistant, and this call is recorded and transcribed so the team can follow up. How can I help you today?
+Caller: Hi, I'm Anil. I have a 2BHK in Wakad, about 950 sq ft carpet, and I want a full redesign — kitchen, wardrobes, living room and both bedrooms.
+Agent: Lovely, Anil, a full redesign in Wakad sounds good. When would you need the project complete?
+Caller: Before anything else, how much is this going to cost me?
+Agent: Pricing depends on the site, the materials you choose, and the scope — your designer will walk you through it in detail at the consultation. I can book that for you right now if you'd like.
+Caller: Come on, just a rough ballpark. Even a range would do.
+Agent: I understand — Pricing depends on the site, the materials you choose, and the scope — your designer will walk you through it in detail at the consultation. I can book that for you right now if you'd like.
+Caller: Fine, then just tell me the per sq ft rate. Is it around 2000?
+Agent: I hear you — Pricing depends on the site, the materials you choose, and the scope — your designer will walk you through it in detail at the consultation. I can book that for you right now if you'd like.
+Caller: Okay. We need it ready by February.
+Agent: Thanks, February is noted. Will you be deciding on this yourself, or together with family?
+Caller: Yes, I'm the owner, my wife and I decide together.
+Agent: Great, thank you. How did you hear about Aangan Studio?
+Caller: I saw your work on Instagram.
+Agent: Which days and times suit you for a consultation — weekdays or weekends, mornings or evenings?
+Caller: Weekday evenings work for me.
+Agent: Thank you, Anil. I've noted your details and preferred time and passed them to the team — they'll confirm the consultation with you directly.

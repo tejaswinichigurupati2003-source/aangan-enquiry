@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants to redo the living room and kitchen, a multi-room redesign they want taken up by the studio."},
+    "service_area": {"verdict": "unclear", "evidence": "Caller never stated where the property is."},
+    "timeline": {"mentioned": true, "urgency_cue": true, "completion_in_weeks": 3, "flexible": true, "evidence": "Caller wanted the work done before Diwali, stated as about three weeks away; when told that is not feasible, asked about starting after Diwali."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller gave no budget information."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller speaks about redoing their own living room and kitchen and no one else is involved."}
+  },
+  "fields": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": "Redo living room and kitchen", "timeline_text": "Before Diwali; open to starting after Diwali", "decision_maker": "Caller", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": false},
+  "flags": [],
+  "summary": "Caller wants a living room and kitchen redone before Diwali, about three weeks away, and said they would think about starting after Diwali.",
+  "reason": "The project type fits but location was never given, and the completion deadline is a few weeks away though the caller showed willingness to shift the start."
+}

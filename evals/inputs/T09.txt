@@ -1,0 +1,14 @@
+CALL DATE: 2026-09-10
+CALL TIME (IST): 11:32
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-09-10T11:32:00+05:30 · completed · 352s ---
+Agent: Good morning, Aangan Studio.
+Caller: I need to speak to someone right now. My project has been going for three months and my designer hasn’t replied in five days. This is not acceptable.
+Agent: I’m very sorry. Can I take your name and project details?
+Caller: Sheetal Deshpande. My designer is Aryan. Flat in Viman Nagar — 2BHK. I’ve sent three messages and called twice.
+Agent: Sheetal, I’m getting this to our project team right now. Would you prefer to hold for two minutes, or should I have someone senior call you back within 15 minutes?
+Caller: Callback. And I want it from Nikhil or a senior person — not just whoever picks up.
+Agent: Noted. I’ll make sure of that.

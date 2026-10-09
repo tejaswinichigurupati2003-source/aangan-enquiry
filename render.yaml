@@ -1,0 +1,32 @@
+# Render blueprint for the Vani webhook + BYOL WebSocket server (needs a long-lived process, so NOT Vercel/serverless).
+# Render dashboard → New → Blueprint → pick this GitHub repo. Then fill the env vars marked "sync: false" in the Render UI
+# (they are secrets — they are never committed). After deploy your URLs are:
+#   webhook : https://<service>.onrender.com/webhooks/vaani/<VAANI_WEBHOOK_SECRET>
+#   BYOL    : wss://<service>.onrender.com/byol
+services:
+  - type: web
+    name: aangan-enquiry
+    runtime: node
+    plan: starter            # a paid always-on plan: free plans sleep, which would drop live calls
+    buildCommand: "echo no build step (zero dependencies)"
+    startCommand: node bin/serve.js
+    healthCheckPath: /health
+    envVars:
+      - { key: NODE_VERSION, value: "22" }
+      - { key: STORAGE_BACKEND, value: supabase }
+      - { key: GEMINI_BACKEND, value: aistudio }
+      - { key: AANGAN_LIVE, value: "0" }          # flip to 1 only when Telegram/HubSpot/email are ready
+      - { key: GEMINI_API_KEY, sync: false }
+      - { key: VAANI_API_KEY, sync: false }
+      - { key: VAANI_AGENT_ID, sync: false }
+      - { key: VAANI_WEBHOOK_SECRET, sync: false }
+      - { key: VAANI_BYOL_TOKEN, sync: false }
+      - { key: SUPABASE_URL, sync: false }
+      - { key: SUPABASE_SERVICE_ROLE_KEY, sync: false }
+      - { key: TELEGRAM_BOT_TOKEN, sync: false }
+      - { key: TELEGRAM_DESIGNER_CHAT_ID, sync: false }
+      - { key: TELEGRAM_NIKHIL_CHAT_ID, sync: false }
+      - { key: HUBSPOT_TOKEN, sync: false }
+      - { key: EMAIL_API_KEY, sync: false }
+      - { key: EMAIL_FROM, sync: false }
+      - { key: EMAIL_TO, sync: false }

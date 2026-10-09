@@ -1,0 +1,107 @@
+[
+  {
+    "reply": "Lovely to meet you, Isha. When would you need the project complete?",
+    "language": "en",
+    "updates": {"name": "Isha", "locality": "Pimple Saudagar", "property_type": "3BHK", "carpet_area_sqft": 1150, "scope": "full redesign", "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "timeline",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Your designer can go through that with you at the consultation.",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": true, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "none",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Your designer will walk you through that at the consultation.",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": true, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": true, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "none",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Noted, by April. Will you be deciding on this yourself, or together with family?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": "by April", "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 25, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "decision_maker",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thank you, Isha. How did you hear about the studio?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": "owner, decides herself", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 25, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "referral_source",
+    "ready_to_close": false
+  },
+  {
+    "reply": "That's nice to hear. Which days and times suit you for a consultation, weekdays or weekends, mornings or evenings?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": "colleague", "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 25, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "preferred_window",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thank you, Isha. I've noted weekends, and the team will confirm the timing with you.",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": "weekends", "designer_mentioned": null, "callback_preference": "weekends"},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 25, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "none",
+    "ready_to_close": true
+  }
+]

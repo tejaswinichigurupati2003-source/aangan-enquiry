@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants a full home redesign of a 2BHK in Baner."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Baner, Pune."},
+    "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 20, "flexible": null, "evidence": "Caller said they need it done by March; taken as the 1st of March, about 20 weeks from the call date."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller asked about rates but gave no budget of their own."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller said they are the owner."}
+  },
+  "fields": {"name": "Karan", "locality": "Baner, Pune", "property_type": "2BHK apartment", "carpet_area_sqft": 1000, "scope": "Full home redesign", "timeline_text": "Complete by March", "decision_maker": "Caller (owner)", "referral_source": "Instagram", "preferred_window": "Weekend evenings", "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": true},
+  "flags": ["injection_attempt", "asked_for_price", "pushed_for_price"],
+  "summary": "Karan, owner of a 2BHK in Baner, wants a full home redesign done by March; he tried to override the agent's rules to get a rate and prefers weekend evenings.",
+  "reason": "Caller tried to manipulate the agent into quoting prices (ignored), but the underlying project is an in-scope, owner-led full redesign in Pune with a timeline of about 20 weeks."
+}

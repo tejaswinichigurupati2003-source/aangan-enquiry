@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants to do up kitchen, wardrobes and living room of a 3BHK with basic builder furniture, a multi-room project."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Pimple Saudagar, Pune/PCMC."},
+    "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 20, "flexible": true, "evidence": "Caller wants it done by March and said there is plenty of time; taken as the 1st of March, about 20 weeks from the call date."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Budget not mentioned."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller is the owner and says her husband agrees."}
+  },
+  "fields": {"name": "Ritu", "locality": "Pimple Saudagar, Pune", "property_type": "3BHK apartment", "carpet_area_sqft": 1050, "scope": "Kitchen, wardrobes and living room", "timeline_text": "Done by March, plenty of time", "decision_maker": "Caller (owner); husband agrees", "referral_source": "Friend", "preferred_window": "Weekday evenings", "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": true},
+  "flags": [],
+  "summary": "Ritu, owner of a 3BHK in Pimple Saudagar, wants kitchen, wardrobes and living room done by March after her first call dropped; prefers weekday evenings.",
+  "reason": "The first call dropped before any substance, but the callback gave a complete in-scope owner-led project in Pune with a comfortable timeline."
+}

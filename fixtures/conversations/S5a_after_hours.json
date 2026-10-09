@@ -1,0 +1,77 @@
+[
+  {
+    "reply": "No problem at all, Neha. Which rooms or work would you like included in the redesign?",
+    "language": "en",
+    "updates": {"name": "Neha", "locality": "Magarpatta", "property_type": "2BHK flat", "carpet_area_sqft": 900, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "scope",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thank you, noted. Will you be deciding on this yourself, or together with family?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": "kitchen, wardrobes and living room", "timeline_text": "January ideal, flexible", "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 12, "flexible": true},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "decision_maker",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Lovely. How did you hear about Aangan Studio?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": "owner, husband agrees", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 12, "flexible": true},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "referral_source",
+    "ready_to_close": false
+  },
+  {
+    "reply": "That's kind of them, thank you. For a consultation, do weekdays or weekends suit you, and mornings or evenings?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": "neighbour recommendation", "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 12, "flexible": true},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "preferred_window",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thank you, Neha. I've noted weekend mornings, and the team will confirm a time with you.",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": "weekend mornings", "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 12, "flexible": true},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "none",
+    "ready_to_close": true
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "id": "S5b_noisy_incomplete",
+  "description": "Noisy line, caller barely audible, call drops. Must not hallucinate details; ends Amber for a call-back.",
+  "startedAt": "2026-10-09T13:10:00+05:30",
+  "from": "+919800010007",
+  "calls": [{"dropAfter": 3, "turns": [
+    "Hello? ... hello? Can you — [noise] — I want to — ",
+    "[line breaking up] ... Pune ... flat ... can you hear me ...",
+    "... sorry ... can't hear you ... [call drops]"
+  ]}],
+  "expect": {"tier": "amber", "guard_events_max": 0}
+}

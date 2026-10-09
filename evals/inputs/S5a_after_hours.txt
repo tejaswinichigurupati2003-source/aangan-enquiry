@@ -1,0 +1,18 @@
+CALL DATE: 2026-10-09
+CALL TIME (IST): 23:40
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-10-09T23:40:00+05:30 · completed · 78s ---
+Agent: Hello, you've reached Aangan Studio. I'm the studio's AI assistant, and this call is recorded and transcribed so the team can follow up. The designers are away right now, but I can take down your details and set up a consultation request. How can I help?
+Caller: Hi, sorry to call so late. I'm Neha, I have a 2BHK in Magarpatta, 900 sq ft, I want a full redesign.
+Agent: No problem at all, Neha. Which rooms or work would you like included in the redesign?
+Caller: Kitchen, wardrobes and living room. We're flexible on timing, January would be ideal.
+Agent: Thank you, noted. Will you be deciding on this yourself, or together with family?
+Caller: Yes, I'm the owner and my husband agrees.
+Agent: Lovely. How did you hear about Aangan Studio?
+Caller: My neighbour recommended you.
+Agent: Which days and times suit you for a consultation — weekdays or weekends, mornings or evenings?
+Caller: Weekend mornings.
+Agent: Thank you, Neha. I've noted your details and preferred time and passed them to the team — they'll confirm the consultation with you directly.

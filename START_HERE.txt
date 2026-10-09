@@ -1,0 +1,4 @@
+1. Open a terminal in this folder (cd aangan-enquiry).
+2. Run: claude
+3. Paste: Read PROMPT.md and follow it.
+4. Answer Claude's one round of questions, then let it build.

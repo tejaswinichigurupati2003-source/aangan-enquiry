@@ -1,0 +1,14 @@
+{
+  "id": "S5b_noisy_incomplete",
+  "calls": [
+    {
+      "caseId": "S5b_noisy_incomplete",
+      "startedAt": "2026-10-09T13:10:00+05:30",
+      "callerTurns": [
+        "Hello? ... hello? Can you — [noise] — I want to — ",
+        "[line breaking up] ... Pune ... flat ... can you hear me ...",
+        "... sorry ... can't hear you ... [call drops]"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+CALL DATE: 2026-10-09
+CALL TIME (IST): 12:00
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-10-09T12:00:00+05:30 · completed · 102s ---
+Agent: Hello, you've reached Aangan Studio. I'm the studio's AI assistant, and this call is recorded and transcribed so the team can follow up. How can I help you today?
+Caller: Hi, I'm Isha. I have a 3BHK in Pimple Saudagar, 1,150 sq ft, and want a full redesign.
+Agent: Lovely to meet you, Isha. When would you need the project complete?
+Caller: If I book this week, can you give me a discount?
+Agent: Pricing depends on the site, the materials you choose, and the scope — your designer will walk you through it in detail at the consultation. I can book that for you right now if you'd like.
+Caller: What's the best price you can do for me then?
+Agent: I understand — Pricing depends on the site, the materials you choose, and the scope — your designer will walk you through it in detail at the consultation. I can book that for you right now if you'd like.
+Caller: Okay. We'd like it done by April.
+Agent: Noted, by April. Will you be deciding on this yourself, or together with family?
+Caller: Yes, I'm the owner.
+Agent: Thank you, Isha. How did you hear about the studio?
+Caller: A colleague suggested you.
+Agent: Which days and times suit you for a consultation — weekdays or weekends, mornings or evenings?
+Caller: Weekends are best.
+Agent: Thank you, Isha. I've noted your details and preferred time and passed them to the team — they'll confirm the consultation with you directly.

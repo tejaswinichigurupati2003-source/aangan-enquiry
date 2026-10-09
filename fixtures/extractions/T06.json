@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Startup wants a full fit-out of a bare-shell office in Baner: workstations, cabin, meeting room, break area."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Baner, Pune."},
+    "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 12.4, "flexible": null, "evidence": "Caller wants the office operational by December; earliest reading is 1 December, about 12 weeks from the call date."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller gave no budget information."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller said they are the founder and the decision-maker."}
+  },
+  "fields": {"name": null, "locality": "Baner", "property_type": "office", "carpet_area_sqft": 800, "scope": "Full fit-out of bare-shell office: 20 workstations, small cabin, meeting room, break area", "timeline_text": "Operational by December", "decision_maker": "Caller (founder)", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": false},
+  "flags": [],
+  "summary": "Startup founder wants a full fit-out of an 800 sq ft bare-shell office in Baner for 20 people, operational by December.",
+  "reason": "In-scope small commercial fit-out in Pune, caller is the decider, and the December target is stated while no budget was discussed."
+}

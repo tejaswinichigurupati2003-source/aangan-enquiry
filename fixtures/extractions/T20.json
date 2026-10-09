@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants the kitchen, both bedrooms and living room of her 2BHK properly designed, with execution to start in January."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Magarpatta, Cybercity area, Pune."},
+    "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": null, "flexible": true, "evidence": "Caller said they are flexible and a January start for execution would be ideal; that is a start preference, not a completion deadline."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller gave no budget."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller owns the flat with her husband and both will attend the consultation."}
+  },
+  "fields": {"name": "Pooja", "locality": "Magarpatta (Cybercity area)", "property_type": "2BHK apartment", "carpet_area_sqft": 900, "scope": "Kitchen, both bedrooms and living room design and execution", "timeline_text": "flexible, January start for execution", "decision_maker": "Caller and her husband (owners)", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": true},
+  "flags": [],
+  "summary": "Pooja owns a 2BHK of about 900 sq ft in Magarpatta and wants kitchen, bedrooms and living room designed and executed from January; consultation booked for her and her husband.",
+  "reason": "In-area home project with full design and execution scope, a flexible start rather than a deadline, and owner-decision-makers who are both attending."
+}

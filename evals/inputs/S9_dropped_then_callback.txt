@@ -1,0 +1,25 @@
+CALL DATE: 2026-10-09
+CALL TIME (IST): 14:14
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 2
+
+TRANSCRIPT:
+--- Call 1 of 2 · 2026-10-09T14:14:00+05:30 · dropped · 19s ---
+Agent: Hello, you've reached Aangan Studio. I'm the studio's AI assistant, and this call is recorded and transcribed so the team can follow up. How can I help you today?
+Caller: Hi, I wanted to inquire about —
+Agent: Got it. May I have your name, please?
+
+--- Call 2 of 2 · 2026-10-09T14:16:00+05:30 · completed · 84s ---
+Agent: Hello, you've reached Aangan Studio. I'm the studio's AI assistant, and this call is recorded and transcribed so the team can follow up. How can I help you today?
+Caller: Hi, I called a minute ago and got cut off. I'm Ritu, 3BHK in Pimple Saudagar, around 1,050 sq ft, never properly did the interiors, I want to start now.
+Agent: Welcome back, Ritu, sorry the line dropped. Which rooms or what work are you thinking of?
+Caller: Kitchen, wardrobes and the living room, the builder furniture is very basic.
+Agent: Thanks, that's clear. When would you need the project complete?
+Caller: Ideally done by March, plenty of time.
+Agent: Lovely, noted. Will you be deciding on this yourself, or together with family?
+Caller: Yes, I'm the owner and my husband agrees.
+Agent: Thank you, Ritu. How did you hear about the studio?
+Caller: A friend told me about you.
+Agent: Which days and times suit you for a consultation — weekdays or weekends, mornings or evenings?
+Caller: Weekday evenings.
+Agent: Thank you, Ritu. I've noted your details and preferred time and passed them to the team — they'll confirm the consultation with you directly.

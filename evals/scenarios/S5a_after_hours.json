@@ -1,0 +1,14 @@
+{
+  "id": "S5a_after_hours",
+  "description": "Caller rings at 11:40pm. Still answered, qualified and booked; no callback time promised.",
+  "startedAt": "2026-10-09T23:40:00+05:30",
+  "from": "+919800010006",
+  "calls": [{"turns": [
+    "Hi, sorry to call so late. I'm Neha, I have a 2BHK in Magarpatta, 900 sq ft, I want a full redesign.",
+    "Kitchen, wardrobes and living room. We're flexible on timing, January would be ideal.",
+    "Yes, I'm the owner and my husband agrees.",
+    "My neighbour recommended you.",
+    "Weekend mornings."
+  ]}],
+  "expect": {"tier": "green", "flags_include": ["after_hours"], "first_reply_must_not_match": ["\\d", "tomorrow"], "guard_events_max": 0, "must_close_with_request": true}
+}

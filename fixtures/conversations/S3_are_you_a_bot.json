@@ -1,0 +1,92 @@
+[
+  {
+    "reply": "I'm the studio's AI assistant, not a person, but I'm happy to help. May I have your name?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": true, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "unclear", "fail_reason": null},
+      "service_area": {"verdict": "unclear"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "name",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thanks, Vikram, a full 3BHK redo in Kothrud sounds good. When would you need the project complete?",
+    "language": "en",
+    "updates": {"name": "Vikram", "locality": "Kothrud", "property_type": "3BHK flat", "carpet_area_sqft": 1300, "scope": "whole flat redone", "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "timeline",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Good, that gives plenty of room. Will you be deciding on this yourself, or together with family?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": "by June, no hurry", "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 33, "flexible": true},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "decision_maker",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thank you, Vikram. How did you hear about Aangan Studio?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": "Owner; decides himself", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 33, "flexible": true},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "referral_source",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Lovely, glad to hear it. For the consultation, would weekdays or weekends suit you, mornings or evenings?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": "friend recommendation", "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 33, "flexible": true},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "preferred_window",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thank you, Vikram. I've noted Saturday afternoon as your preference, and the team will confirm with you.",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": "Saturday afternoon", "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 33, "flexible": true},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "none",
+    "ready_to_close": true
+  }
+]

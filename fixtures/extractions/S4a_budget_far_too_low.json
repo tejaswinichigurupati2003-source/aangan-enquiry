@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants a complete redesign with execution of a 3BHK including kitchen and wardrobes."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Hadapsar, within Pune."},
+    "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null, "evidence": "Caller did not answer the timing question and gave no start or completion date."},
+    "budget": {"volunteered": true, "assessment": "far_below_scope", "evidence": "Caller volunteered a total that is far below what a full design-and-execution of a three-bedroom home would need."},
+    "decision_maker": {"verdict": "unclear", "evidence": "Who decides was never discussed; the caller only said 'we' set aside the budget."}
+  },
+  "fields": {"name": "Meena", "locality": "Hadapsar", "property_type": "3BHK apartment", "carpet_area_sqft": 1200, "scope": "Complete redesign with execution: kitchen, wardrobes, whole home", "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": true},
+  "flags": ["budget_volunteered"],
+  "summary": "Meena wants a complete redesign with execution of a 3BHK in Hadapsar but volunteered a budget far too small for that scope.",
+  "reason": "The project and area are in scope, but the total the caller set aside clearly cannot cover full design and execution of a whole 3BHK; timeline and decision-maker were not established."
+}

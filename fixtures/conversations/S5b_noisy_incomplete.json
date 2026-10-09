@@ -1,0 +1,47 @@
+[
+  {
+    "reply": "Sorry, the line is breaking up and I couldn't catch that. Could you please say it again?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "unclear", "fail_reason": null},
+      "service_area": {"verdict": "unclear"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "none",
+    "ready_to_close": false
+  },
+  {
+    "reply": "I can hear you, but the line is very unclear. Could you please repeat that slowly?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "unclear", "fail_reason": null},
+      "service_area": {"verdict": "unclear"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "none",
+    "ready_to_close": false
+  },
+  {
+    "reply": "I'm sorry, I can't hear you clearly. If the call drops, please try calling the studio again.",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "unclear", "fail_reason": null},
+      "service_area": {"verdict": "unclear"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "none",
+    "ready_to_close": false
+  }
+]

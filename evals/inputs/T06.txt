@@ -1,0 +1,16 @@
+CALL DATE: 2026-09-05
+CALL TIME (IST): 15:28
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-09-05T15:28:00+05:30 · completed · 301s ---
+Agent: Good afternoon, Aangan Studio.
+Caller: Hi, I’m calling about a commercial project. We’re a startup — just got our first proper office space in Baner. About 800 sq ft. We need workstations for 20 people, a small cabin, a meeting room, and a break area.
+Agent: We do commercial fitouts up to about 3,000 sq ft. What’s the state of the space right now?
+Caller: Bare shell — just columns and floor. Nothing else.
+Agent: Full fitout from scratch. And the timeline?
+Caller: We want to be operational by December. Our team is working from home currently.
+Agent: December is doable. Are you the decision-maker for this?
+Caller: Yes, I’m the founder.
+Agent: Perfect. Let’s set up a consultation.

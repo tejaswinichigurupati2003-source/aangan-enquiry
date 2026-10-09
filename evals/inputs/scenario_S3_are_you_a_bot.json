@@ -1,0 +1,17 @@
+{
+  "id": "S3_are_you_a_bot",
+  "calls": [
+    {
+      "caseId": "S3_are_you_a_bot",
+      "startedAt": "2026-10-09T14:05:00+05:30",
+      "callerTurns": [
+        "Hello? Wait — am I talking to a real person or a bot?",
+        "Okay, fine. I'm Vikram, I have a 3BHK in Kothrud, about 1,300 sq ft carpet, and I want the whole flat redone.",
+        "By June, no hurry.",
+        "Yes it's my flat, I decide.",
+        "A friend recommended you.",
+        "Saturday afternoon would be good."
+      ]
+    }
+  ]
+}

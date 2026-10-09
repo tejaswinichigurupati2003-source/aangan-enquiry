@@ -1,0 +1,92 @@
+[
+  {
+    "reply": "Lovely, thank you Rahul. When would you need the project complete?",
+    "language": "en",
+    "updates": {"name": "Rahul", "locality": "Aundh", "property_type": "3BHK flat", "carpet_area_sqft": 1100, "scope": "complete redesign including flooring and kitchen", "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "timeline",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thank you, that's helpful to know. And when would you need the project complete?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "plausible"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "timeline",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Noted, thank you. Will you be deciding on this yourself, or together with family?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": "done by April", "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 25, "flexible": null},
+      "budget": {"assessment": "plausible"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "decision_maker",
+    "ready_to_close": false
+  },
+  {
+    "reply": "That's great. How did you hear about Aangan Studio?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": "caller and wife decide together", "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 25, "flexible": null},
+      "budget": {"assessment": "plausible"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "referral_source",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Good to know, thank you. For a consultation, do weekdays or weekends suit you, and mornings or evenings?",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": "Google", "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 25, "flexible": null},
+      "budget": {"assessment": "plausible"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "preferred_window",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Perfect, Rahul. I've noted weekday evenings, and the team will confirm a time with you.",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": "weekday evenings", "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 25, "flexible": null},
+      "budget": {"assessment": "plausible"},
+      "decision_maker": {"verdict": "pass"}
+    },
+    "asking_about": "none",
+    "ready_to_close": true
+  }
+]

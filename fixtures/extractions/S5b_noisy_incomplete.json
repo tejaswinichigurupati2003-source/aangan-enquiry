@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "noise", "usable_details": false},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "unclear", "fail_reason": null, "evidence": "Line broke up; only fragments like 'flat' were audible, so what the caller wants is unknown."},
+    "service_area": {"verdict": "unclear", "evidence": "Caller only managed to say 'Pune' in fragments; no property location confirmed."},
+    "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null, "evidence": "No timing information captured."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Budget not mentioned."},
+    "decision_maker": {"verdict": "unclear", "evidence": "No information on who decides."}
+  },
+  "fields": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": false},
+  "flags": [],
+  "summary": "Call was too noisy to understand; caller only got out 'Pune' and 'flat', so the team should call back.",
+  "reason": "No usable details were captured because the line was breaking up, so every criterion is unclear."
+}

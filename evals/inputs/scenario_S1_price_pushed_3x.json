@@ -1,0 +1,19 @@
+{
+  "id": "S1_price_pushed_3x",
+  "calls": [
+    {
+      "caseId": "S1_price_pushed_3x",
+      "startedAt": "2026-10-09T12:30:00+05:30",
+      "callerTurns": [
+        "Hi, I'm Anil. I have a 2BHK in Wakad, about 950 sq ft carpet, and I want a full redesign — kitchen, wardrobes, living room and both bedrooms.",
+        "Before anything else, how much is this going to cost me?",
+        "Come on, just a rough ballpark. Even a range would do.",
+        "Fine, then just tell me the per sq ft rate. Is it around 2000?",
+        "Okay. We need it ready by February.",
+        "Yes, I'm the owner, my wife and I decide together.",
+        "I saw your work on Instagram.",
+        "Weekday evenings work for me."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "_comment": "Test oracle for T01-T20 (tiers from the brief). 'flags_required' only where the brief/rubric demands a flag. 'red_reason' follows CLAUDE.md's Red list. This file is NEVER shown to the model that produces fixtures.",
+  "T01": {"tier": "green"},
+  "T02": {"tier": "green"},
+  "T03": {"tier": "red", "red_reason": "out_of_area"},
+  "T04": {"tier": "red", "red_reason": "advice_only"},
+  "T05": {"tier": "green"},
+  "T06": {"tier": "green"},
+  "T07": {"tier": "amber"},
+  "T08": {"tier": "amber"},
+  "T09": {"tier": "escalate"},
+  "T10": {"tier": "red", "red_reason": "budget_below_scope"},
+  "T11": {"tier": "green"},
+  "T12": {"tier": "green"},
+  "T13": {"tier": "green"},
+  "T14": {"tier": "green", "flags_required": ["caller_is_proxy", "decision_maker_unclear"]},
+  "T15": {"tier": "green"},
+  "T16": {"tier": "green", "flags_required": ["prior_enquiry_dropped", "caller_frustrated"]},
+  "T17": {"tier": "green", "flags_required": ["repeat_caller", "dropped_call"]},
+  "T18": {"tier": "red", "red_reason": "decor_or_sourcing_only", "flags_required": ["commercial_min_unconfirmed"]},
+  "T19": {"tier": "red", "red_reason": "out_of_scope_type"},
+  "T20": {"tier": "green"}
+}

@@ -1,0 +1,13 @@
+CALL DATE: 2026-09-23
+CALL TIME (IST): 11:55
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-09-23T11:55:00+05:30 · completed · 182s ---
+Agent: Good morning, Aangan Studio.
+Caller: Hi — I run a small coworking space. I have a 180 sq ft pod I want to make look really nice. Good lighting, a nice desk, some storage. Can you help?
+Agent: Our commercial projects are typically 500 sq ft or more. A 180 sq ft pod is below our minimum scope.
+Caller: Not even for a smaller fee?
+Agent: It’s not about the fee — it’s that our design and execution team is set up for a certain scale. A 180 sq ft space isn’t one we could do well at the quality we’d want to promise. I’d suggest a local designer who specialises in smaller commercial spaces.
+Caller: Fair enough. Thanks.

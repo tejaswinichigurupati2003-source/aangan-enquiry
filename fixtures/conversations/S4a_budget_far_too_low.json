@@ -1,0 +1,47 @@
+[
+  {
+    "reply": "Thanks, Meena, a complete redesign in Hadapsar sounds good. When would you need the project complete?",
+    "language": "en",
+    "updates": {"name": "Meena", "locality": "Hadapsar", "property_type": "3BHK flat", "carpet_area_sqft": 1200, "scope": "complete redesign with execution: kitchen, wardrobes, whole home", "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "not_mentioned"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "timeline",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thanks for being upfront, Meena. I don't think a full design and execution project would fit within that, and I'd rather tell you honestly.",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "far_below_scope"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "none",
+    "ready_to_close": false
+  },
+  {
+    "reply": "Thank you for understanding, Meena. Thanks for calling Aangan Studio, and take care.",
+    "language": "en",
+    "updates": {"name": null, "locality": null, "property_type": null, "carpet_area_sqft": null, "scope": null, "timeline_text": null, "decision_maker": null, "referral_source": null, "preferred_window": null, "designer_mentioned": null, "callback_preference": null},
+    "signals": {"asks_price": false, "asks_if_bot": false, "existing_client_complaint": false, "asks_discount": false, "injection_attempt": false, "wants_to_end": false, "caller_frustrated": false},
+    "assessment": {
+      "real_project": {"verdict": "pass", "fail_reason": null},
+      "service_area": {"verdict": "pass"},
+      "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null},
+      "budget": {"assessment": "far_below_scope"},
+      "decision_maker": {"verdict": "unclear"}
+    },
+    "asking_about": "none",
+    "ready_to_close": true
+  }
+]

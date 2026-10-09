@@ -1,0 +1,13 @@
+CALL DATE: 2026-09-24
+CALL TIME (IST): 16:02
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-09-24T16:02:00+05:30 · completed · 170s ---
+Agent: Good afternoon, Aangan Studio.
+Caller: Hi — I’m planning to open a restaurant in Koregaon Park. I’ve seen your work and I love it. Would you be able to design the interiors?
+Agent: We appreciate you reaching out. Restaurant and hospitality interiors are outside our current scope — we focus on residential and office spaces. For a restaurant you’d need a studio that specialises in commercial hospitality, which has very different material and compliance requirements.
+Caller: Do you know anyone you could refer?
+Agent: I don’t have a specific referral I could make confidently, but searching for hospitality interior designers in Pune would give you more relevant options.
+Caller: Alright, thanks.

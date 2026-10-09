@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants the complete interior of her 2BHK flat including kitchen and wardrobes."},
+    "service_area": {"verdict": "pass", "evidence": "Property is in Baner, within Pune."},
+    "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 21.7, "flexible": null, "evidence": "Caller said the family wants to move in within five months, roughly twenty-two weeks."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller only asked roughly what it would cost; no budget of her own was given."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller said the home is theirs and she and her husband both decide."}
+  },
+  "fields": {"name": "Sneha", "locality": "Baner", "property_type": "2BHK apartment", "carpet_area_sqft": 1000, "scope": "Complete interior of the flat including kitchen and wardrobes", "timeline_text": "Wants to move in within 5 months", "decision_maker": "Caller (owner) with her husband", "referral_source": "A friend", "preferred_window": "Weekend mornings", "designer_mentioned": null, "callback_preference": null, "language": "hinglish", "caller_name_is_confirmed": true},
+  "flags": ["hinglish_caller", "asked_for_price"],
+  "summary": "Sneha, owner of a 1000 sq ft 2BHK in Baner, wants a full interior and plans to move in within five months.",
+  "reason": "In-scope full-home project in Pune with owner decision-makers; she asked about cost once and gave no budget."
+}

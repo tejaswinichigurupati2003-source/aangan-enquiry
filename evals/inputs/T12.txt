@@ -1,0 +1,16 @@
+CALL DATE: 2026-09-15
+CALL TIME (IST): 10:05
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-09-15T10:05:00+05:30 · completed · 450s ---
+Agent: Good morning, Aangan Studio.
+Caller: I’m calling about a villa project in Kalyani Nagar. My name is Anand Sharma. The property is about 5,500 sq ft — ground plus two floors. Full end-to-end design.
+Agent: That’s a significant project. Is this a new property or an existing home?
+Caller: New construction. Possession was last month. Completely empty.
+Agent: And your timeline?
+Caller: March next year to move in. No rush.
+Agent: Good time to start. Would you like our principal designer to come to site for the first consultation?
+Caller: Yes — this week or next if possible.
+Agent: Let me check the calendar and revert by end of day.

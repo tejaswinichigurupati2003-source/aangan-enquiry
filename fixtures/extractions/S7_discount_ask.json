@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "pass", "fail_reason": null, "evidence": "Caller wants a full redesign of a 3BHK in Pimple Saudagar."},
+    "service_area": {"verdict": "pass", "evidence": "Pimple Saudagar is within Pune city/PCMC."},
+    "timeline": {"mentioned": true, "urgency_cue": false, "completion_in_weeks": 25, "flexible": null, "evidence": "Caller said they would like it done by April; taken as the 1st of April, about 25 weeks from the call date."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller asked for a discount and best price but did not state a budget."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller said she is the owner."}
+  },
+  "fields": {"name": "Isha", "locality": "Pimple Saudagar, Pune", "property_type": "3BHK apartment", "carpet_area_sqft": 1150, "scope": "Full redesign", "timeline_text": "Done by April", "decision_maker": "Caller (owner)", "referral_source": "Colleague suggestion", "preferred_window": "Weekends", "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": true},
+  "flags": ["asked_for_discount", "asked_for_price", "pushed_for_price"],
+  "summary": "Isha, owner of a 3BHK in Pimple Saudagar, wants a full redesign done by April and asked twice for a discount or best price; prefers weekends.",
+  "reason": "In-scope owner-led full redesign in Pune with a long timeline; the caller pushed on pricing but gave no budget."
+}

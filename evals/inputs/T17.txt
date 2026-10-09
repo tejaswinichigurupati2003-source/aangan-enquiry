@@ -1,0 +1,18 @@
+CALL DATE: 2026-09-22
+CALL TIME (IST): 14:14
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 2
+
+TRANSCRIPT:
+--- Call 1 of 2 · 2026-09-22T14:14:00+05:30 · dropped · 72s ---
+Agent: Good afternoon, Aangan Studio.
+Caller: Hi, I wanted to inquire about — (line drops)
+
+--- Call 2 of 2 · 2026-09-22T14:16:00+05:30 · completed · 270s ---
+Agent: Good afternoon, Aangan Studio.
+Caller: Hi — I called just now and got cut off. I’m Ritu Kapoor from Pimple Saudagar. 3BHK, about 1,050 sq ft. We’ve been here two years but never properly did the interiors. We want to start now.
+Agent: Thanks for calling back. Pimple Saudagar is in our service area. What are you looking to do?
+Caller: Kitchen, wardrobes, living room. We moved in with builder furniture and it’s very basic.
+Agent: Standard full-home scope. Timeline?
+Caller: Ideally done by March. Plenty of time.
+Agent: Perfect. Let me book a consultation.

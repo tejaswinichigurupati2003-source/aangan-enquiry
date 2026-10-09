@@ -1,0 +1,20 @@
+CALL DATE: 2026-10-09
+CALL TIME (IST): 14:05
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-10-09T14:05:00+05:30 · completed · 87s ---
+Agent: Hello, you've reached Aangan Studio. I'm the studio's AI assistant, and this call is recorded and transcribed so the team can follow up. How can I help you today?
+Caller: Hello? Wait — am I talking to a real person or a bot?
+Agent: I'm an AI assistant for Aangan Studio, not a person. I can take your details and set up a consultation request with one of our designers. Shall we carry on?
+Caller: Okay, fine. I'm Vikram, I have a 3BHK in Kothrud, about 1,300 sq ft carpet, and I want the whole flat redone.
+Agent: Thanks, Vikram, a full 3BHK redo in Kothrud sounds good. When would you need the project complete?
+Caller: By June, no hurry.
+Agent: Good, that gives plenty of room. Will you be deciding on this yourself, or together with family?
+Caller: Yes it's my flat, I decide.
+Agent: Thank you, Vikram. How did you hear about Aangan Studio?
+Caller: A friend recommended you.
+Agent: Which days and times suit you for a consultation — weekdays or weekends, mornings or evenings?
+Caller: Saturday afternoon would be good.
+Agent: Thank you, Vikram. I've noted your details and preferred time and passed them to the team — they'll confirm the consultation with you directly.

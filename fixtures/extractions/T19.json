@@ -1,0 +1,15 @@
+{
+  "interaction": {"kind": "conversation", "usable_details": true},
+  "existing_client_complaint": {"is": false, "evidence": ""},
+  "criteria": {
+    "real_project": {"verdict": "fail", "fail_reason": "out_of_scope_type", "evidence": "Caller wants interior design for a restaurant they plan to open, and restaurants are out of scope."},
+    "service_area": {"verdict": "pass", "evidence": "The restaurant is in Koregaon Park, Pune."},
+    "timeline": {"mentioned": false, "urgency_cue": false, "completion_in_weeks": null, "flexible": null, "evidence": "No timing was mentioned."},
+    "budget": {"volunteered": false, "assessment": "not_mentioned", "evidence": "Caller gave no budget."},
+    "decision_maker": {"verdict": "pass", "evidence": "Caller is the one planning to open the restaurant and is enquiring for themselves."}
+  },
+  "fields": {"name": null, "locality": "Koregaon Park", "property_type": "restaurant", "carpet_area_sqft": null, "scope": "Restaurant interior design", "timeline_text": null, "decision_maker": "Caller (opening the restaurant)", "referral_source": "Has seen the studio's work", "preferred_window": null, "designer_mentioned": null, "callback_preference": null, "language": "en", "caller_name_is_confirmed": false},
+  "flags": [],
+  "summary": "Caller is opening a restaurant in Koregaon Park and wants interiors designed, which is outside the studio's scope.",
+  "reason": "Restaurant is an out-of-scope project type even though the location is in Pune; the caller decides and no timeline or budget came up."
+}

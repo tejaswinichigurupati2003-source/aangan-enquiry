@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aangan Enquiries</title>
+<style>
+  :root {
+    --bg: #f6f5f1; --card: #ffffff; --ink: #1d1d1b; --muted: #6a6a64; --line: #e4e2da;
+    --green: #1f7a4d; --green-bg: #e3f3ea; --amber: #a8620a; --amber-bg: #fbefd9;
+    --red: #b3261e; --red-bg: #fbe7e5; --esc: #5b3fb0; --esc-bg: #ece7fa; --accent: #1d1d1b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413; --card: #1e1e1c; --ink: #f1efe8; --muted: #a4a29a; --line: #34332f;
+      --green: #6fd0a0; --green-bg: #16301f; --amber: #f0b45c; --amber-bg: #38280f;
+      --red: #f2877f; --red-bg: #3a1a18; --esc: #b9a6f5; --esc-bg: #2a2147; --accent: #f1efe8;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141413; --card: #1e1e1c; --ink: #f1efe8; --muted: #a4a29a; --line: #34332f;
+    --green: #6fd0a0; --green-bg: #16301f; --amber: #f0b45c; --amber-bg: #38280f;
+    --red: #f2877f; --red-bg: #3a1a18; --esc: #b9a6f5; --esc-bg: #2a2147; --accent: #f1efe8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 20px 16px 60px; }
+  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  h1 { font-size: 20px; margin: 0; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 26px 0 10px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--card); }
+  .seg button { border: 0; background: transparent; color: var(--ink); padding: 7px 14px; font: inherit; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+  .banner { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-size: 14px; }
+  .grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .k { color: var(--muted); font-size: 13px; }
+  .v { font-size: 26px; font-weight: 650; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .sub { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .tier { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .t-green { background: var(--green-bg); color: var(--green); } .t-amber { background: var(--amber-bg); color: var(--amber); }
+  .t-red { background: var(--red-bg); color: var(--red); } .t-escalate { background: var(--esc-bg); color: var(--esc); }
+  .bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--line); margin-top: 8px; }
+  .bar span { display: block; height: 100%; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 13px; }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: baseline; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12.5px; }
+  tr:last-child td { border-bottom: 0; }
+  .scroll { overflow-x: auto; }
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin-bottom: 8px; }
+  summary { cursor: pointer; font-weight: 600; }
+  pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); border-radius: 8px; padding: 10px; font: 12.5px/1.5 ui-monospace, Menlo, Consolas, monospace; margin: 8px 0 0; max-height: 320px; overflow: auto; }
+  .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+  .btn { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 8px; padding: 6px 12px; font: inherit; cursor: pointer; }
+  .btn:hover { border-color: var(--ink); }
+  .pill { font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--line); margin-right: 4px; display: inline-block; }
+  .foot { color: var(--muted); font-size: 12.5px; margin-top: 28px; }
+  .ok { color: var(--green); font-weight: 600; } .bad { color: var(--red); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Aangan Studio — phone enquiries</h1>
+    <div class="seg" role="group" aria-label="Data source">
+      <button data-src="all" aria-pressed="true">All</button>
+      <button data-src="live" aria-pressed="false">Live</button>
+      <button data-src="seed" aria-pressed="false">Seed / test</button>
+    </div>
+  </header>
+  <div id="banner"></div>
+  <div id="app" aria-live="polite">Loading…</div>
+  <p class="foot">All cost figures use unit prices marked ESTIMATE in <code>config.yaml</code>. Seed data is test data and is never sent to HubSpot. Pickup times in demo data are simulated. Refreshes every 15 s.</p>
+</div>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pct = (x) => (x == null ? 'n/a' : Math.round(x * 100) + '%');
+const money = (x, cur) => (x == null ? 'n/a' : (cur === 'INR' ? '₹' : cur + ' ') + Number(x).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+const ms = (x) => (x == null ? 'n/a' : x < 1000 ? Math.round(x) + ' ms' : (x / 1000).toFixed(1) + ' s');
+const tierName = { green: 'Green', amber: 'Amber', red: 'Red', escalate: 'Escalate' };
+let source = 'all';
+document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
+  source = b.dataset.src;
+  document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  load();
+}));
+
+function tile(k, v, sub) { return `<div class="card"><div class="k">${esc(k)}</div><div class="v">${v}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>`; }
+function tierBar(t) {
+  const total = t.green + t.amber + t.red + t.escalate || 1;
+  const seg = (n, c) => (n ? `<span style="width:${(n / total) * 100}%;background:var(--${c})"></span>` : '');
+  return `<div class="bar" role="img" aria-label="Tier mix">${seg(t.green, 'green')}${seg(t.amber, 'amber')}${seg(t.red, 'red')}${seg(t.escalate, 'esc')}</div>
+  <div class="legend"><span><i class="dot" style="background:var(--green)"></i>Green ${t.green}</span><span><i class="dot" style="background:var(--amber)"></i>Amber ${t.amber}</span><span><i class="dot" style="background:var(--red)"></i>Red ${t.red}</span><span><i class="dot" style="background:var(--esc)"></i>Escalate ${t.escalate}</span></div>`;
+}
+function costBar(b) {
+  const parts = [['model', 'var(--esc)'], ['stt', 'var(--green)'], ['tts', 'var(--amber)'], ['telephony', 'var(--red)'], ['hosting', 'var(--muted)']];
+  const total = parts.reduce((a, [k]) => a + (b[k] || 0), 0) || 1;
+  return `<div class="bar" role="img" aria-label="Cost breakdown">${parts.map(([k, c]) => `<span style="width:${((b[k] || 0) / total) * 100}%;background:${c}"></span>`).join('')}</div>
+  <div class="legend">${parts.map(([k, c]) => `<span><i class="dot" style="background:${c}"></i>${k} ${b[k] ?? 0}</span>`).join('')}</div>`;
+}
+function flagPills(f) { return (f || []).map((x) => `<span class="pill">${esc(x.replace(/_/g, ' '))}</span>`).join(''); }
+
+function render(m) {
+  $('#banner').innerHTML = m.source !== 'live' && m.totals.calls ? `<div class="banner">${m.source === 'seed' ? 'Showing SEED / TEST data only.' : 'This view includes seed/test calls and simulated demo calls — switch to “Live” for real traffic.'}</div>` : '';
+  const a = m.answer, h = m.handoff, c = m.cost;
+  let html = `<div class="grid">
+    ${tile('Calls', m.totals.calls, `${m.totals.enquiries} enquiries · ${m.totals.mergedEnquiries} merged repeat callers`)}
+    ${tile('Green handoffs', h.greenHandoffs, 'sent to designers on Telegram')}
+    ${tile('Amber (front desk)', m.tiers.amber, 'need a human follow-up')}
+    ${tile('Red (declined)', m.tiers.red, `${m.redReview.reviewed}/${m.redReview.total} spot-checked`)}
+    ${tile('Escalations', m.tiers.escalate, 'existing-client complaints, Nikhil paged')}
+  </div>
+  <h2>Calls by tier</h2><div class="card">${tierBar(m.tiers)}</div>
+
+  <h2>Response</h2>
+  <div class="grid">
+    ${tile('Median time to answer', ms(a.medianMs), a.aiHandled ? `${pct(a.within5minShare)} of AI calls answered inside 5 min` : 'no AI-answered calls in this view')}
+    ${tile('Calls outside 10am–7pm', a.afterHoursCalls, `${pct(a.afterHoursShare)} of all calls`)}
+    ${tile('Missed calls', a.missedCalls, 'call-backs are scheduled automatically')}
+    ${tile('Call end → designer note', h.medianHandoffSec == null ? 'n/a' : h.medianHandoffSec + ' s', 'median')}
+    ${tile('Designer pickup (median)', h.designerPickup.medianMin == null ? 'n/a' : h.designerPickup.medianMin + ' min', `${h.designerPickup.acked} acknowledged · ${h.designerPickup.pending} pending`)}
+  </div>
+  <p class="sub">${esc(a.note)}</p>
+
+  <h2>Cost to run (${esc(c.currency)} — estimates)</h2>
+  <div class="grid">
+    ${tile('Cost per call', money(c.perCall, c.currency))}
+    ${tile('Cost per Green lead', money(c.perGreenLead, c.currency), 'all spend ÷ Green leads')}
+    ${tile('Total spend', money(c.totalSpend, c.currency), `projected ${money(c.monthlyProjection.spend, c.currency)} at ${c.monthlyProjection.calls} calls/month`)}
+    ${m.pipeline ? tile('Gross Green pipeline', `₹${(m.pipeline.grossValueMin / 100000).toFixed(0)}–${(m.pipeline.grossValueMax / 100000).toFixed(0)} L`, 'Green leads × average project value. Not a forecast.') : ''}
+  </div>
+  <div class="card" style="margin-top:10px"><div class="k">Per-call breakdown (average)</div>${c.perCallBreakdown ? costBar(c.perCallBreakdown) : 'n/a'}
+  <div class="sub">${c.flags.tokensEstimated ? 'Token counts are estimated (chars ÷ 4). ' : ''}${c.flags.conversationModelled ? 'Conversation tokens for human-handled seed calls are modelled. ' : ''}Every unit price is an ESTIMATE to confirm.</div></div>`;
+
+  html += `<h2>Amber — front-desk queue (${m.ambers.length})</h2>`;
+  html += m.ambers.length ? `<div class="scroll"><table><thead><tr><th>Caller</th><th>Why</th><th>Next</th><th>Call-backs</th></tr></thead><tbody>${m.ambers.map((x) => `<tr><td>${esc(x.phone || 'no number')}${x.source === 'seed' ? ' <span class="pill">seed</span>' : ''}<div class="sub">${esc(x.fields?.name || '')} ${esc(x.fields?.locality || '')}</div></td><td>${esc(x.reason)}</td><td>${esc(x.next || '')}</td><td>${x.callbacks.map((cb) => `#${cb.attempt} ${esc(cb.dueAt.slice(5, 16).replace('T', ' '))} (${esc(cb.status)})`).join('<br>') || '—'}</td></tr>`).join('')}</tbody></table></div>` : '<div class="card sub">Nothing waiting.</div>';
+
+  html += `<h2>Red — spot-check list (${m.reds.length}) · is the AI too strict?</h2>
+  <p class="sub">Open a call, read the transcript, and mark whether the decline was right. Reviewed ${m.redReview.reviewed}/${m.redReview.total}; marked too strict: ${m.redReview.tooStrict} (${pct(m.redReview.tooStrictRate)}).</p>`;
+  html += m.reds.map((r) => `<details><summary><span class="tier t-red">Red</span> ${esc(r.reason?.replace(/_/g, ' '))} — ${esc(r.phone || '')} ${r.source === 'seed' ? '<span class="pill">seed</span>' : ''} ${r.review ? `<span class="pill">${r.review.verdict === 'ok' ? 'checked: correct' : 'checked: TOO STRICT'}</span>` : ''}</summary>
+    <div class="sub" style="margin-top:6px">${esc(r.summary || '')}</div>
+    <div class="sub">Failing criteria: ${esc(r.failing.join(', ') || '—')} · ${esc(Object.values(r.evidence).join(' | '))}</div>
+    <pre>${esc(r.transcript)}</pre>
+    <div class="actions"><button class="btn" data-review="ok" data-id="${esc(r.id)}">✓ Decline was correct</button><button class="btn" data-review="too_strict" data-id="${esc(r.id)}">✗ Too strict — should have gone to a designer</button></div></details>`).join('') || '<div class="card sub">No Red calls yet.</div>';
+
+  html += `<h2>Green leads (${m.greens.length})</h2>`;
+  html += m.greens.length ? `<div class="scroll"><table><thead><tr><th>Caller</th><th>Project</th><th>Flags</th><th>Handoff</th></tr></thead><tbody>${m.greens.map((g) => `<tr><td>${esc(g.phone || 'no number')} ${g.source === 'seed' ? '<span class="pill">seed</span>' : ''}<div class="sub">${esc(g.fields?.name || '')}</div></td><td>${esc([g.fields?.property_type, g.fields?.locality, g.fields?.carpet_area_sqft ? g.fields.carpet_area_sqft + ' sq ft' : ''].filter(Boolean).join(' · '))}<div class="sub">${esc(g.summary || '')}</div></td><td>${flagPills(g.flags)}</td><td>${g.handoff?.telegramSentAt ? 'Telegram ✓' : '—'}<div class="sub">HubSpot: ${esc(g.handoff?.hubspot || '—')}${g.handoff?.ackAt ? ' · picked up' : ''}</div></td></tr>`).join('')}</tbody></table></div>` : '<div class="card sub">No Green leads yet.</div>';
+
+  if (m.escalations.length) html += `<h2>Escalations</h2><div class="scroll"><table><tbody>${m.escalations.map((e) => `<tr><td><span class="tier t-escalate">Escalate</span></td><td>${esc(e.phone)}</td><td>${esc(e.summary || '')}</td></tr>`).join('')}</tbody></table></div>`;
+
+  const s = m.safety;
+  html += `<h2>Safety counters</h2><div class="grid">
+    ${tile('Lines blocked by the guard', s.guardBlocked, 'price / human-claim / referral / promised time')}
+    ${tile('Seed records refused by HubSpot', s.seedHubspotRefusals, 'by design')}
+    ${tile('Seed records in HubSpot outbox', `<span class="${s.hubspotOutboxFromSeed ? 'bad' : 'ok'}">${s.hubspotOutboxFromSeed}</span>`, 'must be 0')}
+    ${tile('Classifier errors', s.classifierErrors, 'routed to Amber for a human')}
+    ${tile('Model errors', s.llmFallbacks, 'engine used scripted fallback')}
+  </div>`;
+  $('#app').innerHTML = html;
+  document.querySelectorAll('[data-review]').forEach((b) => b.addEventListener('click', async () => {
+    await fetch('/api/review', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ enquiryId: b.dataset.id, verdict: b.dataset.review }) });
+    load();
+  }));
+}
+
+async function load() {
+  if (location.protocol === 'file:') {
+    $('#app').innerHTML = '<div class="banner">This page needs the dashboard server — it cannot run from a file. In a terminal in the project folder run <code>npm run demo</code> then <code>npm run dashboard -- --dir data/demo</code>, and open <b>http://127.0.0.1:4177</b>.</div>';
+    return;
+  }
+  try {
+    const open = [...document.querySelectorAll('details[open]')].map((d) => d.querySelector('summary').textContent);
+    const m = await (await fetch('/api/metrics?source=' + source)).json();
+    render(m);
+    document.querySelectorAll('details').forEach((d) => { if (open.includes(d.querySelector('summary').textContent)) d.open = true; });
+  } catch (e) { $('#app').textContent = 'Could not load metrics: ' + e.message; }
+}
+load();
+setInterval(load, 15000);
+</script>
+</body>
+</html>

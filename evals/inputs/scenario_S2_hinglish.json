@@ -1,0 +1,18 @@
+{
+  "id": "S2_hinglish",
+  "calls": [
+    {
+      "caseId": "S2_hinglish",
+      "startedAt": "2026-10-09T11:15:00+05:30",
+      "callerTurns": [
+        "Namaste, main Sneha bol rahi hoon. Mujhe Baner mein apne 2BHK flat ka poora interior karwana hai, kitchen aur wardrobe bhi.",
+        "Flat lagbhag 1000 sq ft carpet ka hai.",
+        "Hum 5 mahine mein shift hona chahte hain.",
+        "Kitna kharcha aayega approx?",
+        "Theek hai. Haan, ghar humara hai, main aur mere husband dono decide karte hain.",
+        "Ek dost ne bataya tha.",
+        "Weekend ki subah theek rahegi."
+      ]
+    }
+  ]
+}

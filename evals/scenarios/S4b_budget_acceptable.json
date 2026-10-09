@@ -1,0 +1,15 @@
+{
+  "id": "S4b_budget_acceptable",
+  "description": "Caller volunteers a comfortable budget. Stays Green; the AI never echoes the figure.",
+  "startedAt": "2026-10-09T10:50:00+05:30",
+  "from": "+919800010005",
+  "calls": [{"turns": [
+    "Good morning, this is Rahul. We have a 3BHK in Aundh, around 1,100 sq ft, and want a complete redesign including flooring and the kitchen.",
+    "We've kept aside a comfortable budget, about twenty-five lakh, so that's not a concern.",
+    "We'd like it all done by April.",
+    "Yes, my wife and I both decide.",
+    "We found you on Google.",
+    "Weekday evenings."
+  ]}],
+  "expect": {"tier": "green", "agent_must_not_match": ["lakh", "twenty", "₹", "budget"], "guard_events_max": 0, "must_close_with_request": true}
+}

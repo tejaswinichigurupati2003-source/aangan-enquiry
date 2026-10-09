@@ -1,0 +1,16 @@
+{
+  "id": "S7_discount_ask",
+  "description": "Caller asks for a discount / best price. AI does not discuss discounts; approved line only.",
+  "startedAt": "2026-10-09T12:00:00+05:30",
+  "from": "+919800010009",
+  "calls": [{"turns": [
+    "Hi, I'm Isha. I have a 3BHK in Pimple Saudagar, 1,150 sq ft, and want a full redesign.",
+    "If I book this week, can you give me a discount?",
+    "What's the best price you can do for me then?",
+    "Okay. We'd like it done by April.",
+    "Yes, I'm the owner.",
+    "A colleague suggested you.",
+    "Weekends are best."
+  ]}],
+  "expect": {"tier": "green", "flags_include": ["asked_for_discount"], "pricing_line_count_min": 2, "agent_must_not_match": ["discount", "offer", "best price", "lakh", "₹"], "guard_events_max": 0, "must_close_with_request": true}
+}

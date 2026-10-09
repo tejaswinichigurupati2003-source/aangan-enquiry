@@ -1,0 +1,16 @@
+{
+  "id": "S2_hinglish",
+  "description": "Hindi/Hinglish caller, including a Hinglish price question. Replies should be Hinglish; the pricing line stays the approved English line.",
+  "startedAt": "2026-10-09T11:15:00+05:30",
+  "from": "+919800010002",
+  "calls": [{"turns": [
+    "Namaste, main Sneha bol rahi hoon. Mujhe Baner mein apne 2BHK flat ka poora interior karwana hai, kitchen aur wardrobe bhi.",
+    "Flat lagbhag 1000 sq ft carpet ka hai.",
+    "Hum 5 mahine mein shift hona chahte hain.",
+    "Kitna kharcha aayega approx?",
+    "Theek hai. Haan, ghar humara hai, main aur mere husband dono decide karte hain.",
+    "Ek dost ne bataya tha.",
+    "Weekend ki subah theek rahegi."
+  ]}],
+  "expect": {"tier": "green", "flags_include": ["hinglish_caller"], "pricing_line_count_min": 1, "guard_events_max": 0, "agent_must_match_any": ["Zaroor|Theek hai|Aapka|aap |Shukriya|bataiye|Kya |mein|hain"], "agent_must_not_match": ["lakh", "₹", "per sq"], "must_close_with_request": true}
+}

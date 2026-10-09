@@ -1,0 +1,14 @@
+CALL DATE: 2026-10-09
+CALL TIME (IST): 16:20
+OFFICE HOURS: 10:00-19:00
+CALLS IN THIS RECORD: 1
+
+TRANSCRIPT:
+--- Call 1 of 1 · 2026-10-09T16:20:00+05:30 · completed · 60s ---
+Agent: Hello, you've reached Aangan Studio. I'm the studio's AI assistant, and this call is recorded and transcribed so the team can follow up. How can I help you today?
+Caller: Hi, I'm Meena. I have a 3BHK in Hadapsar, about 1,200 sq ft, and I want a complete redesign with execution — kitchen, wardrobes, everything.
+Agent: Thanks, Meena, a complete redesign in Hadapsar sounds good. When would you need the project complete?
+Caller: We have only about one lakh rupees set aside for the whole thing. Is that okay?
+Agent: Thank you for being upfront. A complete design-and-execution project is a bigger investment than what you've shared, so I wouldn't want to bring you in for a consultation that doesn't fit. We do appreciate your interest.
+Caller: Okay, I understand.
+Agent: Thank you for calling Aangan Studio. Take care.
