@@ -146,3 +146,30 @@ test('the HubSpot contact properties the code writes are exactly the ones the se
   const written = Object.keys(toContactProperties(rec())).filter((k) => k.startsWith('aangan_')).sort();
   assert.deepEqual(written, PROPERTIES.map((p) => p.name).sort());
 });
+
+import { telegramSetup } from '../bin/telegram-setup.js';
+
+test('telegram-setup: verifies the token, lists chat ids, only sends a message when asked, reports a bad token', async () => {
+  const sent = [];
+  const f = async (url, init) => {
+    const method = String(url).split('/').pop();
+    const j = (o) => ({ json: async () => o });
+    if (method === 'getMe') return j({ ok: true, result: { username: 'aangan_leads_bot', first_name: 'Aangan Leads' } });
+    if (method === 'getUpdates') return j({ ok: true, result: [
+      { update_id: 1, message: { chat: { id: 111, type: 'private', first_name: 'Nikhil' } } },
+      { update_id: 2, message: { chat: { id: -100222, type: 'supergroup', title: 'Designers' } } },
+      { update_id: 3, message: { chat: { id: 111, type: 'private', first_name: 'Nikhil' } } },
+    ] });
+    if (method === 'sendMessage') { sent.push(JSON.parse(init.body)); return j({ ok: true }); }
+    return j({ ok: false });
+  };
+  const lines = []; const log = (l) => lines.push(l);
+  const r = await telegramSetup({ token: 't', fetchImpl: f, log });
+  assert.deepEqual(r.chats.map((c) => c.id), [111, -100222], 'duplicates collapsed, group id is negative');
+  assert.equal(sent.length, 0, 'no message is sent unless --test is given');
+  assert.match(lines.join('\n'), /@aangan_leads_bot/);
+  await telegramSetup({ token: 't', testChat: '-100222', fetchImpl: f, log });
+  assert.equal(sent.length, 1); assert.equal(sent[0].chat_id, '-100222');
+  const bad = await telegramSetup({ token: 'x', fetchImpl: async () => ({ json: async () => ({ ok: false, description: 'Unauthorized' }) }), log });
+  assert.equal(bad.ok, false);
+});
