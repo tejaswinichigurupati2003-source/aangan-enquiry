@@ -2,3 +2,7 @@
 data/runtime/
 node_modules/
 data/demo/
+.vercel
+
+.vercel
+.env*

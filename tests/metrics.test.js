@@ -97,3 +97,45 @@ test('store persists atomically to disk and reloads', () => {
   assert.equal(b.db.events[0].type, 'x');
   fs.rmSync(dir, { recursive: true, force: true });
 });
+
+import { createHandlers, checkAuth, resetCache } from '../src/dashboard/handlers.js';
+
+test('Vercel dashboard handlers: password-gated (503 unset, 401 wrong, 200 right), never leaks data without auth, review persists', async () => {
+  const KEY = 'service-role-key-for-tests';
+  const store = new Map();
+  const fetchImpl = async (url, init = {}) => {
+    const t = new URL(url).pathname.split('/').pop();
+    store.set(t, store.get(t) ?? new Map());
+    if ((init.method || 'GET') === 'POST') { for (const r of JSON.parse(init.body)) store.get(t).set(r.aan_enquiry_id ?? r.aan_id, r); return { ok: true, status: 201, json: async () => ({}) }; }
+    return { ok: true, status: 200, json: async () => [...store.get(t).values()].map((r) => ({ aan_data: r.aan_data })) };
+  };
+  const mkRes = () => { const r = { code: null, headers: {}, body: '' }; r.writeHead = (c, h) => { r.code = c; r.headers = h; }; r.end = (b) => { r.body = b; }; return r; };
+  const basic = (u, p) => `Basic ${Buffer.from(`${u}:${p}`).toString('base64')}`;
+  const env = { SUPABASE_URL: 'https://x.supabase.co', SUPABASE_SERVICE_ROLE_KEY: KEY, DASHBOARD_PASSWORD: 'correct horse' };
+
+  // no password configured → closed
+  resetCache();
+  const closed = createHandlers({ env: { ...env, DASHBOARD_PASSWORD: '' }, fetchImpl });
+  let res = mkRes(); await closed.metrics({ url: '/api/metrics', headers: {} }, res); assert.equal(res.code, 503);
+
+  const h = createHandlers({ env, fetchImpl });
+  res = mkRes(); await h.metrics({ url: '/api/metrics', headers: {} }, res); assert.equal(res.code, 401); assert.match(res.headers['WWW-Authenticate'], /Basic/);
+  assert.doesNotMatch(res.body, /aan_|phone|transcript/);
+  res = mkRes(); await h.metrics({ url: '/api/metrics', headers: { authorization: basic('aangan', 'wrong') } }, res); assert.equal(res.code, 401);
+  res = mkRes(); await h.page({ url: '/', headers: {} }, res); assert.equal(res.code, 401);
+
+  const good = { authorization: basic('aangan', 'correct horse') };
+  res = mkRes(); await h.page({ url: '/', headers: good }, res);
+  assert.equal(res.code, 200); assert.match(res.body, /Aangan Studio — phone enquiries/); assert.match(res.headers['X-Robots-Tag'], /noindex/);
+  res = mkRes(); await h.metrics({ url: '/api/metrics?source=all', headers: good }, res);
+  assert.equal(res.code, 200); assert.equal(JSON.parse(res.body).totals.calls, 0);
+
+  // review: needs a real enquiry
+  store.set('aangan_enquiries', new Map([['enq_1', { aan_id: 'enq_1', aan_data: { id: 'enq_1', source: 'live', tier: 'red', callIds: [], classification: {}, handoff: {}, updatedAt: '2026-10-09T00:00:00Z', createdAt: '2026-10-09T00:00:00Z' } }]]));
+  resetCache();
+  res = mkRes(); await h.review({ method: 'POST', url: '/api/review', headers: good, body: { enquiryId: 'enq_1', verdict: 'too_strict' } }, res);
+  assert.equal(res.code, 200); assert.equal(store.get('aangan_reviews').get('enq_1').aan_verdict, 'too_strict');
+  res = mkRes(); await h.review({ method: 'POST', url: '/api/review', headers: good, body: { enquiryId: 'nope', verdict: 'ok' } }, res); assert.equal(res.code, 400);
+  res = mkRes(); await h.review({ method: 'GET', url: '/api/review', headers: good }, res); assert.equal(res.code, 405);
+  assert.equal(checkAuth({ headers: { authorization: basic('someone-else', 'correct horse') } }, env).ok, false, 'wrong username is rejected');
+});

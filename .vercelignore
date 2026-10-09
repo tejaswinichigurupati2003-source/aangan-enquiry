@@ -1,0 +1,15 @@
+# The Vercel project hosts ONLY the password-protected dashboard (api/ + src/ + config.yaml).
+# The live call server (WebSocket) cannot run on Vercel — it deploys to Render (render.yaml).
+data
+evals
+fixtures
+tests
+enquiries
+docs
+bin
+supabase
+prompts
+*.md
+PROMPT.md
+START_HERE.txt
+.env
