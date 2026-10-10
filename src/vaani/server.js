@@ -15,7 +15,7 @@ const safeEqual = (a, b) => { const x = Buffer.from(String(a)); const y = Buffer
 export function createVaaniServer({ cfg, store, provider, fetchImpl, now, poll, log = () => {} }) {
   const registry = new CallRegistry();
   const api = new VaaniApi(cfg, { fetchImpl });
-  const webhook = new VaaniWebhook({ cfg, store, provider, registry, api, now, poll });
+  const webhook = new VaaniWebhook({ cfg, store, provider, registry, api, now, poll, fetchImpl });
   const hub = new ByolHub({ cfg, store, provider, registry, now });
   const pending = new Set(); // in-flight background webhook jobs (so tests/shutdown can await them)
 

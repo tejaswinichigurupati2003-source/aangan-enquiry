@@ -7,6 +7,7 @@ import { createProvider } from '../src/llm/index.js';
 import { VaaniApi, parseVaaniTranscript } from '../src/vaani/api.js';
 import { classifyEnquiry } from '../src/classifier.js';
 import { route } from '../src/router.js';
+import { bookFromCall } from '../src/postcall-booking.js';
 
 const id = process.argv[2];
 if (!id || id.startsWith('--')) { console.log('Usage: node bin/reprocess-vani.js <vani-call-id> [--dry]'); process.exit(1); }
@@ -28,6 +29,7 @@ if (usage) call.usage = { ...(call.usage ?? {}), classifier: usage };
 for (const cb of store.db.callbacks.filter((c) => c.enquiryId === enquiry.id && c.status === 'scheduled')) cb.status = 'skipped_resolved';
 const routed = await route({ cfg, store, enquiry, classification, now: new Date(call.endedAt ?? Date.now()) });
 call.tier = classification.tier;
+if (classification.tier === 'green') { call.postCallBooking = undefined; const b = await bookFromCall({ cfg, store, provider, enquiry, call }); console.log(`booking from transcript: ${b.status}${b.reason ? ` (${b.reason})` : ''}${b.start ? ` ${b.start}` : ''}`); }
 store.save();
 if (store.drain) await store.drain();
 console.log(`tier: ${classification.tier}\nsummary: ${classification.summary}\nactions: ${routed.actions.join(', ')}`);

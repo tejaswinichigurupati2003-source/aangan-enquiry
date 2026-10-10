@@ -50,7 +50,9 @@ booking:
   slot_minutes: 60
   earliest_hours_ahead: 24     # never offer a slot sooner than this
   horizon_days: 14
-  working_days: [1, 2, 3, 4, 5, 6]   # Monday=1 ... Saturday=6 (Sunday closed)
+  working_days: [0, 1, 2, 3, 4, 5, 6]   # Sunday=0 ... Saturday=6. All days for now (the owner tested a Sunday booking); remove 0 if the studio is closed on Sundays
+  post_call_enabled: true      # book from the call transcript when Vani's own AI answered (D45)
+  post_call_min_hours: 2       # a time the caller explicitly asked for is accepted down to this much notice
   offers_per_call: 2           # how many different slots the AI will offer before falling back to a request
 
 rules:
@@ -103,6 +105,7 @@ costs:
 prompts:
   conversation: v2         # prompts/conversation.v2.md (v2 adds mandatory reply_language; v1 kept for reference) — every call record stores the versions used
   classifier: v1           # prompts/classifier.v1.md
+  booking-extract: v1      # prompts/booking-extract.v1.md (post-call: what day/time/e-mail did the caller ask for)
 
 business:
   # From Nikhil's brief (his stated average project value). Used ONLY for the dashboard's gross-pipeline line. Not a price list.

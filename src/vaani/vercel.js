@@ -19,7 +19,7 @@ export async function handleVaaniWebhook({ cfg, store, provider, fetchImpl, secr
 
   const ev = normalizeEvent(payload);
   const seen = store.db.events.some((e) => e.type === 'vaani_event' && e.vaaniEvent === ev.event && e.vaaniCallId === ev.callId && (e.payload?.timestamp ?? null) === (ev.timestamp ?? null));
-  const hook = new VaaniWebhook({ cfg, store, provider, registry: new CallRegistry(), api: new VaaniApi(cfg, { fetchImpl }), poll });
+  const hook = new VaaniWebhook({ cfg, store, provider, registry: new CallRegistry(), api: new VaaniApi(cfg, { fetchImpl }), poll, fetchImpl });
   if (seen) return { code: 200, body: { status: 'ok', duplicate: true } };
   hook.ingest(payload);
   try {

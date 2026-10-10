@@ -8,6 +8,7 @@ import { normalizePhone } from '../phone.js';
 import { uid } from '../store.js';
 import { finishCall } from '../pipeline.js';
 import { parseVaaniTranscript } from './api.js';
+import { bookFromCall } from '../postcall-booking.js';
 
 const str = (v) => (typeof v === 'string' ? v : null);
 
@@ -31,8 +32,8 @@ export function normalizeEvent(payload) {
 }
 
 export class VaaniWebhook {
-  constructor({ cfg, store, provider, registry, api, now = () => new Date(), poll }) {
-    Object.assign(this, { cfg, store, provider, registry, api, now, poll });
+  constructor({ cfg, store, provider, registry, api, now = () => new Date(), poll, fetchImpl }) {
+    Object.assign(this, { cfg, store, provider, registry, api, now, poll, fetchImpl });
   }
 
   /**
@@ -125,6 +126,9 @@ export class VaaniWebhook {
       turns, usage: {}, guardEvents: [], engineFlags: [], vaani: meta, via: 'vani_llm',
     });
     const out = await finishCall({ cfg: this.cfg, store: this.store, provider: this.provider, call, now: end });
-    return { action: 'classified_from_vani_transcript', tier: out.classification.tier, enquiryId: out.enquiry.id };
+    // Vani's own AI cannot see our calendar, so it only took a request: book it now from what the caller actually said.
+    const booking = await bookFromCall({ cfg: this.cfg, store: this.store, provider: this.provider, enquiry: out.enquiry, call, fetchImpl: this.fetchImpl, now: end });
+    if (this.store.drain) await this.store.drain().catch(() => {});
+    return { action: 'classified_from_vani_transcript', tier: out.classification.tier, enquiryId: out.enquiry.id, booking: booking.status };
   }
 }

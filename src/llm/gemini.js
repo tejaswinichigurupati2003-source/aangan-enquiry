@@ -40,9 +40,9 @@ export class GeminiProvider {
       systemInstruction: { parts: [{ text: system }] },
       contents: messages.map((m) => ({ role: m.role === 'model' ? 'model' : 'user', parts: [{ text: m.text }] })),
       // Hidden "thinking" tokens count against maxOutputTokens: a small cap silently truncates the JSON (finishReason MAX_TOKENS).
-      generationConfig: { temperature, maxOutputTokens: (kind === 'classifier' ? p.max_output_tokens_classifier : p.max_output_tokens_conversation) ?? p.max_output_tokens, responseMimeType: 'application/json' },
+      generationConfig: { temperature, maxOutputTokens: (kind === 'classifier' || kind === 'booking_extract' ? p.max_output_tokens_classifier : p.max_output_tokens_conversation) ?? p.max_output_tokens, responseMimeType: 'application/json' },
     };
-    const budget = kind === 'classifier' ? p.thinking_budget_classifier : p.thinking_budget_conversation;
+    const budget = kind === 'classifier' || kind === 'booking_extract' ? p.thinking_budget_classifier : p.thinking_budget_conversation;
     if (budget != null) body.generationConfig.thinkingConfig = { thinkingBudget: budget };
     const headers = { 'Content-Type': 'application/json' };
     if (this.backend !== 'vertex') headers['x-goog-api-key'] = this.key;

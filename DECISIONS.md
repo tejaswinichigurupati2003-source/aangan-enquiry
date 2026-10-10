@@ -239,3 +239,14 @@ The free HubSpot plan allows ONE deal pipeline (the portal's "Education Sales Pi
 (ids kept): New lead, Contacted, Consultation booked, Consultation done, Won, Lost. Each live Green lead gets a deal that moves with the dashboard stage (hubspot-deals.js; stage
 ids are looked up by label). Needs deal scopes on the HubSpot key (crm.objects.deals.read/write, crm.schemas.deals.read) — until added, the contact sync keeps working and one
 `hubspot_deals_scopes_missing` event is logged. Stage probabilities (10/30/60/80 %) are left as they were; adjust them to your own sense of conversion.
+
+## D45 ⚑ Booking from the transcript when Vani's own AI answers (owner request 2026-10-10)
+Vani's AI cannot see our calendar, and the owner does not want to depend on a public call server. After the call ends, the finished transcript is read by Gemini
+(`prompts/booking-extract.v1.md`: wants a consultation? which day/time — the caller's LAST statement wins — and e-mail), the request is validated in code against REAL
+availability (office hours, working days, designers, the studio iCal calendar, minimum notice) and, if free, booked exactly like a dashboard booking: designer assigned, Telegram,
+calendar event, caller e-mail. If it cannot be booked (busy, outside hours, unclear) nothing is double-booked: the lead is flagged `slot_needs_confirming` and the designer group gets
+the request with the nearest open slots. Idempotent per call; a model failure falls back to what the caller plainly said. `working_days` now includes Sunday (the owner tested a Sunday).
+Limit: the caller is told on the call that a confirmation follows, not given a live yes/no — only the always-on call server (BYOL, D43) can confirm a slot DURING the call.
+## D46 Vani transcripts are time-stamped
+Vani writes `[11:26:57] AGENT: …` and splits one answer over several lines; the first parser expected plain `AGENT:` and read the whole call as empty (lead classified Amber, no Telegram note).
+Fixed + tested; bin/reprocess-vani.js re-runs a stored call. Routing channels (Telegram, e-mail, HubSpot) are now independent so one failing provider cannot lose a lead.
