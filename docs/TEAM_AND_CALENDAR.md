@@ -44,3 +44,15 @@ For instant blocking write straight into the calendar with a Google service acco
 ## Checking the whole chain
 `node bin/e2e.js` plays a full simulated call with the real model and the real pipeline in dry-run; `node bin/e2e.js --live --cleanup` does it with the real
 Telegram, HubSpot and Supabase (one test message lands in the designer group; the HubSpot contact and Supabase rows are deleted afterwards).
+
+## Connecting Google Calendar (instant blocking) and caller e-mail
+**Google Calendar** (about 10 minutes, once):
+1. console.cloud.google.com → create/choose a project → **APIs & Services → Library → Google Calendar API → Enable**.
+2. **IAM & Admin → Service Accounts → Create** (name e.g. `aangan-calendar`, no roles needed) → open it → **Keys → Add key → JSON** (a file downloads).
+3. Google Calendar → the studio calendar → **Settings and sharing → Share with specific people → add the service account's e-mail → "Make changes to events"**. Also copy the **Calendar ID** (same page, "Integrate calendar").
+4. `node bin/setup-google.js "C:\path\to\key.json" "<calendar-id>"`, then `node bin/setup-google.js --test` (creates and deletes a test event).
+5. Delete the downloaded key file once it's in `.env`.
+Note: a Google Workspace/school account may forbid creating service-account keys (organisation policy). Use a personal Google account for the studio calendar in that case.
+
+**Caller e-mail** (Resend): create a Resend account → **Domains → add and verify your studio's domain** (DNS records) → **API Keys → create** →
+`.env`: `EMAIL_API_KEY=…`, `EMAIL_FROM="Aangan Studio <hello@yourdomain>"`. Without a verified domain Resend only delivers to your own address, so callers would not receive anything.
