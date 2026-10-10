@@ -3,7 +3,8 @@
 import { computeMetrics } from '../metrics.js';
 import { applyAction, autoAssignAll } from '../actions.js';
 import { getTeam, ownerOf, stageOf } from '../team.js';
-import { googleCalendarLink, calendarWeekLink, buildIcs } from '../calendar.js';
+import { googleCalendarLink, calendarWeekLink, buildIcs, buildIcsFeed } from '../calendar.js';
+import crypto from 'node:crypto';
 import { sendTelegram } from '../integrations/telegram.js';
 import { forceDryRun } from '../config.js';
 import { syncDeal } from '../integrations/hubspot-deals.js';
@@ -38,6 +39,14 @@ export function apiIcs(store, cfg, query) {
   if (!e || e.consult?.status !== 'scheduled') return json(404, { error: 'no consultation booked' });
   const designer = getTeam(cfg).owners.find((o) => o.id === e.consult.designerId);
   return { code: 200, body: buildIcs(e, designer, cfg), type: 'text/calendar; charset=utf-8', headers: { 'Content-Disposition': `attachment; filename="aangan-consultation-${e.id}.ics"` } };
+}
+
+/** The one studio calendar. Calendar apps cannot log in, so the URL itself carries a secret token (CALENDAR_FEED_TOKEN); no token set = feed off. */
+export function apiCalendarFeed(store, cfg, query) {
+  const want = cfg.env.CALENDAR_FEED_TOKEN; const got = query.get('token') ?? '';
+  const a = Buffer.from(String(want ?? '')); const b = Buffer.from(String(got));
+  if (!want || a.length !== b.length || !crypto.timingSafeEqual(a, b)) return json(404, { error: 'not found' });
+  return { code: 200, body: buildIcsFeed(store.db.enquiries, cfg, { designerId: query.get('designer') }), type: 'text/calendar; charset=utf-8' };
 }
 
 export function apiReview(store, body) {

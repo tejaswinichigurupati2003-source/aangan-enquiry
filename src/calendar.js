@@ -54,3 +54,15 @@ export function buildIcs(enq, designer, cfg) {
     'END:VEVENT', 'END:VCALENDAR', '',
   ].filter((l) => l !== null).join('\r\n');
 }
+
+/** One subscribable calendar with every booked consultation (Google Calendar → Other calendars → From URL). Live leads only. */
+export function buildIcsFeed(enquiries, cfg, { designerId = null } = {}) {
+  const team = getTeamLite(cfg);
+  const events = enquiries.filter((e) => e.source === 'live' && e.consult?.status === 'scheduled' && (!designerId || e.consult.designerId === designerId)).flatMap((e) => {
+    const d = team.find((o) => o.id === e.consult.designerId);
+    return ['BEGIN:VEVENT', `UID:${e.id}-consult@aangan`, `DTSTAMP:${stamp(e.consult.createdAt ?? e.updatedAt ?? Date.now())}`, `DTSTART:${stamp(e.consult.start)}`, `DTEND:${stamp(e.consult.end)}`,
+      `SUMMARY:${esc(`${consultTitle(e)}${d ? ` · ${d.name}` : ''}`)}`, `DESCRIPTION:${esc(consultDetails(e))}`, e.fields?.locality ? `LOCATION:${esc(e.fields.locality)}` : null, 'END:VEVENT'].filter(Boolean);
+  });
+  return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Aangan Studio//Enquiry system//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:Aangan consultations${designerId ? ` (${team.find((o) => o.id === designerId)?.name ?? designerId})` : ''}`, `X-WR-TIMEZONE:${cfg.studio.timezone}`, 'REFRESH-INTERVAL;VALUE=DURATION:PT15M', 'X-PUBLISHED-TTL:PT15M', ...events, 'END:VCALENDAR', ''].join('\r\n');
+}
+const getTeamLite = (cfg) => [...(cfg.team?.designers ?? []), cfg.team?.admin ?? { id: 'nikhil', name: cfg.studio.founder_name }];

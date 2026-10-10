@@ -30,11 +30,11 @@ studio:
   founder_name: Nikhil Deshpande
 
 team:
-  # STAND-IN names (real names were not provided): replace with your actual designers. Keep each id stable once leads are assigned.
+  # STAND-IN short names (real names were not provided): replace with your actual designers. Keep each id stable once leads are assigned.
   designers:
-    - {id: designer_1, name: "Ananya Kulkarni", email: "", active: true}
-    - {id: designer_2, name: "Rohan Deshmukh", email: "", active: true}
-    - {id: designer_3, name: "Meera Joshi", email: "", active: true}
+    - {id: designer_1, name: "Asha", email: "", active: true}
+    - {id: designer_2, name: "Ravi", email: "", active: true}
+    - {id: designer_3, name: "Neha", email: "", active: true}
   admin: {id: nikhil, name: Nikhil Deshpande}
   consult_minutes: 60               # default consultation length
   pickup_alert_minutes: 30          # a Green note not tapped Got it within this long is flagged

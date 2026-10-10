@@ -147,7 +147,7 @@ test('calendar + caller e-mail: dry-run by default, live only with credentials, 
   await syncConsultation({ cfg, store, enquiry: enq });
   assert.ok(store.db.outbox.some((o) => o.channel === 'calendar' && o.dryRun && o.action === 'create_event'));
   const mail = store.db.outbox.find((o) => o.channel === 'email'); assert.ok(mail.dryRun && mail.to === 'priya@gmail.com' && /Your Aangan Studio consultation/.test(mail.subject));
-  assert.ok(!/Ananya|Rohan|Meera/.test(mail.text), 'the caller e-mail does not name a designer');
+  assert.ok(!new RegExp(getTeam(cfg).designers.map((d) => d.name).join('|')).test(mail.text), 'the caller e-mail does not name a designer');
 
   // live with credentials: token + event + e-mail requests are made (fake Google/Resend), the calendar id is stored
   const { privateKey } = crypto.generateKeyPairSync('rsa', { modulusLength: 2048, privateKeyEncoding: { type: 'pkcs8', format: 'pem' }, publicKeyEncoding: { type: 'spki', format: 'pem' } });
@@ -175,7 +175,7 @@ test('calendar + caller e-mail: dry-run by default, live only with credentials, 
 test('HubSpot deals: live Green only, stage follows the dashboard, degrades quietly without deal scopes', async () => {
   const { SeedRefusedError, NotGreenError } = await import('../src/integrations/hubspot.js');
   const store = new Store(null);
-  const base = { id: 'enq_d', source: 'live', tier: 'green', phone: '+919800011121', fields: { name: 'Priya Kulkarni', locality: 'Baner' }, handoff: { hubspotId: '555' }, classification: { summary: 's' }, assignment: { ownerName: 'Ananya Kulkarni' } };
+  const base = { id: 'enq_d', source: 'live', tier: 'green', phone: '+919800011121', fields: { name: 'Priya Kulkarni', locality: 'Baner' }, handoff: { hubspotId: '555' }, classification: { summary: 's' }, assignment: { ownerName: 'Asha' } };
   await assert.rejects(syncDeal({ cfg, store, enquiry: { ...base, source: 'seed' } }), SeedRefusedError);
   await assert.rejects(syncDeal({ cfg, store, enquiry: { ...base, tier: 'amber' } }), NotGreenError);
   const dry = await syncDeal({ cfg, store, enquiry: { ...structuredClone(base), stage: 'consult_booked' } });

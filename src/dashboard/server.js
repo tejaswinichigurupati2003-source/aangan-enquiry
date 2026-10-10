@@ -4,7 +4,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { apiMetrics, apiLead, apiIcs, apiReview, apiAction } from './api.js';
+import { apiMetrics, apiLead, apiIcs, apiReview, apiAction, apiCalendarFeed } from './api.js';
 import { openStore, storageBackend } from '../storage.js';
 import { Store } from '../store.js';
 import { dataDir } from '../config.js';
@@ -37,6 +37,7 @@ export function createDashboard(cfg, { dir = dataDir(cfg), fetchImpl, local = fa
       if (req.method === 'GET' && url.pathname === '/') return send(res, 200, fs.readFileSync(path.join(here, 'page.html'), 'utf8'), 'text/html; charset=utf-8');
       if (req.method === 'GET' && url.pathname === '/api/metrics') return out(res, apiMetrics(await getStore(), cfg, url.searchParams));
       if (req.method === 'GET' && url.pathname === '/api/lead') return out(res, apiLead(await getStore(), cfg, url.searchParams));
+      if (req.method === 'GET' && url.pathname === '/api/calendar') return out(res, apiCalendarFeed(await getStore(), cfg, url.searchParams));
       if (req.method === 'GET' && url.pathname === '/api/ics') return out(res, apiIcs(await getStore(), cfg, url.searchParams));
       if (req.method === 'POST' && (url.pathname === '/api/review' || url.pathname === '/api/action')) {
         const body = await readJson(req);

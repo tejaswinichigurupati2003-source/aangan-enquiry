@@ -7,7 +7,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { loadConfig } from '../config.js';
 import { openStore } from '../storage.js';
-import { apiMetrics, apiLead, apiIcs, apiReview, apiAction } from './api.js';
+import { apiMetrics, apiLead, apiIcs, apiReview, apiAction, apiCalendarFeed } from './api.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const safeEqual = (a, b) => { const x = Buffer.from(String(a)); const y = Buffer.from(String(b)); return x.length === y.length && crypto.timingSafeEqual(x, y); };
@@ -73,6 +73,8 @@ export function createHandlers({ env = process.env, fetchImpl, pagePath = path.j
     page: guard(async (req, res) => send(res, 200, fs.readFileSync(pagePath, 'utf8'), 'text/html; charset=utf-8')),
     metrics: guard(async (req, res) => out(res, apiMetrics(await getStore(cfg, fetchImpl), cfg, query(req)))),
     lead: guard(async (req, res) => out(res, apiLead(await getStore(cfg, fetchImpl), cfg, query(req)))),
+    // token-protected instead of login-protected: Google Calendar / Apple Calendar cannot send a password
+    calendar: async (req, res) => { try { return out(res, apiCalendarFeed(await getStore(cfg, fetchImpl), cfg, query(req))); } catch (e) { return send(res, 500, { error: e.message }); } },
     ics: guard(async (req, res) => out(res, apiIcs(await getStore(cfg, fetchImpl), cfg, query(req)))),
     review: post(async (store, body) => { const r = apiReview(store, body); if (store.drain) await store.drain(); return r; }),
     action: post((store, body) => apiAction(store, cfg, body, { fetchImpl })),
