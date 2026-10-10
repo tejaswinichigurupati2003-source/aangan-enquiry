@@ -12,7 +12,7 @@ test('transcript messages: whole conversation, split under the Telegram limit, n
   const parts = buildTranscriptMessages(t);
   assert.ok(parts.length >= 2 && parts.every((p) => p.length <= 3700));
   assert.match(parts[0], /Full transcript \(1\//);
-  const all = parts.join('\n');
+  const all = parts.map((p) => p.split('\n\n').slice(1).join('\n\n')).join('\n'); // drop each part's "Full transcript (n/m)" header
   assert.ok(all.includes('🤖 AI: Hello.') && all.includes('AI: Thanks.') && (all.replace(/[^a-z]/g, '').match(/longanswer/g) || []).length === 500);
   assert.equal(buildTranscriptMessages('Agent: hi').length, 1);
 });
