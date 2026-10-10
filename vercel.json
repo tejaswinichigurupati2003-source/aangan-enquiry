@@ -12,11 +12,7 @@
   ],
   "functions": {
     "api/*.js": {
-      "includeFiles": "{config.yaml,src/dashboard/page.html}",
-      "maxDuration": 30
-    },
-    "api/vaani-webhook.js": {
-      "includeFiles": "{config.yaml,prompts/**,src/**}",
+      "includeFiles": "{config.yaml,prompts/*.md,src/dashboard/page.html}",
       "maxDuration": 60
     }
   },

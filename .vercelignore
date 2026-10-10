@@ -8,8 +8,10 @@ enquiries
 docs
 bin
 supabase
-prompts
 *.md
 PROMPT.md
 START_HERE.txt
 .env
+
+!prompts/
+!prompts/*.md
