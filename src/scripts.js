@@ -90,11 +90,29 @@ const ACK_EN = ['Thanks.', 'Got it.', 'Okay.'];
 const ACK_HI = ['Theek hai.', 'Samajh gaya.', 'Zaroor.'];
 export const ack = (lang, n = 0) => (isHinglish(lang) ? ACK_HI : ACK_EN)[n % 3];
 
+// ---- Booking a slot on the call (D43). Code speaks these; slots come from real availability. No designer is ever named. ----
+export const bookingOffer = (slot, n, lang) => (isHinglish(lang)
+  ? (n === 0 ? `Main ${slot} ke liye aapka consultation hold kar sakta hoon. Kya yeh theek rahega?` : `Ek aur option hai: ${slot}. Kya yeh theek rahega?`)
+  : (n === 0 ? `I can hold ${slot} for your consultation. Does that work for you?` : `Another option is ${slot}. Would that suit you?`));
+export const BOOKING_OTHER_TIME = 'Of course. Which other day or time would suit you better?';
+export const BOOKING_OTHER_TIME_HI = 'Zaroor. Aapko kaun sa din ya time theek rahega?';
+export const ASK_EMAIL = 'Lovely. So I can send you the calendar invite, could you tell me your email address? Please say it slowly, for example name, at, gmail, dot, com.';
+export const ASK_EMAIL_HI = 'Bahut accha. Calendar invite bhejne ke liye, kya aap apna email address bata sakte hain? Dheere boliye, jaise name, at, gmail, dot, com.';
+export const confirmEmail = (spoken, lang) => (isHinglish(lang) ? `Maine suna: ${spoken}. Kya yeh sahi hai?` : `I have ${spoken}. Is that correct?`);
+export const EMAIL_AGAIN = "Sorry about that. Could you say your email address once more, slowly, one part at a time?";
+export const EMAIL_AGAIN_HI = 'Maaf kijiye. Kya aap email address ek baar aur, dheere dheere bata sakte hain?';
+export const bookedLine = (slot, hasEmail, lang) => (isHinglish(lang)
+  ? `Ho gaya. Maine ${slot} aapke consultation ke liye hold kar diya hai${hasEmail ? ' aur invite aapke email par bheja jayega' : ''}. Team aapse details seedha confirm karegi. Shukriya.`
+  : `All set. I've held ${slot} for your consultation${hasEmail ? ' and the invite will go to your email' : ''}. The team will confirm the details with you directly. Thank you for calling Aangan Studio.`);
+
 export const FIELD_ORDER = ['name', 'locality', 'property_type', 'carpet_area', 'scope', 'timeline', 'decision_maker', 'referral_source', 'preferred_window'];
 
 export const ALL_SCRIPT_LINES = () => [
   greeting({ afterHours: false }), greeting({ afterHours: true }), ...PRICE_REPEAT_PREFIX.map((p) => p + PRICING_LINE),
   AFTER_HOURS_NOTE, botDisclosure('en'), botDisclosure('hinglish'), INJECTION_NOTE, ESCALATE_ASK, ESCALATE_ASK_NUMBER, ESCALATE_ASK_NAME,
   ESCALATE_CLOSE, FAREWELL, NO_REFERRAL, ...Object.values(DECLINE), closeOk('Priya', 'en'), closeOk('', 'hinglish'),
+  bookingOffer('Saturday, 17 October at 11 in the morning', 0, 'en'), bookingOffer('Monday, 19 October at 4 in the afternoon', 1, 'en'), bookingOffer('Saturday, 17 October at 11 in the morning', 0, 'hinglish'),
+  BOOKING_OTHER_TIME, BOOKING_OTHER_TIME_HI, ASK_EMAIL, ASK_EMAIL_HI, confirmEmail('priya dot kulkarni at gmail dot com', 'en'), confirmEmail('priya dot k at gmail dot com', 'hinglish'), EMAIL_AGAIN, EMAIL_AGAIN_HI,
+  bookedLine('Saturday, 17 October at 11 in the morning', true, 'en'), bookedLine('Saturday, 17 October at 11 in the morning', false, 'en'), bookedLine('Saturday, 17 October at 11 in the morning', true, 'hinglish'),
   CLOSE_AMBER, CALLBACK_INTRO, NOISE_1, NOISE_1_HI, NOISE_2, ...ACK_EN, ...ACK_HI, ...Object.values(Q_EN), ...Object.values(Q_HI),
 ];

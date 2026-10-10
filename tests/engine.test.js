@@ -9,6 +9,7 @@ import { ALL_SCRIPT_LINES } from '../src/scripts.js';
 import { detect } from '../src/engine.js';
 
 const cfg = loadConfig({ fresh: true, env: {} });
+cfg.booking = { ...cfg.booking, enabled: false }; // these tests cover the request-only close; booking on the call is tested in booking.test.js
 const NOON = '2026-10-09T12:00:00+05:30';
 const NIGHT = '2026-10-09T23:40:00+05:30';
 

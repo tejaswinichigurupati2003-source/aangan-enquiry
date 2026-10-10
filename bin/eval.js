@@ -14,6 +14,7 @@ import { runSeedEval, runScenarioEval, dumpInputs, dumpScenarioInputs } from '..
 const args = process.argv.slice(2);
 const opt = (name, def = null) => { const i = args.indexOf(`--${name}`); return i >= 0 ? (args[i + 1]?.startsWith('--') || args[i + 1] == null ? true : args[i + 1]) : def; };
 const cfg = forceDryRun(loadConfig({ fresh: true })); // fake callers: never send anything real
+cfg.booking = { ...cfg.booking, enabled: false }; // the T01-T20 / S1-S10 expectations are about the request-only close; on-call booking has its own tests (tests/booking.test.js)
 const providerName = opt('provider', 'recorded');
 const only = opt('only') ? String(opt('only')).split(',') : null;
 

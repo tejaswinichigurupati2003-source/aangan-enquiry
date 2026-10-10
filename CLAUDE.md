@@ -9,11 +9,11 @@ Scope: inbound phone calls only. WhatsApp and web form are out of scope (extensi
 - Escalate: existing client complaint. Page Nikhil. Not a lead.
 
 ## AI can
-Answer scope and area questions, ask one clarifying question, deflect pricing, book a consultation, decline politely.
+Answer scope and area questions, ask one clarifying question, deflect pricing, book a consultation (hold a real slot on the call and take the caller's e-mail for the invite), decline politely.
 
 ## AI must never
 Say any number, range or per-sq-ft figure (pricing.md is NOT in its context). Refer callers to other studios.
-Promise dates or designers. Handle complaints. Claim to be human if asked.
+Promise dates or designers. (One owner-approved exception, D43: on a live call the system may confirm a consultation slot it has actually held from real availability; it still never names or promises a designer.) Handle complaints. Claim to be human if asked.
 
 ## Pricing reply (verbatim)
 "Pricing depends on the site, the materials you choose, and the scope — your designer will walk you through it in detail at the consultation. I can book that for you right now if you'd like."

@@ -11,6 +11,7 @@ import { istParts, isAfterHours } from './classifier.js';
 import { speechSeconds } from './cost.js';
 import * as S from './scripts.js';
 import { uid } from './store.js';
+import { parseWindowHint, hintIsEmpty, slotMatchesHint, findSlots, speakSlot, speakEmail, parseSpokenEmail, isYes, isNo } from './booking.js';
 
 const FIELD_KEYS = ['name', 'locality', 'property_type', 'carpet_area_sqft', 'scope', 'timeline_text', 'decision_maker', 'referral_source', 'preferred_window', 'designer_mentioned', 'callback_preference'];
 const ASKING_TO_FIELD = { name: 'name', locality: 'locality', property_type: 'property_type', carpet_area: 'carpet_area', scope: 'scope', timeline: 'timeline', decision_maker: 'decision_maker', referral_source: 'referral_source', preferred_window: 'preferred_window', phone: 'phone' };
@@ -231,6 +232,8 @@ export class CallEngine {
     }
 
     if (looksHinglish(text) && st.language === 'en') st.language = 'hinglish';
+    // A slot is being booked: the next few turns are fully scripted (no model), so the model can never invent a time or an address.
+    if (['offer', 'ask_email', 'confirm_email'].includes(st.booking?.phase)) return this.bookingTurn(call, text, det);
     const out = await this.callModel(call, text);
     const m = this.mergeModelOutput(call, out, text, det);
     const sig = m.signals;
@@ -292,6 +295,10 @@ export class CallEngine {
         st.windowAsked = true; st.asked.push('preferred_window');
         return this.emit(call, injectionPrefix + S.question('preferred_window', lang), false, 'intake');
       }
+      if (ev.tier === 'green' && !endNow && !tooLong && this.bookingOn(call) && !st.booking) {
+        const offer = this.startBooking(call, text);
+        if (offer) return offer;
+      }
       st.mode = 'closed';
       const line = ev.tier === 'green' ? S.closeOk(st.fields.name, lang) : S.CLOSE_AMBER;
       return this.emit(call, line, true, 'closed');
@@ -310,6 +317,81 @@ export class CallEngine {
       if (!st.asked.includes(next)) st.asked.push(next);
     }
     return this.emit(call, injectionPrefix + reply, false, 'intake');
+  }
+
+  /** Booking on the call only for live calls, and only when switched on in config.yaml (booking.enabled). */
+  bookingOn(call) { return Boolean(this.cfg.booking?.enabled) && call.source === 'live'; }
+
+  startBooking(call, text) {
+    const st = call.state; const lang = st.language;
+    const hint = parseWindowHint(`${st.fields.preferred_window ?? ''} ${text}`, this.cfg, this.now().getTime());
+    const slots = findSlots({ cfg: this.cfg, store: this.store, hint, nowMs: this.now().getTime(), count: 2, callId: call.id });
+    if (!slots.length) { st.booking = { phase: 'skipped' }; return null; }
+    st.booking = { phase: 'offer', slots, idx: 0, offers: 1, email: null, candidate: null, tries: 0, unclear: 0, slot: null };
+    this.addFlag(call, 'slot_offered');
+    return this.emit(call, S.bookingOffer(speakSlot(this.cfg, slots[0].start), 0, lang), false, 'booking');
+  }
+
+  /** The line that re-asks whatever question is currently open (used after a policy reply such as the pricing line). */
+  bookingPending(call) {
+    const st = call.state; const b = st.booking; const lang = st.language;
+    if (b.phase === 'offer') return S.bookingOffer(speakSlot(this.cfg, b.slots[b.idx].start), 0, lang);
+    if (b.phase === 'confirm_email') return S.confirmEmail(speakEmail(b.candidate), lang);
+    return lang === 'hinglish' || lang === 'hi' ? S.ASK_EMAIL_HI : S.ASK_EMAIL;
+  }
+
+  finishBooking(call, withEmail) {
+    const st = call.state; const b = st.booking; const lang = st.language;
+    b.phase = 'done'; b.slot = b.slots[b.idx];
+    if (!withEmail) b.email = null; else st.fields.email = b.email;
+    this.addFlag(call, 'slot_held');
+    if (!b.email) this.addFlag(call, 'no_email_captured');
+    st.mode = 'closed';
+    return this.emit(call, S.bookedLine(speakSlot(this.cfg, b.slot.start), Boolean(b.email), lang), true, 'closed', { booked: b.slot });
+  }
+
+  fallBackToRequest(call) {
+    const st = call.state;
+    st.booking.phase = 'skipped'; st.mode = 'closed';
+    return this.emit(call, S.closeOk(st.fields.name, st.language), true, 'closed');
+  }
+
+  bookingTurn(call, text, det) {
+    const st = call.state; const b = st.booking; const lang = st.language; const hi = lang === 'hinglish' || lang === 'hi';
+    if (det.bot) { this.addFlag(call, 'asked_if_bot'); return this.emit(call, `${S.botDisclosure(lang)} ${this.bookingPending(call)}`, false, 'booking'); }
+    if (det.price || det.discount) { st.priceAsks++; this.addFlag(call, 'asked_for_price'); return this.emit(call, `${S.pricingReply(st.priceAsks)} ${this.bookingPending(call)}`, false, 'booking'); }
+    const emailInText = parseSpokenEmail(text);
+    if (det.end && !isYes(text) && !emailInText) return this.fallBackToRequest(call);
+
+    if (b.phase === 'offer') {
+      const hint = parseWindowHint(text, this.cfg, this.now().getTime());
+      if (isYes(text) && (hintIsEmpty(hint) || slotMatchesHint(this.cfg, b.slots[b.idx], hint))) { // accepted the slot we offered
+        b.slot = b.slots[b.idx];
+        b.phase = 'ask_email';
+        return this.emit(call, hi ? S.ASK_EMAIL_HI : S.ASK_EMAIL, false, 'booking');
+      }
+      if (isNo(text) || !hintIsEmpty(hint)) { // wants something else (a plain "yes" was handled above)
+        if (b.offers >= (this.cfg.booking?.offers_per_call ?? 2) + 1) return this.fallBackToRequest(call);
+        const offered = b.slots.map((x) => x.start);
+        let next = findSlots({ cfg: this.cfg, store: this.store, hint, nowMs: this.now().getTime(), count: 2, exclude: offered, callId: call.id });
+        if (hintIsEmpty(hint) && b.slots[b.idx + 1]) next = [b.slots[b.idx + 1]]; // a plain "no": move on to the second option we already had
+        if (!next.length) return this.fallBackToRequest(call);
+        b.slots = next; b.idx = 0; b.offers++;
+        return this.emit(call, S.bookingOffer(speakSlot(this.cfg, next[0].start), 1, lang), false, 'booking');
+      }
+      if (++b.unclear >= 2) return this.fallBackToRequest(call);
+      return this.emit(call, this.bookingPending(call), false, 'booking');
+    }
+
+    if (b.phase === 'ask_email' || b.phase === 'confirm_email') {
+      if (emailInText && (b.phase === 'ask_email' || !isYes(text))) { b.candidate = emailInText; b.phase = 'confirm_email'; return this.emit(call, S.confirmEmail(speakEmail(emailInText), lang), false, 'booking'); }
+      if (b.phase === 'confirm_email' && isYes(text)) { b.email = b.candidate; return this.finishBooking(call, true); }
+      const declines = /\b(?:don'?t (?:want|have|wish)|no email|rather not|skip|nahi (?:hai|dena|chahiye)|not comfortable|prefer not)\b/i.test(text);
+      if (declines || ++b.tries >= 2) return this.finishBooking(call, false);
+      b.phase = 'ask_email';
+      return this.emit(call, hi ? S.EMAIL_AGAIN_HI : S.EMAIL_AGAIN, false, 'booking');
+    }
+    return this.fallBackToRequest(call);
   }
 
   escalateTurn(call) {

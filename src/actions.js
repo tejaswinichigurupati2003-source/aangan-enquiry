@@ -1,7 +1,7 @@
 // Dashboard actions on a lead: assign / reassign, change stage, schedule a consultation, add a note.
 // Pure functions over the store (no network). They return { ok, enquiry, notify } where `notify` is an optional Telegram text
 // for the caller (the API layer) to send; or { error, status, warnings } when the request is refused.
-import { getTeam, STAGES, STAGE_FLOW, ownerOf, stageOf, pushActivity } from './team.js';
+import { getTeam, STAGES, STAGE_FLOW, ownerOf, stageOf, isClosed, autoAssign, pushActivity } from './team.js';
 import { displayPhone } from './phone.js';
 
 const fail = (status, error, extra = {}) => ({ ok: false, status, error, ...extra });
@@ -95,6 +95,17 @@ export function cancelConsult({ store, enq, by, now = new Date() }) {
   store.event('consult_cancelled', { enquiryId: enq.id, by: by || null, source: enq.source });
   store.save();
   return { ok: true, enquiry: enq, notify: `❌ Consultation cancelled\n${label(enq)}${by ? `\nBy ${by}` : ''}` };
+}
+
+/** Give every open Green / Escalate lead that has no owner one (same rule as new leads). Returns how many were assigned. */
+export function autoAssignAll({ cfg, store, by, now = new Date() }) {
+  let n = 0; let live = 0;
+  for (const e of store.db.enquiries) {
+    if (!['green', 'escalate'].includes(e.tier) || e.assignment || isClosed(e)) continue;
+    if (autoAssign(cfg, store, e, now)) { n++; if (e.source === 'live') live++; }
+  }
+  if (n) { store.event('lead_assigned_bulk', { count: n, by: by || null }); store.save(); }
+  return { ok: true, count: n, live, notify: live ? `🔁 ${live} existing lead${live === 1 ? '' : 's'} without a designer were shared out automatically${by ? ` by ${by}` : ''}` : null };
 }
 
 /** Entry point used by the API layer. */

@@ -222,3 +222,20 @@ Because changing things is riskier than reading, writes can require a shared **t
 Removed repeats: the sidebar guardrail card (the same numbers are on Cost & health), the cost KPI on Overview (lives on Cost & health), the separate Follow-ups and
 Safety/Costs tabs (merged into one Leads list with filters, and one Cost & health tab), the Green-leads table that duplicated the Follow-ups queue, and two footers.
 Added: needs-attention list, per-role home, lead drawer (owner, stage, consultation, notes, transcript), week schedule, workload, search ( / ), CSV export.
+
+## D43 ⚑ The AI books a consultation slot on the call (owner request 2026-10-10) — changes a hard rule
+Before: the AI only captured a preferred window and the team confirmed. Now (live calls, `booking.enabled` in config.yaml): after the Green intake and the caller's preferred window,
+CODE offers a real slot (office hours, Mon–Sat, at least 24 h ahead, at least one active designer free, other in-progress calls' holds counted), the caller says yes, the AI asks for
+their e-mail, reads it back for confirmation, and holds the slot. When the call ends the hold becomes a consultation on the lead (same rules as a dashboard booking: no
+double-booking), the designer group is told on Telegram, the studio's Google Calendar event is created (blocks the slot) and the caller is e-mailed a confirmation with an .ics.
+Safety: the booking turns are fully scripted (no model call), every line passes the guard, no designer is ever named, a caller who declines to give an e-mail is still booked
+(team confirms by phone), a slot that is taken before the call ends is reported to the team instead of double-booked, and bot-disclosure / pricing questions still win mid-booking.
+This overrides "never promise dates" ONLY for slots the system has really held. The Vani-side prompt (used when Vani's own model answers instead of our BYOL engine) is unchanged and
+still only takes a request. Real Google Calendar writes need a service account (gcal.js header); without it everything is dry-run and the dashboard shows the slot.
+Hinglish booking lines need native-speaker review like the others (D12).
+
+## D44 HubSpot: one pipeline, renamed; deals follow the dashboard stages
+The free HubSpot plan allows ONE deal pipeline (the portal's "Education Sales Pipeline"). With the owner's OK it was renamed **Aangan Enquiries** and its six stages renamed in place
+(ids kept): New lead, Contacted, Consultation booked, Consultation done, Won, Lost. Each live Green lead gets a deal that moves with the dashboard stage (hubspot-deals.js; stage
+ids are looked up by label). Needs deal scopes on the HubSpot key (crm.objects.deals.read/write, crm.schemas.deals.read) — until added, the contact sync keeps working and one
+`hubspot_deals_scopes_missing` event is logged. Stage probabilities (10/30/60/80 %) are left as they were; adjust them to your own sense of conversion.

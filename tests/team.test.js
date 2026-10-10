@@ -10,6 +10,7 @@ import { computeMetrics } from '../src/metrics.js';
 import { createDashboard } from '../src/dashboard/server.js';
 
 const cfg = loadConfig({ fresh: true, env: {} });
+const D = getTeam(cfg).designers.map((d) => d.name);
 const NOW = new Date('2026-10-10T06:00:00Z'); // Saturday 11:30 IST
 
 function lead(store, over = {}) {
@@ -42,12 +43,12 @@ test('reassign: changes owner, moves a booked consultation with it, logs the cha
   const store = new Store(null); const e = lead(store); autoAssign(cfg, store, e, NOW);
   assert.equal(act(store, { action: 'assign', enquiryId: e.id, ownerId: 'nobody' }).status, 400);
   const r = act(store, { action: 'assign', enquiryId: e.id, ownerId: 'designer_2', by: 'Nikhil' });
-  assert.ok(r.ok); assert.equal(e.assignment.ownerId, 'designer_2'); assert.match(r.notify, /Designer 1 → Designer 2/);
+  assert.ok(r.ok); assert.equal(e.assignment.ownerId, 'designer_2'); assert.match(r.notify, new RegExp(`${D[0]} → ${D[1]}`));
   assert.equal(act(store, { action: 'assign', enquiryId: e.id, ownerId: 'designer_2' }).notify, null, 'no-op reassign sends nothing');
   act(store, { action: 'schedule', enquiryId: e.id, start: '2026-10-12T05:30:00Z', minutes: 60 });
   act(store, { action: 'assign', enquiryId: e.id, ownerId: 'designer_3' });
   assert.equal(e.consult.designerId, 'designer_3');
-  assert.ok(e.activity.some((a) => /Reassigned from Designer 1 to Designer 2/.test(a.text)));
+  assert.ok(e.activity.some((a) => new RegExp(`Reassigned from ${D[0]} to ${D[1]}`).test(a.text)));
   assert.ok(store.db.events.some((x) => x.type === 'lead_assigned' && x.to === 'designer_2'));
 });
 
@@ -172,4 +173,20 @@ test('team PIN: with the login off, writes need DASHBOARD_TEAM_PIN (reads stay o
   assert.equal((await call(h, 'action', { 'x-team-pin': '4321' })).code, 404, 'right PIN gets through to the normal "lead not found"');
   const open = createHandlers({ env: { STORAGE_BACKEND: 'json', DASHBOARD_AUTH: 'off' } });
   assert.equal((await call(open, 'action')).code, 404, 'no PIN configured: unchanged behaviour');
+});
+
+test('share out unassigned: existing Green/Escalate leads without an owner get one, evenly; owned and closed leads are untouched; workload shows an Unassigned row', async () => {
+  const { autoAssignAll } = await import('../src/actions.js');
+  const store = new Store(null);
+  const ls = [lead(store), lead(store), lead(store), lead(store), lead(store, { tier: 'escalate' }), lead(store, { tier: 'amber' }), lead(store, { stage: 'won' })];
+  ls[0].assignment = { ownerId: 'designer_3', ownerName: 'x' };
+  let m = computeMetrics(store, cfg, { source: 'all', now: NOW });
+  assert.equal(m.team.workload.find((w) => w.id === null).open, 5, 'three Green, the complaint and the Amber queue item; the won lead is not open');
+  const r = autoAssignAll({ cfg, store, by: 'Nikhil', now: NOW });
+  assert.equal(r.count, 4); assert.match(r.notify, /4 existing leads/);
+  assert.equal(ls[5].assignment, undefined, 'Amber stays in the front-desk queue'); assert.equal(ls[6].assignment, undefined, 'closed leads are left alone'); assert.equal(ls[0].assignment.ownerId, 'designer_3');
+  assert.equal(ls[4].assignment.ownerId, getTeam(cfg).admin.id);
+  const counts = {}; for (const e of [ls[1], ls[2], ls[3]]) counts[e.assignment.ownerId] = (counts[e.assignment.ownerId] || 0) + 1;
+  assert.ok(Math.max(...Object.values(counts)) <= 2, 'spread, not piled on one person');
+  assert.equal(autoAssignAll({ cfg, store, now: NOW }).count, 0, 'idempotent');
 });

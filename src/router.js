@@ -11,6 +11,7 @@ import { DECLINE } from './scripts.js';
 import { scheduleCallbacks } from './callbacks.js';
 import { forceDryRun } from './config.js';
 import { autoAssign } from './team.js';
+import { syncDeal } from './integrations/hubspot-deals.js';
 
 export async function route({ cfg, store, enquiry, classification, now = new Date(), fetchImpl }) {
   const cls = classification;
@@ -44,6 +45,8 @@ export async function route({ cfg, store, enquiry, classification, now = new Dat
         h.hubspot = hs.dryRun ? 'dry_run' : 'pushed';
         if (hs.id) h.hubspotId = hs.id;
         actions.push(`hubspot:${h.hubspot}`);
+        const dl = await syncDeal({ cfg: io.cfg, store, enquiry, fetchImpl }); // the deal (pipeline stage) next to the contact; degrades quietly without deal scopes
+        if (dl.id || dl.dryRun) actions.push(`hubspot_deal:${dl.dryRun ? 'dry_run' : 'synced'}`);
       } catch (e) {
         if (e instanceof SeedRefusedError) {
           h.hubspot = 'refused_seed';

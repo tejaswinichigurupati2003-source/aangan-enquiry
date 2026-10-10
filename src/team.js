@@ -99,21 +99,25 @@ export function buildAttention(store, cfg, now = new Date()) {
   return out.sort((a, b) => rank[a.sev] - rank[b.sev] || String(a.since).localeCompare(String(b.since)));
 }
 
-/** Per-owner workload for the studio head. */
-export function buildWorkload(store, cfg, now = new Date()) {
+/** Per-owner workload for the studio head, over the leads in the current view (source filter), plus a row for leads nobody owns yet. */
+export function buildWorkload(store, cfg, now = new Date(), { source = 'all' } = {}) {
   const team = getTeam(cfg);
   const weekEnd = now.getTime() + 7 * 86400000;
-  return team.owners.map((o) => {
-    const mine = store.db.enquiries.filter((e) => e.source === 'live' && ownerOf(e) === o.id);
+  const pool = store.db.enquiries.filter((e) => (source === 'all' || e.source === source) && ['green', 'amber', 'escalate'].includes(e.tier));
+  const row = (id, name, active, mine) => {
     const open = mine.filter((e) => !isClosed(e));
     const acked = mine.filter((e) => e.handoff?.ackAt && e.handoff?.telegramSentAt);
     const pick = acked.map((e) => (new Date(e.handoff.ackAt) - new Date(e.handoff.telegramSentAt)) / 60000).sort((a, b) => a - b);
     return {
-      id: o.id, name: o.name, active: o.active, open: open.length,
+      id, name, active, open: open.length,
       awaitingPickup: open.filter((e) => e.tier === 'green' && e.handoff?.telegramSentAt && !e.handoff?.ackAt).length,
       consultsWeek: mine.filter((e) => e.consult?.status === 'scheduled' && new Date(e.consult.start).getTime() >= now.getTime() && new Date(e.consult.start).getTime() <= weekEnd).length,
       won: mine.filter((e) => stageOf(e) === 'won').length, lost: mine.filter((e) => stageOf(e) === 'lost').length,
       medianPickupMin: pick.length ? Math.round(pick[pick.length >> 1] * 10) / 10 : null,
     };
-  });
+  };
+  const rows = team.owners.map((o) => row(o.id, o.name, o.active, pool.filter((e) => ownerOf(e) === o.id)));
+  const nobody = pool.filter((e) => !ownerOf(e));
+  if (nobody.length) rows.push(row(null, 'Unassigned', true, nobody));
+  return rows;
 }

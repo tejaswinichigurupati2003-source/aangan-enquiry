@@ -407,8 +407,8 @@ function upcomingCard(m) {
 }
 
 function workloadCard(m) {
-  const rows = m.team.workload;
-  return `<section class="card"><div class="card-h"><div><h3>Team workload</h3><div class="cap">Live leads by owner — click a name to see their leads</div></div></div><div class="scroll"><table><thead><tr><th>Owner</th><th>Open</th><th>Not picked up</th><th>Consults 7d</th><th>Won / lost</th><th>Pickup</th></tr></thead><tbody>${rows.map((w) => `<tr><td><button class="att" style="padding:2px 0;border:0" data-owner="${esc(w.id)}">${avatar(m, w.id, w.name)}<b>${esc(w.name)}</b>${w.active ? '' : ' <span class="tag">away</span>'}</button></td><td>${w.open}</td><td>${w.awaitingPickup ? `<span class="pill bad">${w.awaitingPickup}</span>` : 0}</td><td>${w.consultsWeek}</td><td>${w.won} / ${w.lost}</td><td>${w.medianPickupMin == null ? '—' : w.medianPickupMin + ' min'}</td></tr>`).join('')}</tbody></table></div></section>`;
+  const rows = m.team.workload, none = rows.find((w) => w.id === null);
+  return `<section class="card"><div class="card-h"><div><h3>Team workload</h3><div class="cap">Leads in this view by owner — click a name to see their leads</div></div>${none ? `<button class="btn primary" data-act="auto_assign_all" title="Gives each lead without a designer to the designer with the fewest open leads">Share out ${none.open} unassigned</button>` : ''}</div><div class="scroll"><table><thead><tr><th>Owner</th><th>Open</th><th>Not picked up</th><th>Consults 7d</th><th>Won / lost</th><th>Pickup</th></tr></thead><tbody>${rows.map((w) => `<tr><td><button class="att" style="padding:2px 0;border:0" data-owner="${esc(w.id ?? 'none')}">${w.id === null ? '<span class="avatar" style="background:var(--s-gray)">?</span>' : avatar(m, w.id, w.name)}<b>${esc(w.name)}</b>${w.active ? '' : ' <span class="tag">away</span>'}</button></td><td>${w.open}</td><td>${w.awaitingPickup ? `<span class="pill bad">${w.awaitingPickup}</span>` : 0}</td><td>${w.consultsWeek}</td><td>${w.won} / ${w.lost}</td><td>${w.medianPickupMin == null ? '—' : w.medianPickupMin + ' min'}</td></tr>`).join('')}</tbody></table></div></section>`;
 }
 
 function pipelineCard(m) {
@@ -595,7 +595,7 @@ function renderDrawer() {
     <div><label class="lab" for="s-des">Designer</label><select id="s-des" class="inp" name="designerId">${m.team.owners.map((o) => `<option value="${esc(o.id)}" ${o.id === (c?.designerId || defaultOwner) ? 'selected' : ''}>${esc(o.name)}</option>`).join('')}</select></div></div>
     <div class="actions"><button class="btn primary" type="submit">${sched ? 'Reschedule' : 'Book consultation'}</button></div></form>`;
   const cal = dtl?.calendar;
-  const consultBlock = sched ? `<div class="consult"><b>${esc(fmtDT(c.start))} – ${esc(fmtT(c.end))}</b><div class="sub">with ${esc(designerName(c.designerId))}</div>
+  const consultBlock = sched ? `<div class="consult"><b>${esc(fmtDT(c.start))} – ${esc(fmtT(c.end))}</b><div class="sub">with ${esc(designerName(c.designerId))}${c.bookedBy === 'phone_ai' ? ' · held by the AI on the call' : ''}${c.callerEmail ? ' · invite to ' + esc(c.callerEmail) : c.bookedBy === 'phone_ai' ? ' · no email captured — confirm by phone' : ''}</div>
       <div class="actions">${cal ? `<a class="btn primary" href="${esc(cal.google)}" target="_blank" rel="noopener">Add to Google Calendar</a><a class="btn" href="${esc(cal.ics)}">Download .ics</a><a class="btn" href="${esc(cal.week)}" target="_blank" rel="noopener">Open that week</a>` : ''}
       <button class="btn" data-act="stage" data-stage="consult_done" data-id="${esc(l.id)}">Mark done</button><button class="btn warn" data-act="cancel_consult" data-id="${esc(l.id)}">Cancel</button></div></div>
       <details class="flat" style="margin-top:12px"><summary class="sub" style="font-weight:600">Change the time</summary><div style="margin-top:10px">${schedForm}</div></details>`
@@ -714,6 +714,7 @@ document.addEventListener('click', async (e) => {
   else if (t.hasAttribute('data-export')) exportCsv();
   else if (d.copy !== undefined) { try { await navigator.clipboard.writeText(d.copy); toast('Number copied'); } catch { toast('Copy is blocked in this browser', true); } }
   else if (d.act === 'cancel_consult') { if (confirm('Cancel this consultation? The designer group is told on Telegram.')) { const r = await act({ action: 'cancel_consult', enquiryId: d.id }); if (r.ok) toast('Consultation cancelled'); } }
+  else if (d.act === 'auto_assign_all') { const r = await act({ action: 'auto_assign_all' }); if (r.ok) toast('Unassigned leads shared out'); }
   else if (d.act === 'stage') { const r = await act({ action: 'stage', stage: d.stage, enquiryId: d.id }); if (r.ok) toast('Marked as ' + STAGE[d.stage][0].toLowerCase()); }
 });
 document.addEventListener('keydown', (e) => {

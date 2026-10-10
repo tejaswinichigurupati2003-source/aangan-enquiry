@@ -30,16 +30,28 @@ studio:
   founder_name: Nikhil Deshpande
 
 team:
-  # PLACEHOLDER designer names: replace with your real designers (keep each id stable once leads are assigned). Never has any effect on what the AI says to callers.
+  # STAND-IN names (real names were not provided): replace with your actual designers. Keep each id stable once leads are assigned.
   designers:
-    - {id: designer_1, name: "Designer 1", email: "", active: true}
-    - {id: designer_2, name: "Designer 2", email: "", active: true}
-    - {id: designer_3, name: "Designer 3", email: "", active: true}
+    - {id: designer_1, name: "Ananya Kulkarni", email: "", active: true}
+    - {id: designer_2, name: "Rohan Deshmukh", email: "", active: true}
+    - {id: designer_3, name: "Meera Joshi", email: "", active: true}
   admin: {id: nikhil, name: Nikhil Deshpande}
   consult_minutes: 60               # default consultation length
   pickup_alert_minutes: 30          # a Green note not tapped Got it within this long is flagged
   stale_lead_days: 3                # an open lead with no activity for this long is flagged
   calendar_view_url: "https://calendar.google.com/calendar/u/0/r/week"   # shared Google Calendar the studio uses
+
+hubspot:
+  pipeline_label: "Aangan Enquiries"   # the deal pipeline (renamed from the portal's default). Stage names: New lead, Contacted, Consultation booked, Consultation done, Won, Lost
+
+booking:
+  # The AI can hold a consultation slot ON THE CALL (decision D43). The slot is only ever offered from real availability, never invented.
+  enabled: true
+  slot_minutes: 60
+  earliest_hours_ahead: 24     # never offer a slot sooner than this
+  horizon_days: 14
+  working_days: [1, 2, 3, 4, 5, 6]   # Monday=1 ... Saturday=6 (Sunday closed)
+  offers_per_call: 2           # how many different slots the AI will offer before falling back to a request
 
 rules:
   lead_time_min_weeks: 8             # qualified.md says 8-10; services.md says 6. Default per brief: 8-10. OPEN QUESTION for Nikhil.

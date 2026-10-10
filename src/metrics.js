@@ -95,7 +95,7 @@ export function computeMetrics(store, cfg, { source = 'all', now = new Date() } 
     pipeline: pv && source === 'live' ? { greenLeads: greens, grossValueMin: greens * pv.min, grossValueMax: greens * pv.max, note: 'Green leads × average project value from the brief. Not a forecast: conversion is unknown.' } : null,
     ambers: amberQueue, reds, redReview: { total: reds.length, reviewed: reviewed.length, tooStrict, tooStrictRate: reviewed.length ? tooStrict / reviewed.length : null },
     flagCounts,
-    team: { ...team, tz: cfg.studio.timezone, tzOffset: tzOffset(cfg.studio.timezone, now), officeHours: { start: cfg.studio.office_hours_start, end: cfg.studio.office_hours_end }, workload: buildWorkload(store, cfg, now) },
+    team: { ...team, tz: cfg.studio.timezone, tzOffset: tzOffset(cfg.studio.timezone, now), officeHours: { start: cfg.studio.office_hours_start, end: cfg.studio.office_hours_end }, workload: buildWorkload(store, cfg, now, { source }) },
     leads, attention, now: now.toISOString(),
     series: buildSeries(store, cfg, calls, enquiries),
     safety: {
