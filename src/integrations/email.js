@@ -12,7 +12,7 @@ export async function sendEmail({ cfg, store, subject, text, enquiryId, fetchImp
     headers: { Authorization: `Bearer ${cfg.env.EMAIL_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ from: cfg.env.EMAIL_FROM, to: to ? [to] : cfg.env.EMAIL_TO.split(','), subject, text, ...(attachments ? { attachments } : {}) }),
   });
-  if (!res.ok) throw new Error(`Email ${res.status}`);
+  if (!res.ok) { const why = await res.json().then((j) => j?.message, () => null).catch(() => null); throw new Error(`Email ${res.status}${why ? `: ${String(why).slice(0, 200)}` : ''}`); }
   store?.outboxPush({ channel: 'email', dryRun: false, enquiryId, subject, to: to ?? undefined });
   return { dryRun: false };
 }
