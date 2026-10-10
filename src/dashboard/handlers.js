@@ -7,7 +7,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { loadConfig } from '../config.js';
 import { openStore } from '../storage.js';
-import { computeMetrics } from '../metrics.js';
+import { apiMetrics, apiLead, apiIcs, apiReview, apiAction } from './api.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const safeEqual = (a, b) => { const x = Buffer.from(String(a)); const y = Buffer.from(String(b)); return x.length === y.length && crypto.timingSafeEqual(x, y); };
@@ -30,13 +30,24 @@ const send = (res, code, body, type = 'application/json; charset=utf-8', extra =
   res.end(typeof body === 'string' ? body : JSON.stringify(body));
 };
 
-/** Cached store per warm serverless instance (the page polls every 15 s). */
+/** Cached store per warm serverless instance (the page polls every 15 s). Writes always reload first, so two instances never overwrite each other with stale rows. */
 let cache = { store: null, at: 0 };
-async function getStore(cfg, fetchImpl) {
-  if (!cache.store || Date.now() - cache.at > 10000) cache = { store: await openStore(cfg, { fetchImpl }), at: Date.now() };
+async function getStore(cfg, fetchImpl, { fresh = false } = {}) {
+  if (fresh || !cache.store || Date.now() - cache.at > 10000) cache = { store: await openStore(cfg, { fetchImpl }), at: Date.now() };
   return cache.store;
 }
 export const resetCache = () => { cache = { store: null, at: 0 }; };
+
+async function readBody(req) {
+  const body = req.body;
+  if (typeof body === 'string') { try { return JSON.parse(body); } catch { return null; } }
+  if (body !== undefined) return body;
+  return new Promise((resolve) => {
+    let s = '';
+    req.on('data', (c) => { s += c; if (s.length > 20000) req.destroy(); });
+    req.on('end', () => { try { resolve(JSON.parse(s)); } catch { resolve(null); } });
+  });
+}
 
 export function createHandlers({ env = process.env, fetchImpl, pagePath = path.join(here, 'page.html') } = {}) {
   const cfg = loadConfig({ fresh: true, env: { STORAGE_BACKEND: 'supabase', ...env } });
@@ -45,25 +56,25 @@ export function createHandlers({ env = process.env, fetchImpl, pagePath = path.j
     if (!a.ok) return send(res, a.code, a.body, undefined, a.headers);
     try { return await fn(req, res); } catch (e) { return send(res, 500, { error: e.message }); }
   };
+  const query = (req) => new URL(req.url, 'http://localhost').searchParams;
+  const out = (res, r) => send(res, r.code, r.body, r.type, r.headers);
+  const post = (fn) => guard(async (req, res) => {
+    if (req.method !== 'POST') return send(res, 405, { error: 'POST only' });
+    // With the login switched off, anyone with the link can READ. Changing things (reassign, book, notes, Telegram posts) can
+    // additionally require a team PIN: set DASHBOARD_TEAM_PIN and the page asks for it once per browser.
+    const pin = cfg.env.DASHBOARD_TEAM_PIN;
+    if (pin && cfg.env.DASHBOARD_AUTH === 'off' && !safeEqual(req.headers?.['x-team-pin'] ?? '', pin)) return send(res, 403, { error: 'team PIN required', pinRequired: true });
+    const body = await readBody(req);
+    if (!body) return send(res, 400, { error: 'bad json' });
+    return out(res, await fn(await getStore(cfg, fetchImpl, { fresh: true }), body));
+  });
   return {
     cfg,
     page: guard(async (req, res) => send(res, 200, fs.readFileSync(pagePath, 'utf8'), 'text/html; charset=utf-8')),
-    metrics: guard(async (req, res) => {
-      const q = new URL(req.url, 'http://localhost').searchParams.get('source');
-      const source = ['all', 'live', 'seed'].includes(q) ? q : 'all';
-      return send(res, 200, computeMetrics(await getStore(cfg, fetchImpl), cfg, { source }));
-    }),
-    review: guard(async (req, res) => {
-      if (req.method !== 'POST') return send(res, 405, { error: 'POST only' });
-      let body = req.body;
-      if (typeof body === 'string') { try { body = JSON.parse(body); } catch { return send(res, 400, { error: 'bad json' }); } }
-      if (body === undefined) body = await new Promise((resolve) => { let s = ''; req.on('data', (c) => { s += c; }); req.on('end', () => { try { resolve(JSON.parse(s)); } catch { resolve(null); } }); });
-      const { enquiryId, verdict, note } = body || {};
-      const store = await getStore(cfg, fetchImpl);
-      if (!['ok', 'too_strict'].includes(verdict) || !store.getEnquiry(enquiryId)) return send(res, 400, { error: 'bad request' });
-      const r = store.setReview(enquiryId, verdict, String(note ?? '').slice(0, 500));
-      await store.drain();
-      return send(res, 200, r);
-    }),
+    metrics: guard(async (req, res) => out(res, apiMetrics(await getStore(cfg, fetchImpl), cfg, query(req)))),
+    lead: guard(async (req, res) => out(res, apiLead(await getStore(cfg, fetchImpl), cfg, query(req)))),
+    ics: guard(async (req, res) => out(res, apiIcs(await getStore(cfg, fetchImpl), cfg, query(req)))),
+    review: post(async (store, body) => { const r = apiReview(store, body); if (store.drain) await store.drain(); return r; }),
+    action: post((store, body) => apiAction(store, cfg, body, { fetchImpl })),
   };
 }

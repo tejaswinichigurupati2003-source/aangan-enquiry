@@ -1,5 +1,6 @@
 import { isLive } from '../config.js';
 import { toTelegramHtml } from '../notes.js';
+import { pushActivity } from '../team.js';
 
 const inQuietHours = (cfg, date) => {
   const hhmm = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: cfg.studio.timezone }).format(date);
@@ -11,13 +12,13 @@ const inQuietHours = (cfg, date) => {
  * Send a handoff note. DRY-RUN by default: the message is written to the outbox instead.
  * @param to 'designer' | 'nikhil'
  */
-export async function sendTelegram({ cfg, store, to, text, enquiryId, now = new Date(), fetchImpl = fetch }) {
+export async function sendTelegram({ cfg, store, to, text, enquiryId, now = new Date(), fetchImpl = fetch, button = true }) {
   const silent = inQuietHours(cfg, now);
   const chatKey = to === 'nikhil' ? 'TELEGRAM_NIKHIL_CHAT_ID' : 'TELEGRAM_DESIGNER_CHAT_ID';
   const payload = {
     text, to, silent,
     // The inline button is how "designer pickup time" is measured.
-    buttons: [{ text: '✅ Got it', callback_data: `ack:${enquiryId}` }],
+    buttons: button ? [{ text: '✅ Got it', callback_data: `ack:${enquiryId}` }] : [],
   };
   if (!isLive(cfg, ['TELEGRAM_BOT_TOKEN', chatKey])) {
     store?.outboxPush({ channel: 'telegram', dryRun: true, enquiryId, ...payload });
@@ -28,7 +29,7 @@ export async function sendTelegram({ cfg, store, to, text, enquiryId, now = new 
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       chat_id: cfg.env[chatKey], text: toTelegramHtml(text), parse_mode: 'HTML', disable_notification: silent,
-      reply_markup: { inline_keyboard: [payload.buttons] },
+      ...(button ? { reply_markup: { inline_keyboard: [payload.buttons] } } : {}),
     }),
   });
   if (!res.ok) throw new Error(`Telegram ${res.status}`);
@@ -49,6 +50,7 @@ export function recordAck(store, enquiryId, now = new Date(), by = null) {
   if (!enq || enq.handoff?.ackAt) return null;
   enq.handoff.ackAt = now.toISOString();
   if (by) enq.handoff.ackBy = by;
+  pushActivity(enq, by, 'pickup', 'Picked up from Telegram', now);
   store.save();
   return enq;
 }

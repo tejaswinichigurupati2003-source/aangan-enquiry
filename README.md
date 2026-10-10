@@ -98,3 +98,6 @@ DPDP-Act data-processing terms; cost at ~200 calls/month vs. fixed plan fees.
 - Secrets only in `.env`; dry-run unless `AANGAN_LIVE=1` **and** credentials exist.
 
 See [PLAN.md](PLAN.md), [DECISIONS.md](DECISIONS.md) (⚑ = please review), [EVAL_RESULTS.md](EVAL_RESULTS.md).
+
+## Team, reassigning and consultation booking
+Per-person dashboard views, lead owners with reassigning, pipeline stages, a week schedule and one-click Google Calendar entries — see [docs/TEAM_AND_CALENDAR.md](docs/TEAM_AND_CALENDAR.md) (decisions D39–D42).

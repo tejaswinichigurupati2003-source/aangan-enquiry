@@ -1,13 +1,14 @@
 // Dashboard metrics. Everything is computed from the store; nothing is hand-entered.
 import { callCost } from './cost.js';
 import { buildSeries } from './series.js';
+import { getTeam, buildAttention, buildWorkload, ownerOf, stageOf, isClosed, tzOffset } from './team.js';
 
 const median = (xs) => { const a = xs.filter((x) => x != null && Number.isFinite(x)).sort((p, q) => p - q); if (!a.length) return null; const m = a.length >> 1; return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2; };
 const sum = (xs) => xs.reduce((a, b) => a + b, 0);
 const r2 = (x) => (x == null ? null : Math.round(x * 100) / 100);
 
 /** @param source 'all' | 'live' | 'seed' */
-export function computeMetrics(store, cfg, { source = 'all' } = {}) {
+export function computeMetrics(store, cfg, { source = 'all', now = new Date() } = {}) {
   const inSrc = (x) => source === 'all' || x.source === source;
   const calls = store.db.calls.filter(inSrc);
   const enquiries = store.db.enquiries.filter(inSrc);
@@ -54,11 +55,22 @@ export function computeMetrics(store, cfg, { source = 'all' } = {}) {
   const amberQueue = enquiries.filter((e) => e.tier === 'amber').map((e) => ({
     id: e.id, phone: e.phone, source: e.source, since: e.queue?.since, reason: e.queue?.reason, next: e.queue?.next_question, fields: e.fields,
     callbacks: store.db.callbacks.filter((c) => c.enquiryId === e.id).map((c) => ({ attempt: c.attempt, dueAt: c.dueAt, status: c.status })),
-    transcript: store.combinedTranscript(e),
   }));
 
   const flagCounts = {};
   for (const e of enquiries) for (const f of e.flags || []) flagCounts[f] = (flagCounts[f] || 0) + 1;
+
+  // --- people: every lead a person can own (Green, Amber, Escalate), with owner / stage / consultation ---
+  const team = getTeam(cfg);
+  const cbs = (id) => store.db.callbacks.filter((c) => c.enquiryId === id).map((c) => ({ attempt: c.attempt, dueAt: c.dueAt, status: c.status }));
+  const leads = enquiries.filter((e) => ['green', 'amber', 'escalate'].includes(e.tier)).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).map((e) => ({
+    id: e.id, source: e.source, phone: e.phone, tier: e.tier, fields: e.fields, flags: e.flags || [], summary: e.classification?.summary, reason: e.queue?.reason || e.classification?.reasons?.[0],
+    next: e.queue?.next_question, createdAt: e.createdAt, updatedAt: e.updatedAt, lastActivityAt: e.lastActivityAt || e.updatedAt, calls: e.callIds.length, repeat: e.callIds.length > 1,
+    ownerId: ownerOf(e), ownerName: e.assignment?.ownerName ?? null, ownerAuto: Boolean(e.assignment?.auto), stage: stageOf(e), closed: isClosed(e), consult: e.consult ?? null,
+    handoff: { telegramSentAt: e.handoff?.telegramSentAt ?? null, ackAt: e.handoff?.ackAt ?? null, ackBy: e.handoff?.ackBy ?? null, hubspot: e.handoff?.hubspot ?? null, pagedAt: e.handoff?.pagedAt ?? null },
+    callbacks: e.tier === 'amber' ? cbs(e.id) : [],
+  }));
+  const attention = buildAttention(store, cfg, now).filter((a) => source === 'all' || source === 'live');
 
   const cc = cfg.cost_assumptions;
   const pv = cfg.business?.avg_project_value_inr;
@@ -83,6 +95,8 @@ export function computeMetrics(store, cfg, { source = 'all' } = {}) {
     pipeline: pv && source === 'live' ? { greenLeads: greens, grossValueMin: greens * pv.min, grossValueMax: greens * pv.max, note: 'Green leads × average project value from the brief. Not a forecast: conversion is unknown.' } : null,
     ambers: amberQueue, reds, redReview: { total: reds.length, reviewed: reviewed.length, tooStrict, tooStrictRate: reviewed.length ? tooStrict / reviewed.length : null },
     flagCounts,
+    team: { ...team, tz: cfg.studio.timezone, tzOffset: tzOffset(cfg.studio.timezone, now), officeHours: { start: cfg.studio.office_hours_start, end: cfg.studio.office_hours_end }, workload: buildWorkload(store, cfg, now) },
+    leads, attention, now: now.toISOString(),
     series: buildSeries(store, cfg, calls, enquiries),
     safety: {
       guardBlocked: store.db.events.filter((e) => e.type === 'guard_blocked' && (source === 'all' || e.source === source)).length,
@@ -91,9 +105,6 @@ export function computeMetrics(store, cfg, { source = 'all' } = {}) {
       classifierErrors: store.db.events.filter((e) => e.type === 'classifier_error').length,
       llmFallbacks: store.db.events.filter((e) => e.type === 'llm_error').length,
     },
-    greens: enquiries.filter((e) => e.tier === 'green').sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).map((e) => ({
-      id: e.id, phone: e.phone, source: e.source, fields: e.fields, flags: e.flags, summary: e.classification?.summary, handoff: e.handoff,
-    })),
     escalations: enquiries.filter((e) => e.tier === 'escalate').map((e) => ({ id: e.id, phone: e.phone, source: e.source, summary: e.classification?.summary, pagedAt: e.handoff?.pagedAt })),
   };
 }

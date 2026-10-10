@@ -10,6 +10,7 @@ import { pushLeadToHubspot, SeedRefusedError } from './integrations/hubspot.js';
 import { DECLINE } from './scripts.js';
 import { scheduleCallbacks } from './callbacks.js';
 import { forceDryRun } from './config.js';
+import { autoAssign } from './team.js';
 
 export async function route({ cfg, store, enquiry, classification, now = new Date(), fetchImpl }) {
   const cls = classification;
@@ -19,6 +20,7 @@ export async function route({ cfg, store, enquiry, classification, now = new Dat
   enquiry.fields = { ...enquiry.fields, ...Object.fromEntries(Object.entries(cls.fields || {}).filter(([, v]) => v != null)) };
   enquiry.flags = cls.flags;
   enquiry.updatedAt = enquiry.updatedAt || now.toISOString();
+  if (cls.tier === 'green' || cls.tier === 'escalate') autoAssign(cfg, store, enquiry, now); // owner is decided BEFORE the note is written
   const transcript = store.combinedTranscript(enquiry);
   const actions = [];
   const h = enquiry.handoff;

@@ -198,3 +198,27 @@ Also: `gemini-2.5-flash` is retired for new keys; model ids need periodic re-che
 The project already hosts a movie app and a "kargo" recruiting app. Our migration is additive only (verified: every existing table, column, RLS flag, policy and
 row count identical before/after), tables are `aangan_*`, columns `aan_*`. ⚑ The kargo tables have RLS OFF (candidate names, emails, phones, CV text) — with
 RLS off, the public/publishable key can read them. Not touched (out of scope), but worth fixing in that app.
+
+## D39 Lead ownership, stages and consultations live inside the enquiry record
+`assignment` (owner, who/when, auto flag), `stage`, `consult` (start/end/designer/status) and `activity` (timeline) are stored on the enquiry JSON, so JSON and
+Supabase persist them with **no schema change**. Green leads are auto-assigned to the designer with the fewest open Green leads (ties: config order); Escalate goes
+to the studio head; Amber waits unowned in the queue. A person's assignment is never overridden. Reassigning, booking, cancelling and notes are logged and a short
+message is posted to the designer Telegram group (test data is forced to dry-run, as everywhere). The AI never names or promises a designer — a test scans every
+spoken script for designer names.
+Designer names in `config.yaml` (`team:`) are PLACEHOLDERS — replace them; keep each `id` stable once leads are assigned.
+
+## D40 Calendar: one-click Google Calendar link + .ics, not a silent write
+Writing straight into the studio's Google Calendar needs credentials only the studio can create (Google service account / OAuth). Until then a booking produces an
+"Add to Google Calendar" link (opens pre-filled in the signed-in person's own calendar, with the designer as a guest if their email is configured), a standard
+.ics download, and a link to that week in the shared calendar. Double-booking the same designer is refused in code; Sundays and out-of-hours need an explicit confirm.
+Upgrade path: a service account that is a member of the shared calendar → create the event in `actions.schedule` (one function) and store the event id on `consult`.
+
+## D41 Per-person views are a view, not a login
+The "Viewing as" selector (studio head / front desk / each designer) changes what is shown and defaults the filters; `?as=designer_1` makes a shareable link.
+It is NOT access control: with the dashboard login off, anyone with the link can switch. Real per-person privacy needs per-person logins (Vercel/Supabase auth).
+Because changing things is riskier than reading, writes can require a shared **team PIN** (`DASHBOARD_TEAM_PIN`, only when `DASHBOARD_AUTH=off`).
+
+## D42 Dashboard de-duplicated
+Removed repeats: the sidebar guardrail card (the same numbers are on Cost & health), the cost KPI on Overview (lives on Cost & health), the separate Follow-ups and
+Safety/Costs tabs (merged into one Leads list with filters, and one Cost & health tab), the Green-leads table that duplicated the Follow-ups queue, and two footers.
+Added: needs-attention list, per-role home, lead drawer (owner, stage, consultation, notes, transcript), week schedule, workload, search ( / ), CSV export.

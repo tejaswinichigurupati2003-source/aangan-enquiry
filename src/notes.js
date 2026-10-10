@@ -41,6 +41,7 @@ export function buildDesignerNote(enquiry, cls) {
   const lines = [
     displayPhone(enquiry.phone),
     line('Name', f.name),
+    line('Designer', enquiry.assignment?.ownerName),
     line('Locality', f.locality),
     line('Property', [f.property_type, areaText(f)].filter(Boolean).join(' · ')),
     line('Scope', f.scope),
