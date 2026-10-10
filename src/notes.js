@@ -83,3 +83,19 @@ export function buildEmail(kind, enquiry, cls, transcript) {
     text: `${kind === 'escalate' ? buildEscalationNote(enquiry, cls) : buildDesignerNote(enquiry, cls)}\n\n----- Transcript -----\n${transcript}\n`,
   };
 }
+
+/** The complete conversation as Telegram-sized messages (limit is 4096 characters; we stay well under). */
+export function buildTranscriptMessages(transcript, max = 3500) {
+  const lines = String(transcript || '').split('\n').filter((l) => l.trim());
+  const chunks = []; let cur = '';
+  for (const raw of lines) {
+    const line = raw.startsWith('Caller:') ? `🧑 ${raw}` : raw.startsWith('Agent:') ? `🤖 ${raw.replace(/^Agent:/, 'AI:')}` : raw;
+    for (let i = 0; i < line.length; i += max) { // a single very long turn is split too
+      const piece = line.slice(i, i + max);
+      if (cur && cur.length + piece.length + 1 > max) { chunks.push(cur); cur = ''; }
+      cur += (cur ? '\n' : '') + piece;
+    }
+  }
+  if (cur) chunks.push(cur);
+  return chunks.map((c, i) => `📝 Full transcript${chunks.length > 1 ? ` (${i + 1}/${chunks.length})` : ''}\n\n${c}`);
+}

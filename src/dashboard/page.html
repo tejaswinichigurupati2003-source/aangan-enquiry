@@ -180,6 +180,7 @@
   .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; } .btn.primary:hover { filter: brightness(1.08); color: #fff; }
   .btn.warn:hover { border-color: var(--t-red); color: var(--t-red); }
   .actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .chat { display: flex; flex-direction: column; gap: 8px; } .msg { max-width: 88%; padding: 8px 12px; border-radius: 14px; font-size: 13.5px; background: var(--soft); align-self: flex-start; } .msg b { display: block; font-size: 11px; letter-spacing: .04em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 2px; } .msg.me { align-self: flex-end; background: var(--p-blue-bg); }
   .consult { background: var(--p-blue-bg); border-radius: 16px; padding: 14px; }
   .consult b { font-size: 16px; color: var(--ink); }
   .backdrop { position: fixed; inset: 0; background: rgba(15,18,50,.35); z-index: 39; display: none; } .backdrop.on { display: block; }
@@ -563,6 +564,16 @@ function vHealth(m) {
 }
 
 /* ---------- lead drawer ---------- */
+/** The whole conversation, always visible, as a chat: caller on the right, the assistant on the left. */
+function transcriptHtml(text) {
+  const rows = String(text || '').split('\n').map((ln) => {
+    const m = /^(Agent|Caller):\s?(.*)$/.exec(ln);
+    if (m) return `<div class="msg ${m[1] === 'Caller' ? 'me' : 'ai'}"><b>${m[1] === 'Caller' ? 'Caller' : 'Assistant'}</b>${esc(m[2])}</div>`;
+    return ln.trim() ? `<div class="sub" style="text-align:center;margin:10px 0 4px">${esc(ln.replace(/^-+\s*|\s*-+$/g, ''))}</div>` : '';
+  }).join('');
+  return rows ? `<div class="chat">${rows}</div>` : '<div class="sub">No conversation was recorded for this call.</div>';
+}
+
 const getLead = (id) => state.m?.leads.find((l) => l.id === id);
 const actor = () => (state.m ? me(state.m).name : null);
 
@@ -614,7 +625,7 @@ function renderDrawer() {
    <div class="sec"><h4>Handoff</h4><div class="sub" style="line-height:1.7">${handoff}</div></div>
    <div class="sec"><h4>Notes &amp; activity</h4><form data-form="note" data-id="${esc(l.id)}"><label class="lab" for="n-text">Add a note (visible to the whole team)</label><textarea id="n-text" class="inp" name="text" maxlength="500" placeholder="e.g. Spoke to them, site visit on Saturday"></textarea><div class="actions"><button class="btn" type="submit">Add note</button></div></form>
      <ul class="tl">${dtl ? (dtl.activity.length ? dtl.activity.map((a) => `<li>${esc(a.text)}<span class="sub">${esc(a.by || 'system')} · ${esc(fmtDT(a.at))}</span></li>`).join('') : '<li class="sub">Nothing yet.</li>') : '<li class="sub">Loading…</li>'}</ul></div>
-   <div class="sec"><h4>Call transcript</h4>${dtl ? `<details class="flat"><summary class="sub" style="font-weight:600">Show transcript (${l.calls} call${l.calls === 1 ? '' : 's'})</summary><pre>${esc(dtl.transcript)}</pre></details>` : d?.error ? `<div class="sub">Could not load: ${esc(d.error)}</div>` : '<div class="sub">Loading…</div>'}</div>
+   <div class="sec"><h4>Call transcript</h4>${dtl ? transcriptHtml(dtl.transcript) : d?.error ? `<div class="sub">Could not load: ${esc(d.error)}</div>` : '<div class="sub">Loading…</div>'}</div>
   </div>`;
 }
 

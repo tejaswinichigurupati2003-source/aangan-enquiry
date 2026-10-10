@@ -292,3 +292,10 @@ test('call_ended after the socket closed corrects the duration to the Vani figur
     assert.equal(call.durationSec, 212);
   } finally { s.close(); }
 });
+
+test('parseVaaniTranscript reads Vani\'s real time-stamped format and joins split answers', () => {
+  const t = parseVaaniTranscript('[11:26:57] AGENT: Hello, you have reached Aangan Studio.\n[11:27:06] USER: Okay. This is Piyush. I have a two BHK flat in Baner.\n[11:27:18] AGENT: Hello Piyush! What is the carpet area?\n[11:27:56] USER: Yes,\n[11:27:59] USER: Myself.\n[11:28:04] AGENT: Understood.');
+  assert.deepEqual(t.map((x) => x.role), ['agent', 'caller', 'agent', 'caller', 'agent']);
+  assert.equal(t[3].text, 'Yes, Myself.');
+  assert.match(t[1].text, /^Okay\. This is Piyush/);
+});

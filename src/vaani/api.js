@@ -60,11 +60,16 @@ export class VaaniApi {
 
 /** Vani transcripts are "AGENT: …\n\n USER: …" text. → turns [{role, text}] (agent|caller). */
 export function parseVaaniTranscript(text) {
+  // Vani's real format is "[11:26:57] AGENT: …" (a time stamp before the speaker); plain "AGENT: …" is accepted too.
   const turns = [];
-  const parts = String(text ?? '').split(/(?:^|\n)\s*(AGENT|USER)\s*:\s*/i);
+  const parts = String(text ?? '').split(/(?:^|\n)\s*(?:\[[^\]\n]*\]\s*)?(AGENT|USER)\s*:\s*/i);
   for (let i = 1; i < parts.length; i += 2) {
     const body = parts[i + 1].replace(/\s+/g, ' ').trim();
-    if (body) turns.push({ role: parts[i].toUpperCase() === 'USER' ? 'caller' : 'agent', text: body });
+    if (!body) continue;
+    const role = parts[i].toUpperCase() === 'USER' ? 'caller' : 'agent';
+    const prev = turns.at(-1);
+    if (prev && prev.role === role) prev.text += ` ${body}`; // Vani splits one spoken answer into several lines ("Yes," / "Myself.")
+    else turns.push({ role, text: body });
   }
   return turns;
 }
