@@ -33,3 +33,14 @@ Green: New → Contacted → Consultation booked → Consultation done → Won /
 
 ## Needs attention (Overview)
 Live leads only: no designer, Telegram note not picked up within 30 min, no activity for 3 days, call-back due, consultation time passed. Thresholds are in `config.yaml` → `team`.
+
+## The single studio calendar (works today, no Google credentials)
+Every consultation — booked by the AI on a call or by a person on the dashboard — appears in one subscribable calendar feed:
+`https://<your-dashboard>/api/calendar?token=<CALENDAR_FEED_TOKEN>` (add `&designer=designer_1` for one person's view).
+Google Calendar → **Other calendars → + → From URL** → paste it. Google re-reads subscribed feeds every few hours (not instantly), so it is for *seeing* the studio's bookings;
+the system itself never double-books because it checks its own records the moment a slot is offered. The token is the password: anyone with the URL can read the feed.
+For instant blocking write straight into the calendar with a Google service account (see the header of `src/integrations/gcal.js`).
+
+## Checking the whole chain
+`node bin/e2e.js` plays a full simulated call with the real model and the real pipeline in dry-run; `node bin/e2e.js --live --cleanup` does it with the real
+Telegram, HubSpot and Supabase (one test message lands in the designer group; the HubSpot contact and Supabase rows are deleted afterwards).
