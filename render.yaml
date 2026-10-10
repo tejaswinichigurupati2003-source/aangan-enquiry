@@ -27,6 +27,10 @@ services:
       - { key: TELEGRAM_DESIGNER_CHAT_ID, sync: false }
       - { key: TELEGRAM_NIKHIL_CHAT_ID, sync: false }
       - { key: HUBSPOT_TOKEN, sync: false }
+      - { key: CALENDAR_ICAL_URL, sync: false }
+      - { key: GOOGLE_SERVICE_ACCOUNT_JSON, sync: false }
+      - { key: GOOGLE_CALENDAR_ID, sync: false }
+      - { key: CALENDAR_FEED_TOKEN, sync: false }
       - { key: EMAIL_API_KEY, sync: false }
       - { key: EMAIL_FROM, sync: false }
       - { key: EMAIL_TO, sync: false }

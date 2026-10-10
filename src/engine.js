@@ -11,6 +11,7 @@ import { istParts, isAfterHours } from './classifier.js';
 import { speechSeconds } from './cost.js';
 import * as S from './scripts.js';
 import { uid } from './store.js';
+import { getExternalBusy } from './integrations/ical-busy.js';
 import { parseWindowHint, hintIsEmpty, slotMatchesHint, findSlots, speakSlot, speakEmail, parseSpokenEmail, isYes, isNo } from './booking.js';
 
 const FIELD_KEYS = ['name', 'locality', 'property_type', 'carpet_area_sqft', 'scope', 'timeline_text', 'decision_maker', 'referral_source', 'preferred_window', 'designer_mentioned', 'callback_preference'];
@@ -296,7 +297,7 @@ export class CallEngine {
         return this.emit(call, injectionPrefix + S.question('preferred_window', lang), false, 'intake');
       }
       if (ev.tier === 'green' && !endNow && !tooLong && this.bookingOn(call) && !st.booking) {
-        const offer = this.startBooking(call, text);
+        const offer = await this.startBooking(call, text);
         if (offer) return offer;
       }
       st.mode = 'closed';
@@ -322,10 +323,11 @@ export class CallEngine {
   /** Booking on the call only for live calls, and only when switched on in config.yaml (booking.enabled). */
   bookingOn(call) { return Boolean(this.cfg.booking?.enabled) && call.source === 'live'; }
 
-  startBooking(call, text) {
+  async startBooking(call, text) {
     const st = call.state; const lang = st.language;
     const hint = parseWindowHint(`${st.fields.preferred_window ?? ''} ${text}`, this.cfg, this.now().getTime());
-    const slots = findSlots({ cfg: this.cfg, store: this.store, hint, nowMs: this.now().getTime(), count: 2, callId: call.id });
+    const busy = await getExternalBusy(this.cfg, { store: this.store, nowMs: this.now().getTime() });
+    const slots = findSlots({ cfg: this.cfg, store: this.store, hint, nowMs: this.now().getTime(), count: 2, callId: call.id, busy });
     if (!slots.length) { st.booking = { phase: 'skipped' }; return null; }
     st.booking = { phase: 'offer', slots, idx: 0, offers: 1, email: null, candidate: null, tries: 0, unclear: 0, slot: null };
     this.addFlag(call, 'slot_offered');
@@ -356,7 +358,7 @@ export class CallEngine {
     return this.emit(call, S.closeOk(st.fields.name, st.language), true, 'closed');
   }
 
-  bookingTurn(call, text, det) {
+  async bookingTurn(call, text, det) {
     const st = call.state; const b = st.booking; const lang = st.language; const hi = lang === 'hinglish' || lang === 'hi';
     if (det.bot) { this.addFlag(call, 'asked_if_bot'); return this.emit(call, `${S.botDisclosure(lang)} ${this.bookingPending(call)}`, false, 'booking'); }
     if (det.price || det.discount) { st.priceAsks++; this.addFlag(call, 'asked_for_price'); return this.emit(call, `${S.pricingReply(st.priceAsks)} ${this.bookingPending(call)}`, false, 'booking'); }
@@ -373,7 +375,8 @@ export class CallEngine {
       if (isNo(text) || !hintIsEmpty(hint)) { // wants something else (a plain "yes" was handled above)
         if (b.offers >= (this.cfg.booking?.offers_per_call ?? 2) + 1) return this.fallBackToRequest(call);
         const offered = b.slots.map((x) => x.start);
-        let next = findSlots({ cfg: this.cfg, store: this.store, hint, nowMs: this.now().getTime(), count: 2, exclude: offered, callId: call.id });
+        const busy = await getExternalBusy(this.cfg, { store: this.store, nowMs: this.now().getTime() });
+        let next = findSlots({ cfg: this.cfg, store: this.store, hint, nowMs: this.now().getTime(), count: 2, exclude: offered, callId: call.id, busy });
         if (hintIsEmpty(hint) && b.slots[b.idx + 1]) next = [b.slots[b.idx + 1]]; // a plain "no": move on to the second option we already had
         if (!next.length) return this.fallBackToRequest(call);
         b.slots = next; b.idx = 0; b.offers++;

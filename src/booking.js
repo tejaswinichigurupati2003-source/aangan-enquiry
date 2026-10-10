@@ -43,7 +43,8 @@ export function slotMatchesHint(cfg, slot, hint) {
 export const hintIsEmpty = (h) => !h.days && !h.part && h.hour == null && !h.date;
 
 /** Is at least one active designer free for [startMs, endMs)? Other calls' unsaved holds count as busy. */
-export function slotIsFree(cfg, store, startMs, endMs, { excludeCallId = null, excludeEnquiryId = null } = {}) {
+export function slotIsFree(cfg, store, startMs, endMs, { excludeCallId = null, excludeEnquiryId = null, busy: external = [] } = {}) {
+  if (external.some((x) => x.start < endMs && x.end > startMs)) return false; // already taken on the studio calendar (meeting, holiday, site visit)
   const team = getTeam(cfg);
   const active = team.designers.filter((d) => d.active);
   if (!active.length) return false;
@@ -59,7 +60,7 @@ export function slotIsFree(cfg, store, startMs, endMs, { excludeCallId = null, e
 }
 
 /** Up to `count` real slots matching the hint, nearest first, preferring different days for the 2nd option. */
-export function findSlots({ cfg, store, hint = {}, nowMs = Date.now(), count = 2, exclude = [], callId = null }) {
+export function findSlots({ cfg, store, hint = {}, nowMs = Date.now(), count = 2, exclude = [], callId = null, busy = [] }) {
   const b = cfg.booking ?? {};
   const mins = b.slot_minutes ?? 60, ahead = (b.earliest_hours_ahead ?? 24) * 3600000, horizon = b.horizon_days ?? 14;
   const working = new Set(b.working_days ?? [1, 2, 3, 4, 5, 6]);
@@ -75,7 +76,7 @@ export function findSlots({ cfg, store, hint = {}, nowMs = Date.now(), count = 2
       if (startMs < nowMs + ahead) continue;
       const endMs = startMs + mins * 60000;
       if (taken.has(new Date(startMs).toISOString())) continue;
-      if (!slotIsFree(cfg, store, startMs, endMs, { excludeCallId: callId })) continue;
+      if (!slotIsFree(cfg, store, startMs, endMs, { excludeCallId: callId, busy })) continue;
       all.push({ start: new Date(startMs).toISOString(), end: new Date(endMs).toISOString(), ymd: day.ymd, dow: day.dow, hour: h });
     }
   }

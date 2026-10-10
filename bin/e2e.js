@@ -30,7 +30,7 @@ const note = (s) => console.log(`  · ${s}`);
 console.log(`\nEND-TO-END (${LIVE ? 'LIVE services' : 'dry-run'})\n`);
 console.log('Integrations configured:');
 const has = (k) => Boolean(cfg.env[k]);
-for (const [label, ok] of [['Gemini key', has('GEMINI_API_KEY')], ['Telegram bot + designer chat', has('TELEGRAM_BOT_TOKEN') && has('TELEGRAM_DESIGNER_CHAT_ID')], ['Supabase', has('SUPABASE_URL') && has('SUPABASE_SERVICE_ROLE_KEY')], ['HubSpot token', has('HUBSPOT_TOKEN')], ['Google Calendar service account', has('GOOGLE_SERVICE_ACCOUNT_JSON') && has('GOOGLE_CALENDAR_ID')], ['E-mail (Resend) key', has('EMAIL_API_KEY') && has('EMAIL_FROM')], ['Calendar feed token', has('CALENDAR_FEED_TOKEN')]]) console.log(`  ${ok ? '●' : '○'} ${label}`);
+for (const [label, ok] of [['Gemini key', has('GEMINI_API_KEY')], ['Telegram bot + designer chat', has('TELEGRAM_BOT_TOKEN') && has('TELEGRAM_DESIGNER_CHAT_ID')], ['Supabase', has('SUPABASE_URL') && has('SUPABASE_SERVICE_ROLE_KEY')], ['HubSpot token', has('HUBSPOT_TOKEN')], ['Google Calendar service account', has('GOOGLE_SERVICE_ACCOUNT_JSON') && has('GOOGLE_CALENDAR_ID')], ['E-mail (Resend) key', has('EMAIL_API_KEY') && has('EMAIL_FROM')], ['Studio calendar iCal address (AI avoids busy times)', has('CALENDAR_ICAL_URL')], ['Calendar feed token', has('CALENDAR_FEED_TOKEN')]]) console.log(`  ${ok ? '●' : '○'} ${label}`);
 console.log(`  live flag: ${cfg.env.AANGAN_LIVE === '1' && LIVE ? 'on' : 'off (dry-run)'}\n`);
 
 const store = LIVE && storageBackend(cfg) === 'supabase' ? await openStore(cfg) : new Store(fs.mkdtempSync(path.join(os.tmpdir(), 'aangan-e2e-')));
